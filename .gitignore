@@ -1,0 +1,10 @@
+a.out
+*.swp
+*.so
+*.pyc
+*.luac
+
+cov.report/
+*.exe
+*.gc*
+

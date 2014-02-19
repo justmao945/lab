@@ -1,0 +1,94 @@
+#!/system/bin/sh
+
+# * Please make sure you have enough space to make the swap file
+#   uses `df` or `busybox free -m` to see the free space of all mount points.
+# * Please run this script as root, uses su to grant the privilege.
+
+# swap file size in MB
+SWAP_SIZE=512
+
+# swap file location. In my device, /data is a ext4 file system
+# and /storage/sdcard0 is a fuse device, that's not a good enough 
+# file system to be used a swap partition. So /data (all 4GB) is 
+# the recommended device to make the swap file.
+SWAP_FILE=/data/swapfile
+
+# important tools...
+alias bb=busybox
+
+# Note that all things in / (rootfs) will be reseted after reboot...
+# So it's impossible to write mount points into fstab
+# Assume the original mount is a symbolic from toolbox.
+# Here we hack the mount command to switch on our swap when the swap file
+# is eixst. Because I can't find any file in /system that will be called
+# by /init.rc, but the mount command is always called during init.
+# FIXME: please be careful, if mount command can not work, you system can
+# not be booted...
+mount_cmd=/system/bin/mount
+
+remount_rw_system() {
+    bb mount -o rw,remount /system
+}
+
+remount_ro_system() {
+    bb mount -o ro,remount /system
+}
+
+delswap_m2a() {
+    if [ ! -f $SWAP_FILE ]; then
+        return
+    fi
+    # swapoff $SWAP_FILE  # no command
+    # bb swapoff -a       # not work for lacking of fstab
+    remount_rw_system
+    bb rm -f $mount_cmd
+    bb ln -s toolbox $mount_cmd
+    bb rm -f $SWAP_FILE
+    if [ $? -ne 0 ]; then
+        echo "Please reboot your system to switch off swap"
+    fi
+    remount_ro_system
+}
+
+mkswap_m2a() {
+    remount_rw_system
+    echo "Creating swap file $SWAP_FILE ..."
+    bb mkdir /data &> /dev/null
+    if [ -f $SWAP_FILE ];then
+        delswap_m2a
+    fi
+    bb dd if=/dev/zero of=$SWAP_FILE bs=1M count=$SWAP_SIZE
+    if [ $? -ne 0 -o ! -f $SWAP_FILE ]; then
+        echo "Error: Make swap file $SWAP_SIZE failed"
+    fi
+
+    echo "Making swap $SWAP_FILE ..."
+    bb chmod 600 $SWAP_FILE
+    bb mkswap $SWAP_FILE
+    echo "Swithing on swap $SWAP_FILE ..."
+    bb swapon $SWAP_FILE
+    bb free -m
+    remount_rw_system
+    bb rm -f $mount_cmd # must delete it!!!
+    echo "#!/system/bin/sh" > $mount_cmd
+    echo "toolbox mount \"\$@\"" >> $mount_cmd
+    echo "code=\$?" >> $mount_cmd
+    echo "[ -f $SWAP_FILE ] && busybox swapon $SWAP_FILE &> /dev/null" >> $mount_cmd
+    echo "exit \$code" >> $mount_cmd
+    bb chmod +x $mount_cmd
+    remount_ro_system
+}
+
+usage() {
+    echo "Usage: $0 [option]"
+    echo "  -h  print usage"
+    echo "  -d  Remove swap file and switch swap"
+}
+
+case "$1" in
+    ""  ) mkswap_m2a;;
+    "-d") delswap_m2a;;
+    "-h") usage;;
+esac
+
+# author: justmao945@gmail.com

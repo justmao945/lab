@@ -1,0 +1,7 @@
+a.out
+*.in
+*.out
+tst.c
+tst.cc
+*.txt
+*.swp

@@ -1,0 +1,85 @@
+! Font settings and rendering.
+! Render setting for cairo -> pango -> gtk
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintslight
+
+! Cursor theme
+!Xcursor.theme: Oxygen Neon
+!Xcursor.size: 0
+
+! rxvt-unicode settings
+URxvt.inputMethod:fcitx
+URxvt.depth:32
+URxvt.transparent: false
+URxvt.urlLauncher:google-chrome
+URxvt.scrollBar:False
+URxvt.mouseWheelScrollPage:True
+URxvt.scrollTtyOutput:False
+URxvt.scrollWithBuffer:True
+URxvt.scrollTtyKeypress:True
+URxvt.cursorBlink:True
+URxvt.saveLines:1024
+URxvt.letterSpace:-1
+URxvt.font:xft:Consolas:size=10:style=Regular:antialias=true,xft:SimSun:size=9:style=Regular:antialias=true
+URxvt.boldFont:xft:Consolas:size=10:style=Bold:antialias=true,xft:SimSun:size=9:style=Bold:antialias=true
+
+! to match gnome-terminal "Linux console" scheme
+! foreground/background
+URxvt*background: #262626
+URxvt*foreground: #ffffff
+! black
+URxvt.color0  : #262626
+URxvt.color8  : #555555
+! red
+URxvt.color1  : #AA0000
+URxvt.color9  : #FF5555
+! green
+URxvt.color2  : #00AA00
+URxvt.color10 : #55FF55
+! yellow
+URxvt.color3  : #AA5500
+URxvt.color11 : #FFFF55
+! blue
+URxvt.color4  : #0000AA
+URxvt.color12 : #5555FF
+! magenta
+URxvt.color5  : #AA00AA
+URxvt.color13 : #FF55FF
+! cyan
+URxvt.color6  : #00AAAA
+URxvt.color14 : #55FFFF
+! white
+URxvt.color7  : #AAAAAA
+URxvt.color15 : #FFFFFF
+
+!! to match gnome-terminal "Tango" scheme
+!! foreground/background
+!URxvt*background: #262626
+!URxvt*foreground: #ffffff
+!! black
+!URxvt.color0  : #262626
+!URxvt.color8  : #555753
+!! red
+!URxvt.color1  : #CC0000
+!URxvt.color9  : #EF2929
+!! green
+!URxvt.color2  : #4E9A06
+!URxvt.color10 : #8AE234
+!! yellow
+!URxvt.color3  : #C4A000
+!URxvt.color11 : #FCE94F
+!! blue
+!URxvt.color4  : #3465A4
+!URxvt.color12 : #729FCF
+!! magenta
+!URxvt.color5  : #75507B
+!URxvt.color13 : #AD7FA8
+!! cyan
+!URxvt.color6  : #06989A
+!URxvt.color14 : #34E2E2
+!! white
+!URxvt.color7  : #D3D7CF
+!URxvt.color15 : #EEEEEC

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+LCOV_OUT=lcov.out
+COV_RPT=cov.report
+
+if make clean && make && ./fdbuf_test.exe; then
+    lcov -c -d . -o $LCOV_OUT
+    rm -rf $COV_RPT
+    genhtml $LCOV_OUT -o $COV_RPT
+    rm -f *.gc* $LCOV_OUT
+    echo "====================================================="
+    echo "Coverage report: $COV_RPT/index.html"
+fi

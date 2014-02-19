@@ -1,0 +1,10 @@
+syntax: glob
+a.out
+*.swp
+*.bak
+*.tmp
+*.o
+test
+pel
+*.a
+*.so

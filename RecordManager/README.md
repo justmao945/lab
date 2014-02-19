@@ -1,0 +1,2 @@
+## Intro
+  RecordManager of MiniSQL.

@@ -1,0 +1,64 @@
+Version:
+  20111107: Original version
+  20111109: Fix bugs and redesign the gui
+  20111111: Deprecate drawing png with cairo (without anti-alias)
+
+Installation:
+    0. Be sure have conky compiled with lua and luacairo
+    1. Be sure have wget
+    2. Extrac this.zip to $HOME directory
+    3. Make a soft link $HOME/.conkyrc -> $HOME/.conky/conkyrc
+
+--------------------------------------------------------------
+Weather:Test() result:
+
+wind	table: 0x9db3980
+|-- speed	14.48
+|-- direction	30
+|-- chill	19
+|
+astronomy	table: 0x9db3fd0
+|-- sunrise	6:18 am
+|-- sunset	5:06 pm
+|
+condition	table: 0x9db4fe0
+|-- date	Tue, 08 Nov 2011 12:59 pm CST
+|-- text	Haze
+|-- temp	19
+|-- code	21
+|
+units	table: 0x9db3608
+|-- speed	km/h
+|-- temperature	C
+|-- pressure	mb
+|-- distance	km
+|
+long	table: 0x9db4be8
+|
+forecast1	table: 0x9db6980
+|-- low	14
+|-- day	Tue
+|-- code	11
+|-- date	8 Nov 2011
+|-- high	18
+|-- text	Showers
+|
+atmosphere	table: 0x9db3cf8
+|-- humidity	68
+|-- pressure	1015.92
+|-- visibility	5
+|-- rising	0
+|
+forecast2	table: 0x9db6d68
+|-- low	12
+|-- day	Wed
+|-- code	39
+|-- date	9 Nov 2011
+|-- high	17
+|-- text	AM Showers
+|
+location	table: 0x9db3300
+|-- country	China
+|-- city	Hangzhou
+|-- region	
+

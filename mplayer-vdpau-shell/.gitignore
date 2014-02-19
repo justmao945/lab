@@ -1,0 +1,11 @@
+a.out
+*.in
+*.out
+tst.c
+tst.cc
+*.txt
+*.swp
+/src
+/pkg
+*.tar.xz
+*.tar.gz

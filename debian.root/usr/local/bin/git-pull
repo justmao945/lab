@@ -1,0 +1,22 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Term::ANSIColor;
+
+sub git_pull {
+    print colored['yellow'], `git branch | grep \\*`;
+    print `git pull`;
+}
+
+if(-d ".git") {
+    git_pull();
+}else {
+    while(my $what = <./*>) {
+        if(-d $what and -d $what . '/.git') {
+            print colored ['green'], "Updating $what\n";
+            chdir $what;
+            git_pull();
+            chdir '..';
+        }
+    }
+}
