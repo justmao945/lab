@@ -209,7 +209,7 @@ au FileType cpp set completeopt+=preview
 set previewheight=4
 
 " Set to debug level 1, only used by plugin developer
-let g:clang_debug = 1
+let g:clang_debug = 3
 
 " Auto completion is OK for the new async mode
 let g:clang_auto = 1
@@ -259,7 +259,7 @@ runtime! ftplugin/man.vim
 " =====================================
 
 " !! background should be set after colorscheme
-if(has('gui_running'))
+if has('gui_running')
   set guioptions=ai
   set linespace=3
   set lines=45
@@ -273,6 +273,9 @@ endif
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
+elseif has("mac")
+  set linespace=1
+  set guifont=Monaco:h12
 else
   set guifont=Consolas\ 12
   set guifontwide=SimSun\ 11
