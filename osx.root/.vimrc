@@ -275,6 +275,7 @@ if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac")
   set linespace=1
+  set lines=40
   set guifont=Monaco:h12
 else
   set guifont=Consolas\ 12

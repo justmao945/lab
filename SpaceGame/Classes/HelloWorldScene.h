@@ -17,6 +17,10 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+    
+private:
+    cocos2d::Sprite *mShip;
+    cocos2d::SpriteBatchNode *mBatchNode;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
