@@ -12,3 +12,4 @@ cov.report/
 *.exe
 *.gc*
 
+.netrwhist
