@@ -19,8 +19,17 @@ public:
     CREATE_FUNC(HelloWorld);
     
 private:
+    // update schedule
+    void update(float dt);
+    
+private:
     cocos2d::Sprite *mShip;
     cocos2d::SpriteBatchNode *mBatchNode;
+    cocos2d::ParallaxNode *mBackgroundNode;
+    cocos2d::Sprite *mSpaceDust1, *mSpaceDust2;
+    cocos2d::Sprite *mPlanetSunrise;
+    cocos2d::Sprite *mGalaxy;
+    cocos2d::Sprite *mSpacialAnomaly, *mSpacialAnomaly2;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
