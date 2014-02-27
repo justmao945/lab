@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 
 USING_NS_CC;
+using namespace std;
 
 AppDelegate::AppDelegate() {
 
@@ -18,6 +19,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLView::create("My Game");
         director->setOpenGLView(glview);
+        auto screensize = glview->getFrameSize();
+        glview->setDesignResolutionSize(768, 1024, ResolutionPolicy::EXACT_FIT);
+        if(screensize.width > 768) {
+            vector<string> dirs(1, "hd");
+            FileUtils::getInstance()->setSearchResolutionsOrder(dirs);
+            director->setContentScaleFactor(2);
+        } else {
+            vector<string> dirs(1, "sd");
+            FileUtils::getInstance()->setSearchResolutionsOrder(dirs);
+            director->setContentScaleFactor(1);
+        }
+        
     }
 
     // turn on display FPS
