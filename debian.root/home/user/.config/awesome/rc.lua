@@ -81,9 +81,6 @@ chrome = 'google-chrome'
 -- X lock
 xlock = 'xtrlock'
 
--- Eclipse with ADT for Android
-eclipse_adt = os.getenv("HOME") .. "/bundle/android-sdk/eclipse/eclipse"
-
 -- Screenshot cmd
 screenshot = "scrot -e 'mv $f ~/screenshots/ &>/dev/null'"
 
@@ -109,7 +106,6 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "Android", eclipse_adt },
                                     { "Chrome", chrome .. ' --scroll-pixels=200 --allow-file-access-from-files' },
                                     { "Lock", xlock },
                                     { "Next", nextbg_cmd },
