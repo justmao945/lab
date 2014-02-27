@@ -21,10 +21,6 @@ function rm --description 'Remove interactively'
     command rm -i $argv
 end
 
-function mkproj_cocos2dx3 --description 'create_project.py for Cocos2d-x 3.0'
-    python $HOME/bundle/cocos2d-x-3/tools/project-creator/create_project.py $argv
-end
-
 # htop can't refresh when TERM is rxvt-unicode-256color
 function t  --description 'Resource top usage'
     env TERM=screen htop $argv
@@ -33,11 +29,9 @@ end
 #---------------+
 #    env        |
 #---------------+
-set -x ANDROID_SDK_ROOT  $HOME/bundle/android-sdk/sdk
-set -x NDK_ROOT          $HOME/bundle/android-ndk-r9c
 set -x EDITOR   vim
 set -x GOPATH   $HOME/go
-set -x PATH     $HOME/bin $GOPATH/bin /usr/local/go/bin $ANDROID_SDK_ROOT/platform-tools $ANDROID_SDK_ROOT/tools $PATH
+set -x PATH     $HOME/bin $GOPATH/bin /usr/local/go/bin $PATH
 
 set -x GTK_IM_MODULE    fcitx
 set -x QT_IM_MODULE     fcitx
