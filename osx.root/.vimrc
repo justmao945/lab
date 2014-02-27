@@ -138,9 +138,6 @@ set infercase
 " Don't show more than n items in the popup menu
 set pumheight=8
 
-" How to show and insert possible completions
-set completeopt=longest,menuone
-
 
 " =====================================
 " Status line
@@ -205,7 +202,6 @@ au FileType go au! BufWritePre <buffer> silent Fmt
 let c_no_curly_error=1
 
 " Add preview window if is C++
-au FileType cpp set completeopt+=preview
 set previewheight=4
 
 " Set to debug level 1, only used by plugin developer

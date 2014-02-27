@@ -533,9 +533,6 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
-				1AFAF8BA16D35E4900DB1158 /* CloseSelected.png */,
-				1AFAF8BB16D35E4900DB1158 /* HelloWorld.png */,
 				75F5325218B90575006583AC /* Arial.fnt */,
 				75F5325318B90575006583AC /* Arial.png */,
 				75F5325418B90575006583AC /* bg_front_spacedust.png */,
@@ -543,11 +540,12 @@
 				75F5325618B90575006583AC /* bg_planetsunrise.png */,
 				75F5325718B90575006583AC /* bg_spacialanomaly.png */,
 				75F5325818B90575006583AC /* bg_spacialanomaly2.png */,
-				75F5325918B90575006583AC /* CloseNormal.png */,
+				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
 				75F5325A18B90575006583AC /* CloseSelected.png */,
 				75F5325B18B90575006583AC /* explosion_large.caf */,
 				75F5325C18B90575006583AC /* explosion_small.caf */,
-				75F5325D18B90575006583AC /* HelloWorld.png */,
+				1AFAF8BB16D35E4900DB1158 /* HelloWorld.png */,
+				75F5325918B90575006583AC /* CloseNormal.png */,
 				75F5325E18B90575006583AC /* laser_enemy.caf */,
 				75F5325F18B90575006583AC /* laser_ship.caf */,
 				75F5326018B90575006583AC /* Marker Felt.ttf */,
@@ -559,6 +557,8 @@
 				75F5326618B90575006583AC /* Stars1.plist */,
 				75F5326718B90575006583AC /* Stars2.plist */,
 				75F5326818B90575006583AC /* Stars3.plist */,
+				75F5325A18B90575006583AC /* CloseSelected.png */,
+				75F5325D18B90575006583AC /* HelloWorld.png */,
 			);
 			name = Resources;
 			path = ../Resources;
