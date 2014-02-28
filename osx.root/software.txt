@@ -1,0 +1,18 @@
+APP:
+Alfred
+AppCleaner
+Batter Health
+cfxr
+Dash
+Disk Diag
+Hyper Dock
+GoAgentX
+MplayerX
+V-play Particle Editor 
+Pocket
+The Unarchiver
+Thunder
+Tiled
+
+Source:
+HomeBrew
