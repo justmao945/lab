@@ -1,8 +1,10 @@
+#include "SimpleAudioEngine.h"
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "GameLayer.h"
 
 USING_NS_CC;
 using namespace std;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
 
@@ -19,20 +21,29 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLView::create("My Game");
         director->setOpenGLView(glview);
-        auto screensize = glview->getFrameSize();
-        glview->setDesignResolutionSize(768, 1024, ResolutionPolicy::EXACT_FIT);
-        if(screensize.width > 768) {
-            vector<string> dirs(1, "hd");
-            FileUtils::getInstance()->setSearchResolutionsOrder(dirs);
-            director->setContentScaleFactor(2);
-        } else {
-            vector<string> dirs(1, "sd");
-            FileUtils::getInstance()->setSearchResolutionsOrder(dirs);
-            director->setContentScaleFactor(1);
-        }
-        
     }
+    
+    glview->setDesignResolutionSize(768, 1024, ResolutionPolicy::EXACT_FIT);
 
+    FileUtils* futils = FileUtils::getInstance();
+    
+    auto screensize = glview->getFrameSize();
+    if(screensize.width > 768) {
+        vector<string> dirs(1, "hd");
+        futils->setSearchResolutionsOrder(dirs);
+        director->setContentScaleFactor(2);
+    }
+    else {
+        vector<string> dirs(1, "sd");
+        futils->setSearchResolutionsOrder(dirs);
+        director->setContentScaleFactor(1);
+    }
+    
+    SimpleAudioEngine* augine = SimpleAudioEngine::getInstance();
+    
+    augine->preloadEffect(futils->fullPathForFilename("hit.wav").c_str());
+    augine->preloadEffect(futils->fullPathForFilename("score.wav").c_str());
+    
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -40,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = GameLayer::createScene();
 
     // run
     director->runWithScene(scene);
