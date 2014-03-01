@@ -34,6 +34,8 @@ protected:
     GameSprite* _player2;
     GameSprite* _ball;
     
+    cocos2d::Vector<GameSprite*> _players;
+    
     cocos2d::LabelTTF *_score1Label;
     cocos2d::LabelTTF *_score2Label;
     
