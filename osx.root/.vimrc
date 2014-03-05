@@ -231,6 +231,20 @@ let g:indentLine_char = '┆'
 
 
 " =====================================
+" CtrlP settings.
+" =====================================
+let g:ctrlp_cmd = 'CtrlPBuffer'
+
+let g:ctrlp_working_path_mode = 'ra'
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir':    '\v[\/]\.(git|hg|svn)$',
+    \ 'file':   '\v\.(exe|so|dll|obj|o|ndb)$',
+    \ 'link':   '',
+    \ }
+
+
+" =====================================
 " File types and miscs.
 " =====================================
 
@@ -365,10 +379,9 @@ map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
 "     -- https://github.com/tpope/vim-pathogen.git
 "  * vim-nerdtree
 "     -- https://github.com/scrooloose/nerdtree.git
-"  * vim-indentline
-"     -- https://github.com/Yggdroot/indentLine.git
-"  * vim-html5
-"  * vim-markdown
-"  * gocode
+"  * vim-clang
+"     -- https://github.com/justmao945/vim-clang.git
+"  * ctrlp.vim
+"     -- https://github.com/kien/ctrlp.vim.git
 
 " vim:set ts=2 sw=2:
