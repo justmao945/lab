@@ -317,44 +317,21 @@ endif
 " Shortcut
 " =====================================
 
-" Toggle sidebar: NERDTree, BufferGator and Tagbar
+" Toggle sidebar: NERDTree
 fu! ToggleSidebar()
   let b = bufnr("%")
   exe "NERDTreeToggle"
   exe bufwinnr(b) . "wincmd w"
 endf
 
-" F2  toggle sidebar
-" F7  quickfix next
-" F8  quickfix previous
-" F9  run %
-" F12 open .vimrc in new tab
-"
-" S-Left  previous tab
-" S-Right next tab
-"
-" M-/ Complete this.
-" 
-" C-q  quit vim without saving
-" C-s  write changed buffer to file.
-"
-" \ t   new tab
-" \ d   close tab
+map  <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
+map! <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
 
-map  <silent> <F2>  <esc>:call ToggleSidebar()<cr>
-map! <silent> <F2>  <esc>:call ToggleSidebar()<cr>
+map  <silent> <C-J>  <esc>:tabprevious<cr>
+map! <silent> <C-J>  <esc>:tabprevious<cr>
 
-imap <silent> <F7>  <esc>:cn<cr>
-imap <silent> <F8>  <esc>:cp<cr>
-
-map  <silent> <F12> <esc>:tabnew ~/.vimrc<cr>
-map! <silent> <F12> <esc>:tabnew ~/.vimrc<cr>
- 
-map <silent> <S-Left>  <esc>:tabprevious<cr>
-map <silent> <S-Right> <esc>:tabnext<cr>
-
-map! <silent> <S-Left>  <esc>:tabprevious<cr>
-map! <silent> <S-Right> <esc>:tabnext<cr>
+map  <silent> <C-K> <esc>:tabnext<cr>
+map! <silent> <C-K> <esc>:tabnext<cr>
 
 map  <silent> <C-q>  <esc>:qa!<cr>
 map! <silent> <C-q>  <esc>:qa!<cr>
@@ -369,6 +346,7 @@ map  <silent> <Leader>d <esc>:tabclose<cr>
 map  <silent> <Leader>t <esc>:tabnew .<cr>
 
 map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
+
 
 " =====================================
 " User plugins list
