@@ -1,6 +1,21 @@
+
+#include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
+using namespace std;
+
+HelloWorld::~HelloWorld() {
+    // release actions
+    CC_SAFE_RELEASE(_growBomb);
+    CC_SAFE_RELEASE(_rotateSprite);
+    CC_SAFE_RELEASE(_shockwaveSequence);
+    CC_SAFE_RELEASE(_swingHealth);
+    CC_SAFE_RELEASE(_groundHit);
+    CC_SAFE_RELEASE(_explosion);
+}
+
 
 Scene* HelloWorld::createScene()
 {
@@ -27,60 +42,197 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Point origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    Director* dx = Director::getInstance();
     
-	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Point::ZERO);
-    this->addChild(menu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
+    _screenSize = dx->getWinSize();
     
-    auto label = LabelTTF::create("Hello World", "Arial", 24);
+    _running = false;
     
-    // position the label on the center of the screen
-    label->setPosition(Point(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
+    createGameScreen();
+    
+    createPools();
+    
+    createActions();
+    
+    _fallingObjects.reserve(40);
 
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    EventListenerTouchAllAtOnce *listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(HelloWorld::onTouchesBegan, this);
+    
+    
+    
+    schedule(schedule_selector(HelloWorld::update));
+    
+    SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3");
     
     return true;
 }
 
-
-void HelloWorld::menuCloseCallback(Ref* pSender)
-{
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+void HelloWorld::update(float delta) {
+    if(! _running) {
+        return;
+    }
+    
+    _meteorTimer += delta;
+    if(_meteorTimer > _meteorInterval) {
+        _meteorTimer = 0;
+        resetMeteor();
+    }
+    
+    
+    _healthTimer += delta;
+    if(_healthTimer > _healthInterval) {
+        _healthTimer = 0;
+        resetHealth();
+    }
+    
+    _difficultyTimer += delta;
+    if(_difficultyTimer > _difficultyInterval) {
+        _difficultyTimer = 0;
+        increaseDifficulty();
+    }
+    
 }
+
+void HelloWorld::onTouchesBegan(const vector<Touch*>& touches, Event* unused) {
+    
+}
+
+
+void HelloWorld::fallingObjectDone(Node* sender) {
+    
+    // remove from array, FIXME: performance issue ?
+    _fallingObjects.eraseObject(sender);
+    sender->stopAllActions();
+    sender->setRotation(0);
+    
+    // a meteor
+    if(sender->getTag() == TAG_SPRITE_METEOR) {
+        _energy -= 15;
+        // show explosion animation
+        sender->runAction((Action*)_groundHit->clone()->autorelease());
+        // play explosion sound
+        SimpleAudioEngine::getInstance()->playEffect("boom.wav");
+        
+    } else { // is a health drop
+        sender->setVisible(false);
+        
+        if(_energy == 100) {
+            _score += 25;
+            char score[100] = { 0 };
+            sprintf(score, "%i", _score);
+            _scoreDisplay->setString(score);
+        }else {
+            _energy += 10;
+            if(_energy > 100) {
+                _energy = 100;
+            }
+        }
+        SimpleAudioEngine::getInstance()->playEffect("health.wav");
+    }
+    
+    if (_energy <= 0) {
+        _energy = 0;
+        stopGame();
+        SimpleAudioEngine::getInstance()->playEffect("fire_truck.wav");
+        // show game over
+        _gameOverMessage->setVisible(true);
+    }
+    
+    char value[100] = {0};
+    sprintf(value, "%i%%", _energy);
+    _energyDisplay->setString(value);
+}
+
+
+void HelloWorld::animationDone(Node* sender) {
+    sender->setVisible(false);
+}
+
+// call back, hide
+void HelloWorld::shockwaveDone() {
+    _shockwave->setVisible(false);
+}
+
+// use a new meteor form the pool
+void HelloWorld::resetMeteor() {
+    
+}
+
+// use a new drop from the pool
+void HelloWorld::resetHealth() {
+    if(_fallingObjects.size() > 30) {
+        return;
+    }
+    
+    Sprite* health = _healthPool.at(_healthPoolIndex);
+    _healthPoolIndex++;
+    
+    if(_healthPoolIndex == _healthPool.size()) {
+        _healthPoolIndex = 0;
+    }
+    
+    float health_x = rand() % int( _screenSize.width * .8) + _screenSize.width * .1;
+    float health_target_x = rand() % int( _screenSize.width * .8) + _screenSize.width * .1;
+    
+    health->stopAllActions();
+    health->cocos2d::Node::setPosition(health_x, _screenSize.height + health->getBoundingBox().size.height * .5);
+    
+    MoveTo* moveTo = MoveTo::create(_healthSpeed, Point(health_target_x, _screenSize.height * .15));
+    CallFuncN* cb = CallFuncN::create( CC_CALLBACK_1(HelloWorld::fallingObjectDone, this));
+    
+    FiniteTimeAction* seq = Sequence::create(moveTo, cb, NULL);
+    
+    health->setVisible(true);
+    health->runAction((Action*)_swingHealth->clone()->autorelease());
+    health->runAction(seq);
+    _fallingObjects.pushBack(health);
+}
+
+void HelloWorld::resetGame() {
+    
+}
+
+void HelloWorld::increaseDifficulty() {
+    _meteorInterval -= 0.2;
+    if(_meteorInterval < .25) {
+        _meteorInterval = 0.25;
+    }
+    
+    _meteorSpeed -= 1;
+    if(_meteorSpeed < 4 ) {
+        _meteorSpeed = 4;
+    }
+    
+    _healthSpeed -= 1;
+    if(_meteorSpeed < 8) {
+        _healthSpeed = 8;
+    }
+}
+
+void HelloWorld::stopGame() {
+    
+}
+
+void HelloWorld::createGameScreen() {
+    Sprite* bg = Sprite::create("bg.png");
+    bg->cocos2d::Node::setPosition(_screenSize.width * .5, _screenSize.height * .5);
+    addChild(bg);
+}
+
+void HelloWorld::createPools() {
+    
+}
+
+void HelloWorld::createActions() {
+    
+}
+
+
+
+
+
+
+
+
+
