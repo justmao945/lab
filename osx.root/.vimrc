@@ -245,6 +245,12 @@ let g:ctrlp_custom_ignore = {
 
 
 " =====================================
+" javascript syntax settings.
+" =====================================
+let g:used_javascript_libs = 'jquery,angularjs'
+
+
+" =====================================
 " File types and miscs.
 " =====================================
 
@@ -383,5 +389,7 @@ map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
 "     -- https://github.com/justmao945/vim-clang.git
 "  * ctrlp.vim
 "     -- https://github.com/kien/ctrlp.vim.git
+"  * javascript-libraries-syntax.vim
+"     -- https://github.com/othree/javascript-libraries-syntax.vim
 
 " vim:set ts=2 sw=2:
