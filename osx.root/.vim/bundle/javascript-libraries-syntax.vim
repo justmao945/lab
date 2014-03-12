@@ -1,0 +1,1 @@
+../../../../javascript-libraries-syntax.vim
