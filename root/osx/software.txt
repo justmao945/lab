@@ -19,3 +19,4 @@ Safari Extensions:
 
 Tips:
     Command + search with google in context menu => search in new tab
+    Remove ~/Library/Preferences/com.apple.LaunchServices.plist to clear contextual menu
