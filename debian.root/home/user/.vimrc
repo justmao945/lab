@@ -237,13 +237,13 @@ let g:indentLine_char = '┆'
 " =====================================
 " CtrlP settings.
 " =====================================
-let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_cmd = 'CtrlPMRU'
 
 let g:ctrlp_working_path_mode = 'ra'
 
 let g:ctrlp_custom_ignore = {
     \ 'dir':    '\v[\/]\.(git|hg|svn)$',
-    \ 'file':   '\v\.(exe|so|dll|obj|o|ndb)$',
+    \ 'file':   '\v\.(exe|so|dll|obj|o|ndb|d|gcda|gcna)$',
     \ 'link':   '',
     \ }
 
@@ -271,18 +271,15 @@ runtime! ftplugin/man.vim
 " =====================================
 " UI settings
 " =====================================
-
 " !! background should be set after colorscheme
+
+colorscheme kolor
+
 if(has('gui_running'))
   set guioptions=ai
   set linespace=3
   set lines=45
   set columns=84
-  colorscheme default
-  set background=light
-else
-  colorscheme 256-grayvim
-  set background=dark
 endif
 
 if has("win32")
@@ -293,12 +290,12 @@ else
 endif
 
 " custom the default theme
-  hi Comment guifg=#7f7f7f
-  hi LineNr  guifg=#7f7f7f
-  " Set color(light grey) of vert split line and status lines.
-  hi VertSplit guibg=#7f7f7f guifg=#7f7f7f
-  hi StatusLine guifg=#7f7f7f
-  hi StatusLineNC guifg=#7f7f7f
+" hi Comment guifg=#7f7f7f
+" hi LineNr  guifg=#7f7f7f
+" " Set color(light grey) of vert split line and status lines.
+" hi VertSplit guibg=#7f7f7f guifg=#7f7f7f
+" hi StatusLine guifg=#7f7f7f
+" hi StatusLineNC guifg=#7f7f7f
 
 " =====================================
 " Keyboard
@@ -361,5 +358,9 @@ map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
 "     -- https://github.com/justmao945/vim-clang.git
 "  * ctrlp.vim
 "     -- https://github.com/kien/ctrlp.vim.git
-
+"
+"  Theme list
+"  * vim-kolor
+"     -- https://github.com/zeis/vim-kolor.git
+"
 " vim:set ts=2 sw=2:
