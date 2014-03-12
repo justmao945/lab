@@ -201,7 +201,6 @@ au FileType go au! BufWritePre <buffer> silent Fmt
 " doesn't tag {} as error in ()
 let c_no_curly_error=1
 
-" Add preview window if is C++
 set previewheight=4
 
 " Set to debug level 1, only used by plugin developer
@@ -233,13 +232,13 @@ let g:indentLine_char = '┆'
 " =====================================
 " CtrlP settings.
 " =====================================
-let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_cmd = 'CtrlPMRU'
 
 let g:ctrlp_working_path_mode = 'ra'
 
 let g:ctrlp_custom_ignore = {
     \ 'dir':    '\v[\/]\.(git|hg|svn)$',
-    \ 'file':   '\v\.(exe|so|dll|obj|o|ndb)$',
+    \ 'file':   '\v\.(exe|so|dll|obj|o|ndb|d|gcda|gcna)$',
     \ 'link':   '',
     \ }
 
@@ -273,18 +272,15 @@ runtime! ftplugin/man.vim
 " =====================================
 " UI settings
 " =====================================
-
 " !! background should be set after colorscheme
-if has('gui_running')
+
+colorscheme kolor
+
+if(has('gui_running'))
   set guioptions=ai
   set linespace=3
   set lines=45
   set columns=84
-  colorscheme default
-  set background=light
-else
-  colorscheme 256-grayvim
-  set background=dark
 endif
 
 if has("win32")
@@ -298,13 +294,6 @@ else
   set guifontwide=SimSun\ 11
 endif
 
-" custom the default theme
-  hi Comment guifg=#7f7f7f
-  hi LineNr  guifg=#7f7f7f
-  " Set color(light grey) of vert split line and status lines.
-  hi VertSplit guibg=#7f7f7f guifg=#7f7f7f
-  hi StatusLine guifg=#7f7f7f
-  hi StatusLineNC guifg=#7f7f7f
 
 " =====================================
 " Keyboard
@@ -323,44 +312,21 @@ endif
 " Shortcut
 " =====================================
 
-" Toggle sidebar: NERDTree, BufferGator and Tagbar
+" Toggle sidebar: NERDTree
 fu! ToggleSidebar()
   let b = bufnr("%")
   exe "NERDTreeToggle"
   exe bufwinnr(b) . "wincmd w"
 endf
 
-" F2  toggle sidebar
-" F7  quickfix next
-" F8  quickfix previous
-" F9  run %
-" F12 open .vimrc in new tab
-"
-" S-Left  previous tab
-" S-Right next tab
-"
-" M-/ Complete this.
-" 
-" C-q  quit vim without saving
-" C-s  write changed buffer to file.
-"
-" \ t   new tab
-" \ d   close tab
+map  <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
+map! <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
 
-map  <silent> <F2>  <esc>:call ToggleSidebar()<cr>
-map! <silent> <F2>  <esc>:call ToggleSidebar()<cr>
+map  <silent> <C-J>  <esc>:tabprevious<cr>
+map! <silent> <C-J>  <esc>:tabprevious<cr>
 
-imap <silent> <F7>  <esc>:cn<cr>
-imap <silent> <F8>  <esc>:cp<cr>
-
-map  <silent> <F12> <esc>:tabnew ~/.vimrc<cr>
-map! <silent> <F12> <esc>:tabnew ~/.vimrc<cr>
- 
-map <silent> <S-Left>  <esc>:tabprevious<cr>
-map <silent> <S-Right> <esc>:tabnext<cr>
-
-map! <silent> <S-Left>  <esc>:tabprevious<cr>
-map! <silent> <S-Right> <esc>:tabnext<cr>
+map  <silent> <C-K> <esc>:tabnext<cr>
+map! <silent> <C-K> <esc>:tabnext<cr>
 
 map  <silent> <C-q>  <esc>:qa!<cr>
 map! <silent> <C-q>  <esc>:qa!<cr>
@@ -375,6 +341,7 @@ map  <silent> <Leader>d <esc>:tabclose<cr>
 map  <silent> <Leader>t <esc>:tabnew .<cr>
 
 map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
+
 
 " =====================================
 " User plugins list
@@ -391,5 +358,9 @@ map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
 "     -- https://github.com/kien/ctrlp.vim.git
 "  * javascript-libraries-syntax.vim
 "     -- https://github.com/othree/javascript-libraries-syntax.vim
-
+"
+"  Theme list
+"  * vim-kolor
+"     -- https://github.com/zeis/vim-kolor.git
+"
 " vim:set ts=2 sw=2:
