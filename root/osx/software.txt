@@ -1,18 +1,21 @@
-APP:
-Alfred
-AppCleaner
-Batter Health
-cfxr
-Dash
-Disk Diag
-Hyper Dock
-GoAgentX
-MplayerX
-V-play Particle Editor 
-Pocket
-The Unarchiver
-Thunder
-Tiled
+Applications:
+    Alfred
+    AppCleaner
+    cfxr
+    Disk Diag
+    Hyper Dock
+    MplayerX
+    V-play Particle Editor 
+    The Unarchiver
+    Tiled
 
 Source:
-HomeBrew
+    HomeBrew
+
+Safari Extensions:
+    Adblock
+    ClickToFlash
+    CustomReader 2
+
+Tips:
+    Command + search with google in context menu => search in new tab
