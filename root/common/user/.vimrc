@@ -6,13 +6,14 @@
 " Pathogen Setup
 " Now can install plugins in ~/.vim/bundle
 " =====================================
-execute pathogen#infect()
+if filereadable($HOME."/.vim/autoload/pathogen.vim")
+  execute pathogen#infect()
+endif
 
 
 " =====================================
 " General Setup
 " =====================================
-
 " Disable compatibility with vi(must come first)
 set nocompatible 
 
@@ -62,10 +63,10 @@ set dir=~/.vimswap//,~/.cache//,/tmp//,.
 " set default shell to sh
 set shell=sh
 
+
 " =====================================
 " Text edition
 " =====================================
-
 " Syntax highlighting
 syntax on
 
@@ -77,11 +78,6 @@ set nowrap
 
 " Dont't put two spaces after . ? ! when joining lines
 set nojoinspaces
-
-" Tab width
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
 
 " Insert spaces instead of tabs
 set expandtab
@@ -110,7 +106,6 @@ set foldmethod=marker
 " =====================================
 " Searching/Replacing
 " =====================================
-
 " Incremental search
 set incsearch
 
@@ -131,7 +126,6 @@ set gdefault
 " =====================================
 " Insert mode completion
 " =====================================
-
 " Don't show possible completions that don't match the case of existing text
 set infercase
 
@@ -142,7 +136,6 @@ set pumheight=8
 " =====================================
 " Status line
 " =====================================
-
 " Display the status line if more than one window
 set laststatus=1
 
@@ -187,7 +180,6 @@ au FileType python inoremap <expr> <buffer> . CodeAutoCompleteDot()
 " =====================================
 " Golang
 " =====================================
-
 " Auto completion after .
 au FileType go inoremap <expr> <buffer> . CodeAutoCompleteDot()
 
@@ -223,13 +215,6 @@ let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$']
 
 
 " =====================================
-" indentLine settings
-" =====================================
-" indentLine char
-let g:indentLine_char = '┆'
-
-
-" =====================================
 " CtrlP settings.
 " =====================================
 let g:ctrlp_cmd = 'CtrlPMRU'
@@ -252,7 +237,6 @@ let g:used_javascript_libs = 'jquery,angularjs'
 " =====================================
 " File types and miscs.
 " =====================================
-
 filetype plugin indent on
 
 au BufRead,BufNewFile *.md set filetype=mkd
@@ -273,45 +257,28 @@ runtime! ftplugin/man.vim
 " UI settings
 " =====================================
 " !! background should be set after colorscheme
-
-colorscheme kolor
-
-if(has('gui_running'))
-  set guioptions=ai
-  set linespace=3
-  set lines=45
-  set columns=84
-endif
+set guioptions=ai
+colorscheme hemisu
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac")
+  set shiftwidth=2 softtabstop=2 tabstop=2
   set linespace=1
-  set lines=40
+  set lines=40 columns=90
   set guifont=Monaco:h12
 else
+  set shiftwidth=4 softtabstop=4 tabstop=4
+  set linespace=3
+  set lines=45 columns=84
   set guifont=Consolas\ 12
   set guifontwide=SimSun\ 11
 endif
 
 
 " =====================================
-" Keyboard
-" =====================================
-
-" Tmux will send xterm-style keys when its xterm-keys option is on
-if $TERM =~ '^screen'
-  exe "set <xUp>=\e[1;*A"
-  exe "set <xDown>=\e[1;*B"
-  exe "set <xRight>=\e[1;*C"
-  exe "set <xLeft>=\e[1;*D"
-endif
-
-
-" =====================================
 " Shortcut
 " =====================================
-
 " Toggle sidebar: NERDTree
 fu! ToggleSidebar()
   let b = bufnr("%")
@@ -360,7 +327,7 @@ map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
 "     -- https://github.com/othree/javascript-libraries-syntax.vim
 "
 "  Theme list
-"  * vim-kolor
-"     -- https://github.com/zeis/vim-kolor.git
+"  * vim-hemisu
+"     -- https://github.com/noahfrederick/vim-hemisu.git
 "
 " vim:set ts=2 sw=2:
