@@ -211,7 +211,7 @@ let g:clang_cpp_options = ''
 " =====================================
 " NERDTree settings
 " =====================================
-let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$']
+let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$']
 
 
 " =====================================
@@ -274,6 +274,7 @@ elseif has("unix")
   set guifontwide=SimSun\ 11
   if has('gui_running')
     set linespace=3 lines=45 columns=84
+    set bg=light
   endif
 endif
 
