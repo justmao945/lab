@@ -59,7 +59,8 @@ bool HelloWorld::init()
     EventListenerTouchAllAtOnce *listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(HelloWorld::onTouchesBegan, this);
     
-    
+    // 0 is forbidden for graph based priority
+    getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
     
     schedule(schedule_selector(HelloWorld::update));
     
@@ -218,6 +219,13 @@ void HelloWorld::createGameScreen() {
     Sprite* bg = Sprite::create("bg.png");
     bg->cocos2d::Node::setPosition(_screenSize.width * .5, _screenSize.height * .5);
     addChild(bg);
+    
+    // cache frames
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("sprite_sheet.plist");
+    
+    // prepare node to render
+    _gameBatchNode = SpriteBatchNode::create("sprite_sheet.png");
+    addChild(_gameBatchNode);
 }
 
 void HelloWorld::createPools() {
