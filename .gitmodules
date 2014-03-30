@@ -1,0 +1,3 @@
+[submodule "SimpleSpritePacker/cimg"]
+	path = SimpleSpritePacker/cimg
+	url = http://git.code.sf.net/p/cimg/source
