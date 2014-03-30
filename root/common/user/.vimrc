@@ -211,7 +211,7 @@ let g:clang_cpp_options = ''
 " =====================================
 " NERDTree settings
 " =====================================
-let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$']
+let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$', '\.a$', '\.d$', '\.gcda$', '\.gcno$']
 
 
 " =====================================
