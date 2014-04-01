@@ -22,7 +22,8 @@ var domains =
 // host can override domains
 var hosts =
 {
-  //"plus.google.com":      true,
+  "www.google.com.hk": true,
+  "github.global.ssl.fastly.net": true,
 };
 
 
