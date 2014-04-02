@@ -132,6 +132,8 @@ set infercase
 " Don't show more than n items in the popup menu
 set pumheight=8
 
+" General complete option
+set completeopt="longest,menuone"
 
 " =====================================
 " Status line
