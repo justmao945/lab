@@ -133,7 +133,7 @@ set infercase
 set pumheight=8
 
 " General complete option
-set completeopt="longest,menuone"
+set completeopt=longest,menuone
 
 " =====================================
 " Status line

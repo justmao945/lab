@@ -1,4 +1,16 @@
 #---------------+
+#    env        |
+#---------------+
+set -x GOPATH $HOME/github/lab/go
+set -x PATH $GOPATH/bin $PATH
+
+set BUNDLE_CONFIG $HOME/.bundle/config.fish
+if [ -f $BUNDLE_CONFIG ]
+  source $BUNDLE_CONFIG
+end
+
+
+#---------------+
 #    alias      |
 #---------------+
 function c  --description 'Clear screen'
@@ -28,3 +40,4 @@ end
 function start_goagent --description 'Start GoAgent Proxy daemon'
   python $HOME/github/3rd/goagent/local/proxy.py $argv
 end
+
