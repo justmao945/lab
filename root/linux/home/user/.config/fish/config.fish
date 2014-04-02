@@ -10,7 +10,7 @@ function df --description 'Print sizes in human readable'
 end
 
 function ga --description 'Start GoAgent proxy server'
-    python $HOME/bundle/goagent/local/proxy.py
+    python $HOME/github/3rd/goagent/local/proxy.py
 end
 
 function man --description 'Use vim viewer to display manpage'
@@ -30,8 +30,8 @@ end
 #    env        |
 #---------------+
 set -x EDITOR   vim
-set -x GOPATH   $HOME/go
-set -x PATH     $HOME/bin $GOPATH/bin /usr/local/go/bin $PATH
+set -x GOPATH   $HOME/github/lab/go
+set -x PATH     $HOME/gitlab/bin $GOPATH/bin /usr/local/go/bin $PATH
 
 set -x GTK_IM_MODULE    fcitx
 set -x QT_IM_MODULE     fcitx
