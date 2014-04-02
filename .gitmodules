@@ -1,3 +1,18 @@
 [submodule "SimpleSpritePacker/cimg"]
 	path = SimpleSpritePacker/cimg
 	url = http://git.code.sf.net/p/cimg/source
+[submodule "go/src/gocode"]
+	path = go/src/gocode
+	url = https://github.com/nsf/gocode.git
+[submodule "vim-plugins/vim-pathogen"]
+	path = vim-plugins/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim-plugins/nerdtree"]
+	path = vim-plugins/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vim-plugins/ctrlp.vim"]
+	path = vim-plugins/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "vim-plugins/vim-hemisu"]
+	path = vim-plugins/vim-hemisu
+	url = https://github.com/noahfrederick/vim-hemisu.git
