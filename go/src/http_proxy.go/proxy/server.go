@@ -6,7 +6,12 @@ import (
 )
 
 type HttpProxyEngine interface {
+	// normal http methods except CONNECT
 	Serve(http.ResponseWriter, *http.Request)
+	// handle CONNECT method, a secure tunnel
+	// Tunneling TCP based protocols through Web proxy servers
+	//  - http://www.web-cache.com/Writings/Internet-Drafts/draft-luotonen-web-proxy-tunneling-01.txt
+	Connect(http.ResponseWriter, *http.Request)
 }
 
 type HttpProxyServer struct {
@@ -32,7 +37,11 @@ func (self *HttpProxyServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	//   be communicated by proxies over further connections.
 	r.Header.Del("Connection")
 
-	self.Engine.Serve(w, r)
+	if r.Method == "CONNECT" {
+		self.Engine.Connect(w, r)
+	} else {
+		self.Engine.Serve(w, r)
+	}
 }
 
 func NewHttpProxyServer() *HttpProxyServer {

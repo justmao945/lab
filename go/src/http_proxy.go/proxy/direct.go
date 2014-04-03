@@ -10,14 +10,16 @@ type HttpProxyEngineDirect struct {
 }
 
 func (self *HttpProxyEngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
-	var cli http.Client
-	resp, err := cli.Do(r)
+	if r.Method == "CONNECT" {
+		log.Printf("Error: this function can not handle CONNECT method")
+		return
+	}
+
+	resp, err := http.DefaultClient.Do(r)
 	if err != nil {
 		log.Printf("Error: Client.Do: %s\n", err.Error())
 		return
 	}
-
-	w.WriteHeader(resp.StatusCode)
 
 	dst, src := w.Header(), resp.Header
 	for k, _ := range dst {
@@ -28,6 +30,9 @@ func (self *HttpProxyEngineDirect) Serve(w http.ResponseWriter, r *http.Request)
 			dst.Add(k, v)
 		}
 	}
+
+	// please prepare header first and write them
+	w.WriteHeader(resp.StatusCode)
 
 	_, err = io.Copy(w, resp.Body)
 	if err != nil {
@@ -40,4 +45,13 @@ func (self *HttpProxyEngineDirect) Serve(w http.ResponseWriter, r *http.Request)
 		log.Printf("Error: http.Response.Body.Close: %s\n", err.Error())
 		return
 	}
+	log.Printf("Response %s %s\n", r.URL.String(), resp.Status)
+}
+
+func (self *HttpProxyEngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "CONNECT" {
+		log.Printf("Error: this function can only handle CONNECT method")
+		return
+	}
+
 }
