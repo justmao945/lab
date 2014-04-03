@@ -1,34 +1,30 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"net"
+	"flag"
+	"log"
+	"net/http"
 )
 
+type Env struct {
+	ProxyAddr   string
+	ProxyEngine string
+}
+
+func (self *Env) Parse() {
+	flag.StringVar(&self.ProxyAddr, "addr", "127.0.0.1:18087", "Porxy server address")
+	flag.StringVar(&self.ProxyEngine, "engine", "gae", "Proxy engine [local|gae]")
+	flag.Parse()
+
+	if self.ProxyEngine != "gae" && self.ProxyEngine != "local" {
+		log.Fatalln("Gngine should be [local|gae]")
+	}
+}
+
 func main() {
-	ln, err := net.Listen("tcp", ":8081")
-
-	if err != nil {
-		fmt.Printf("Error: %s\n", err.Error())
-		return
-	}
-
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			fmt.Printf("Error: %s\n", err.Error())
-			break
-		}
-		fmt.Println("Connected")
-		for {
-			line, err := bufio.NewReader(conn).ReadString('\n')
-			fmt.Println(line)
-			if err != nil {
-				fmt.Printf("Error: %s\n", err.Error())
-				break
-			}
-		}
-		conn.Close()
-	}
+	var env Env
+	env.Parse()
+	srv := NewHttpProxyServer()
+	log.Printf("Listen and serve on %s\n", env.ProxyAddr)
+	log.Fatal(http.ListenAndServe(env.ProxyAddr, srv))
 }
