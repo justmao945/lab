@@ -1,4 +1,4 @@
-package main
+package mallory
 
 import (
 	"io"
@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-type HttpProxyEngineDirect struct {
+type EngineDirect struct {
 }
 
-func (self *HttpProxyEngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
 		log.Printf("Error: this function can not handle CONNECT method")
 		return
@@ -48,7 +48,7 @@ func (self *HttpProxyEngineDirect) Serve(w http.ResponseWriter, r *http.Request)
 	log.Printf("Response %s %s\n", r.URL.String(), resp.Status)
 }
 
-func (self *HttpProxyEngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "CONNECT" {
 		log.Printf("Error: this function can only handle CONNECT method")
 		return

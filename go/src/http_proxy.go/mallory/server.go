@@ -1,11 +1,11 @@
-package main
+package mallory
 
 import (
 	"log"
 	"net/http"
 )
 
-type HttpProxyEngine interface {
+type Engine interface {
 	// normal http methods except CONNECT
 	Serve(http.ResponseWriter, *http.Request)
 	// handle CONNECT method, a secure tunnel
@@ -14,11 +14,11 @@ type HttpProxyEngine interface {
 	Connect(http.ResponseWriter, *http.Request)
 }
 
-type HttpProxyServer struct {
-	Engine HttpProxyEngine
+type Server struct {
+	Engine Engine
 }
 
-func (self *HttpProxyServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("%s %s %s\n", r.Method, r.RequestURI, r.Proto)
 
 	// This is an error if is not empty on Client
@@ -44,8 +44,8 @@ func (self *HttpProxyServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewHttpProxyServer() *HttpProxyServer {
-	srv := &HttpProxyServer{}
-	srv.Engine = &HttpProxyEngineDirect{}
+func NewServer() *Server {
+	srv := &Server{}
+	srv.Engine = &EngineDirect{}
 	return srv
 }
