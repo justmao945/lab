@@ -10,6 +10,10 @@ import (
 
 type EngineDirect struct{}
 
+func NewEngineDirect() *EngineDirect {
+	return &EngineDirect{}
+}
+
 func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
 		log.Printf("[%d] Error: this function can not handle CONNECT method", s.ID)

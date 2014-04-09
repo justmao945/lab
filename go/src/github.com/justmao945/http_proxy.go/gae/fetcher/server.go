@@ -1,6 +1,8 @@
 package fetcher
 
 import (
+	"appengine"
+	"appengine/urlfetch"
 	"fmt"
 	"net/http"
 )

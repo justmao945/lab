@@ -59,6 +59,6 @@ func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func NewServer() *Server {
 	srv := &Server{}
-	srv.Engine = &EngineDirect{}
+	srv.Engine = NewEngineDirect()
 	return srv
 }
