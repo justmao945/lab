@@ -18,12 +18,12 @@ type Env struct {
 
 func (self *Env) Parse() {
 	flag.StringVar(&self.MalloryAddr, "addr", "127.0.0.1:18087", "Porxy server address")
-	flag.StringVar(&self.MalloryEngine, "engine", "direct", "Mallory engine [direct|gae]")
-	flag.StringVar(&self.AppSpot, "appspot", "http://localhost:8080", "Full URL of your GAE application, e.g. http://kill-me-baby.appspot.com")
+	flag.StringVar(&self.MalloryEngine, "engine", "direct", `Mallory engine, "direct" or "gae"`)
+	flag.StringVar(&self.AppSpot, "appspot", "http://kill-me-baby.appspot.com", "Full URL of your GAE application")
 	flag.Parse()
 
 	if self.MalloryEngine != "gae" && self.MalloryEngine != "direct" {
-		log.Fatalln("engine should be [direct|gae]")
+		log.Fatalln(`engine should be "direct" or "gae"`)
 	}
 }
 

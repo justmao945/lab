@@ -29,15 +29,7 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 	}
 
 	// copy headers
-	dst, src := w.Header(), resp.Header
-	for k, _ := range dst {
-		dst.Del(k)
-	}
-	for k, vs := range src {
-		for _, v := range vs {
-			dst.Add(k, v)
-		}
-	}
+	CopyResponseHeader(w, resp)
 
 	// please prepare header first and write them
 	w.WriteHeader(resp.StatusCode)
@@ -49,8 +41,7 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 	}
 
 	// Must close body after read
-	err = resp.Body.Close()
-	if err != nil {
+	if err := resp.Body.Close(); err != nil {
 		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
 		return
 	}
