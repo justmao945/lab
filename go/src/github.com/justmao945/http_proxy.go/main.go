@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./mallory"
 	"flag"
+	"github.com/justmao945/http_proxy.go/mallory"
 	"log"
 	"net/http"
 )
