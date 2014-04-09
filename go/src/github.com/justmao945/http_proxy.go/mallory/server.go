@@ -19,7 +19,7 @@ type Server struct {
 }
 
 func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Printf("%s %s %s\n", r.Method, r.RequestURI, r.Proto)
+	log.Printf("%s %s %s\n", r.Method, r.URL.Host, r.Proto)
 
 	// This is an error if is not empty on Client
 	r.RequestURI = ""

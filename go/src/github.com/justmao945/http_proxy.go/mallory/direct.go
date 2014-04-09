@@ -47,7 +47,7 @@ func (self *EngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error: http.Response.Body.Close: %s\n", err.Error())
 		return
 	}
-	log.Printf("Response %s %s <- %d bytes\n", r.URL.String(), resp.Status, n)
+	log.Printf("Response %s %s <- %d bytes\n", r.URL.Host, resp.Status, n)
 }
 
 func (self *EngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
