@@ -79,19 +79,19 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	copyAndWait := func(wg *sync.WaitGroup, w io.Writer, r io.Reader) {
+	copyAndWait := func(w io.Writer, r io.Reader) {
 		_, err := io.Copy(w, r)
 		if err != nil {
 			log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
 		}
 		wg.Done()
 	}
-	go copyAndWait(&wg, dst, src)
-	go copyAndWait(&wg, src, dst)
+	go copyAndWait(dst, src)
+	go copyAndWait(src, dst)
 
 	wg.Wait()
 	src.Close()
 	dst.Close()
 
-	log.Printf("[%d] Close %s\n", s.ID, r.URL.Host)
+	log.Printf("[%d] CLOSE %s\n", s.ID, r.URL.Host)
 }
