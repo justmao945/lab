@@ -16,12 +16,15 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	resp, err := http.DefaultClient.Do(r)
+	// Client.Do is different from DefaultTransport.RoundTrip ...
+	// NOTE: find out why
+	resp, err := http.DefaultTransport.RoundTrip(r)
 	if err != nil {
-		log.Printf("[%d] Error: Client.Do: %s\n", s.ID, err.Error())
+		log.Printf("[%d] Error: http.DefaultTransport.RoundTrip: %s\n", s.ID, err.Error())
 		return
 	}
 
+	// copy headers
 	dst, src := w.Header(), resp.Header
 	for k, _ := range dst {
 		dst.Del(k)
@@ -41,6 +44,7 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	// Must close body after read
 	err = resp.Body.Close()
 	if err != nil {
 		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
@@ -55,6 +59,7 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	// Use Hijacker to get the underlying connection
 	hij, ok := w.(http.Hijacker)
 	if !ok {
 		log.Printf("[%d] Error: Server does not support Hijacker\n", s.ID)
@@ -63,10 +68,11 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 
 	src, _, err := hij.Hijack()
 	if err != nil {
-		log.Printf("[%d] Error: Hijacker.Hijack: %s\n", s.ID, err.Error())
+		log.Printf("[%d] Error: http.Hijacker.Hijack: %s\n", s.ID, err.Error())
 		return
 	}
 
+	// connect the remote client directly
 	dst, err := net.Dial("tcp", r.URL.Host)
 	if err != nil {
 		log.Printf("[%d] Error: net.Dial: %s\n", s.ID, err.Error())
@@ -74,8 +80,11 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	// Once connected successfully, return OK
 	src.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 
+	// Proxy is no need to know anything, just exchange data between the client
+	// the the remote server.
 	var wg sync.WaitGroup
 	wg.Add(2)
 
@@ -89,6 +98,9 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 	go copyAndWait(dst, src)
 	go copyAndWait(src, dst)
 
+	// Generally, the remote server would keep the connection alive,
+	// so we will not close the connection until both connection recv
+	// EOF and are done!
 	wg.Wait()
 	src.Close()
 	dst.Close()

@@ -6,11 +6,13 @@ import (
 	"sync/atomic"
 )
 
+// A session is a proxy request
 type Session struct {
+	// the unique ID start from 1
 	ID int64
 }
 
-type Engine interface {
+type Engineer interface {
 	// normal http methods except CONNECT
 	Serve(*Session, http.ResponseWriter, *http.Request)
 
@@ -21,8 +23,10 @@ type Engine interface {
 }
 
 type Server struct {
+	// used to generate unique ID for sessions
 	IDZygote int64
-	Engine   Engine
+	// different fetch engine can be adapted to the server
+	Engine Engineer
 }
 
 func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
