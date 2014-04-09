@@ -3,23 +3,32 @@ package mallory
 import (
 	"log"
 	"net/http"
+	"sync/atomic"
 )
+
+type Session struct {
+	ID int64
+}
 
 type Engine interface {
 	// normal http methods except CONNECT
-	Serve(http.ResponseWriter, *http.Request)
+	Serve(*Session, http.ResponseWriter, *http.Request)
+
 	// handle CONNECT method, a secure tunnel
 	// Tunneling TCP based protocols through Web proxy servers
 	//  - http://www.web-cache.com/Writings/Internet-Drafts/draft-luotonen-web-proxy-tunneling-01.txt
-	Connect(http.ResponseWriter, *http.Request)
+	Connect(*Session, http.ResponseWriter, *http.Request)
 }
 
 type Server struct {
-	Engine Engine
+	IDZygote int64
+	Engine   Engine
 }
 
 func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Printf("%s %s %s\n", r.Method, r.URL.Host, r.Proto)
+	s := &Session{ID: atomic.AddInt64(&self.IDZygote, 1)}
+
+	log.Printf("[%d] %s %s %s\n", s.ID, r.Method, r.URL.Host, r.Proto)
 
 	// This is an error if is not empty on Client
 	r.RequestURI = ""
@@ -38,9 +47,9 @@ func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.Header.Del("Connection")
 
 	if r.Method == "CONNECT" {
-		self.Engine.Connect(w, r)
+		self.Engine.Connect(s, w, r)
 	} else {
-		self.Engine.Serve(w, r)
+		self.Engine.Serve(s, w, r)
 	}
 }
 

@@ -1,4 +1,3 @@
 package mallory
 
-type EngineGAE struct {
-}
+type EngineGAE struct{}

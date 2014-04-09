@@ -8,18 +8,17 @@ import (
 	"sync"
 )
 
-type EngineDirect struct {
-}
+type EngineDirect struct{}
 
-func (self *EngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
-		log.Printf("Error: this function can not handle CONNECT method")
+		log.Printf("[%d] Error: this function can not handle CONNECT method", s.ID)
 		return
 	}
 
 	resp, err := http.DefaultClient.Do(r)
 	if err != nil {
-		log.Printf("Error: Client.Do: %s\n", err.Error())
+		log.Printf("[%d] Error: Client.Do: %s\n", s.ID, err.Error())
 		return
 	}
 
@@ -36,42 +35,41 @@ func (self *EngineDirect) Serve(w http.ResponseWriter, r *http.Request) {
 	// please prepare header first and write them
 	w.WriteHeader(resp.StatusCode)
 
-	n, err := io.Copy(w, resp.Body)
+	_, err = io.Copy(w, resp.Body)
 	if err != nil {
-		log.Printf("Error: io.Copy: %s\n", err.Error())
+		log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
 		return
 	}
 
 	err = resp.Body.Close()
 	if err != nil {
-		log.Printf("Error: http.Response.Body.Close: %s\n", err.Error())
+		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
 		return
 	}
-	log.Printf("Response %s %s <- %d bytes\n", r.URL.Host, resp.Status, n)
+	log.Printf("[%d] RESPONSE %s %s\n", s.ID, r.URL.Host, resp.Status)
 }
 
-func (self *EngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method != "CONNECT" {
-		log.Printf("Error: this function can only handle CONNECT method")
+		log.Printf("[%d] Error: this function can only handle CONNECT method\n", s.ID)
 		return
 	}
 
 	hij, ok := w.(http.Hijacker)
 	if !ok {
-		log.Printf("Error: Server does not support Hijacker")
+		log.Printf("[%d] Error: Server does not support Hijacker\n", s.ID)
 		return
 	}
 
 	src, _, err := hij.Hijack()
 	if err != nil {
-		log.Printf("Error: Hijacker.Hijack: %s\n", err.Error())
+		log.Printf("[%d] Error: Hijacker.Hijack: %s\n", s.ID, err.Error())
 		return
 	}
 
-	log.Printf("Dial %s\n", r.URL.Host)
 	dst, err := net.Dial("tcp", r.URL.Host)
 	if err != nil {
-		log.Printf("Error: net.Dial: %s\n", err.Error())
+		log.Printf("[%d] Error: net.Dial: %s\n", s.ID, err.Error())
 		src.Close()
 		return
 	}
@@ -82,7 +80,10 @@ func (self *EngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
 	wg.Add(2)
 
 	copyAndWait := func(wg *sync.WaitGroup, w io.Writer, r io.Reader) {
-		io.Copy(w, r)
+		_, err := io.Copy(w, r)
+		if err != nil {
+			log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
+		}
 		wg.Done()
 	}
 	go copyAndWait(&wg, dst, src)
@@ -92,5 +93,5 @@ func (self *EngineDirect) Connect(w http.ResponseWriter, r *http.Request) {
 	src.Close()
 	dst.Close()
 
-	log.Printf("Close %s\n", r.URL.Host)
+	log.Printf("[%d] Close %s\n", s.ID, r.URL.Host)
 }
