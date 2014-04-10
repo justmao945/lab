@@ -17,6 +17,12 @@ func NewEngineGAE(appspot string) *EngineGAE {
 	return &EngineGAE{AppSpot: appspot}
 }
 
+// 1. Receive client request R1
+// 2. Write R1 as the body of a new request R2
+// 3. Post request R2 to remote GAE
+// 4. Receive response P1 from GAE
+// 5. Read remote server(which the client want to connect with) resonse P2 from the body of P1
+// 6. Send P2 as the response to client
 func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
 		s.Error("this function can not handle CONNECT method")
@@ -80,5 +86,14 @@ func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// FIXME: impossible to connect gae and handle it as a normal TCP connection?
+	// FIXME: Impossible to connect gae and handle it as a normal TCP connection?
+	// GAE only provide http handlers? At least I don't know how to handle to TCP connection on GAE server.
+	// NOTE: GAE socket service can only be available for billing users. So free users is unable to use the
+	// long term connection. And do what we did in EngineDirect.
+	// So we can only use urlfetch.Client.Transport.RoundTrip to do http or https method.
+	// Generally, the CONNECT method can be used for any purpose for the advantage of TCP connection.
+	// The proxy doesn't need to know what the real underlying protocol or what it is, just need to copy
+	// data from client to server, and copy the response from the server to client without any interpret.
+	// Now what we can do and had been done by some GAE proxies is that, extract the underlying protocol!!!
+	// GAE can only handle limited protocols with urlfetch module, such as http and https.
 }
