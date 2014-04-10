@@ -5,7 +5,6 @@ import (
 	"github.com/justmao945/http_proxy.go/mallory"
 	"log"
 	"net/http"
-	"net/url"
 )
 
 type Env struct {
@@ -18,20 +17,14 @@ type Env struct {
 }
 
 func (self *Env) Parse() {
-	flag.StringVar(&self.MalloryAddr, "addr", "127.0.0.1:18087", "Porxy server address")
+	flag.StringVar(&self.MalloryAddr, "addr", "127.0.0.1:18087", "Porxy server address, Host:Port")
 	flag.StringVar(&self.MalloryEngine, "engine", "direct", `Mallory engine, "direct" or "gae"`)
-	flag.StringVar(&self.AppSpot, "appspot", "https://oribe-yasuna.appspot.com", "Full URL of your GAE application")
+	// -appsopt=debug to connect the localhost server for debug
+	flag.StringVar(&self.AppSpot, "appspot", "oribe-yasuna", "GAE application ID")
 	flag.Parse()
 
 	if self.MalloryEngine != "gae" && self.MalloryEngine != "direct" {
 		log.Fatalln(`engine should be "direct" or "gae"`)
-	}
-
-	if self.MalloryEngine == "gae" {
-		_, err := url.Parse(self.AppSpot)
-		if err != nil {
-			log.Fatalf(`Inavlid appspot: %s\n`, self.AppSpot)
-		}
 	}
 }
 
@@ -41,11 +34,15 @@ func main() {
 	// default is the direct connect engine
 	srv := mallory.NewServer()
 
+	// info
+	log.Printf("Listen and serve on %s\n", env.MalloryAddr)
+	log.Printf("\tEngine: %s\n", env.MalloryEngine)
+
 	// overwrite the engine with gae
 	if env.MalloryEngine == "gae" {
 		srv.Engine = mallory.NewEngineGAE(env.AppSpot)
+		log.Printf("\tAppSpot: %s\n", env.AppSpot)
 	}
 
-	log.Printf("Listen and serve on %s\n", env.MalloryAddr)
 	log.Fatal(http.ListenAndServe(env.MalloryAddr, srv))
 }

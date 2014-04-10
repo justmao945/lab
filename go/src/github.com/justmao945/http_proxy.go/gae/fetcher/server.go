@@ -8,10 +8,9 @@ import (
 )
 
 func init() {
-	http.HandleFunc("/", HandleHTTP)
+	http.HandleFunc("/", hello)
 	http.HandleFunc("/http", HandleHTTP)
-	http.HandleFunc("/https", HandleHTTPS)
-	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/connect", HandleConnect)
 }
 
 func HandleHTTP(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +45,7 @@ func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func HandleHTTPS(w http.ResponseWriter, r *http.Request) {
+func HandleConnect(w http.ResponseWriter, r *http.Request) {
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {

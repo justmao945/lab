@@ -3,12 +3,13 @@ package mallory
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
 	"net/http"
 )
 
 type EngineGAE struct {
-	// application URL, e.g. http://kill-me-baby.appspot.com
+	// application ID
 	AppSpot string
 }
 
@@ -30,7 +31,13 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	resp, err := http.Post(self.AppSpot, "application/data", &buf)
+	url := fmt.Sprintf("http://%s.appspot.com/http", self.AppSpot)
+	// for debug
+	if self.AppSpot == "debug" {
+		url = "http://localhost:8080/http"
+	}
+
+	resp, err := http.Post(url, "application/data", &buf)
 	if err != nil {
 		s.Error("http.Post: %s", err.Error())
 		return
@@ -70,5 +77,4 @@ func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Reques
 		s.Error("this function can only handle CONNECT method")
 		return
 	}
-
 }
