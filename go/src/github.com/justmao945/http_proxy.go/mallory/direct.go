@@ -53,7 +53,7 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	// Use Hijacker to get the underl")ying connection
+	// Use Hijacker to get the underlying connection
 	hij, ok := w.(http.Hijacker)
 	if !ok {
 		s.Error("Server does not support Hijacker")

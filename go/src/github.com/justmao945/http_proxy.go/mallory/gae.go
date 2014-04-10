@@ -70,4 +70,5 @@ func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Reques
 		s.Error("this function can only handle CONNECT method")
 		return
 	}
+
 }

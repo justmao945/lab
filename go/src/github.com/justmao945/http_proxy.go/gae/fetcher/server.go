@@ -10,6 +10,7 @@ import (
 func init() {
 	http.HandleFunc("/", HandleHTTP)
 	http.HandleFunc("/http", HandleHTTP)
+	http.HandleFunc("/https", HandleHTTPS)
 	http.HandleFunc("/hello", hello)
 }
 
@@ -43,6 +44,9 @@ func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 		s.HTTPError("http.Response.Body.Close: %s", err.Error())
 		return
 	}
+}
+
+func HandleHTTPS(w http.ResponseWriter, r *http.Request) {
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
