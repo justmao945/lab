@@ -10,9 +10,10 @@ import (
 type Env struct {
 	// local addr to listen and serve, default is 127.0.0.1:18087
 	MalloryAddr string
-	// remote engine to be used, gae or direct(default)
+	// remote engine to be used, "gae" or "direct"(default)
 	MalloryEngine string
-	// application URL, only valid when the engine is gae, e.g. http://kill-me-baby.appspot.com
+	// GAE application ID, only valid when the engine is "gae"
+	// e.g. kill-me-baby of http://kill-me-baby.appspot.com
 	AppSpot string
 }
 

@@ -31,12 +31,14 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	// http is enough, though appspot support https, which doesn't help.
 	url := fmt.Sprintf("http://%s.appspot.com/http", self.AppSpot)
 	// for debug
 	if self.AppSpot == "debug" {
 		url = "http://localhost:8080/http"
 	}
 
+	// post client request as body data
 	resp, err := http.Post(url, "application/data", &buf)
 	if err != nil {
 		s.Error("http.Post: %s", err.Error())
@@ -62,8 +64,8 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	// Must close body after read,
-	// Note that cres.Body is rely on resp.Body
+	// Must close body after read the response body
+	// Note that cres.Body is rely on resp.Body, so do not close before reading
 	if err := resp.Body.Close(); err != nil {
 		s.Error("http.Response.Body.Close: %s", err.Error())
 		return
@@ -77,4 +79,6 @@ func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Reques
 		s.Error("this function can only handle CONNECT method")
 		return
 	}
+
+	// FIXME: impossible to connect gae and handle it as a normal TCP connection?
 }

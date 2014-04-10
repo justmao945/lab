@@ -20,7 +20,8 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 	}
 
 	// Client.Do is different from DefaultTransport.RoundTrip ...
-	// NOTE: find out why
+	// Client.Do will change some part of request as a new request of the server.
+	// The underlying RoundTrip never changes anything of the request.
 	resp, err := http.DefaultTransport.RoundTrip(r)
 	if err != nil {
 		s.Error("http.DefaultTransport.RoundTrip: %s", err.Error())
@@ -39,7 +40,7 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// Must close body after read
+	// Must close body after read the response body
 	if err := resp.Body.Close(); err != nil {
 		s.Error("http.Response.Body.Close: %s", err.Error())
 		return

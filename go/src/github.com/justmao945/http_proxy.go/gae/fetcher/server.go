@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	http.HandleFunc("/", hello)
+	http.HandleFunc("/", hello) // this will handle all except /http and /connect
 	http.HandleFunc("/http", HandleHTTP)
 	http.HandleFunc("/connect", HandleConnect)
 }
