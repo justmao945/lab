@@ -1,16 +1,9 @@
 package mallory
 
 import (
-	"log"
 	"net/http"
 	"sync/atomic"
 )
-
-// A session is a proxy request
-type Session struct {
-	// the unique ID start from 1
-	ID int64
-}
 
 type Engineer interface {
 	// normal http methods except CONNECT
@@ -30,9 +23,9 @@ type Server struct {
 }
 
 func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s := &Session{ID: atomic.AddInt64(&self.IDZygote, 1)}
+	s := NewSession(atomic.AddInt64(&self.IDZygote, 1))
 
-	log.Printf("[%d] %s %s %s\n", s.ID, r.Method, r.URL.Host, r.Proto)
+	s.Info("%s %s %s", r.Method, r.URL.Host, r.Proto)
 
 	// This is an error if is not empty on Client
 	r.RequestURI = ""

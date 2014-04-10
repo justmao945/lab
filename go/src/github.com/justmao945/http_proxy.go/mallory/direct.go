@@ -2,7 +2,6 @@ package mallory
 
 import (
 	"io"
-	"log"
 	"net"
 	"net/http"
 	"sync"
@@ -16,7 +15,7 @@ func NewEngineDirect() *EngineDirect {
 
 func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
-		log.Printf("[%d] Error: this function can not handle CONNECT method", s.ID)
+		s.Error("this function can not handle CONNECT method")
 		return
 	}
 
@@ -24,7 +23,7 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 	// NOTE: find out why
 	resp, err := http.DefaultTransport.RoundTrip(r)
 	if err != nil {
-		log.Printf("[%d] Error: http.DefaultTransport.RoundTrip: %s\n", s.ID, err.Error())
+		s.Error("http.DefaultTransport.RoundTrip: %s", err.Error())
 		return
 	}
 
@@ -36,41 +35,41 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 
 	_, err = io.Copy(w, resp.Body)
 	if err != nil {
-		log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
+		s.Error("io.Copy: %s", err.Error())
 		return
 	}
 
 	// Must close body after read
 	if err := resp.Body.Close(); err != nil {
-		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
+		s.Error("http.Response.Body.Close: %s", err.Error())
 		return
 	}
-	log.Printf("[%d] RESPONSE %s %s\n", s.ID, r.URL.Host, resp.Status)
+	s.Info("RESPONSE %s %s", r.URL.Host, resp.Status)
 }
 
 func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method != "CONNECT" {
-		log.Printf("[%d] Error: this function can only handle CONNECT method\n", s.ID)
+		s.Error("this function can only handle CONNECT method")
 		return
 	}
 
-	// Use Hijacker to get the underlying connection
+	// Use Hijacker to get the underl")ying connection
 	hij, ok := w.(http.Hijacker)
 	if !ok {
-		log.Printf("[%d] Error: Server does not support Hijacker\n", s.ID)
+		s.Error("Server does not support Hijacker")
 		return
 	}
 
 	src, _, err := hij.Hijack()
 	if err != nil {
-		log.Printf("[%d] Error: http.Hijacker.Hijack: %s\n", s.ID, err.Error())
+		s.Error("http.Hijacker.Hijack: %s", err.Error())
 		return
 	}
 
 	// connect the remote client directly
 	dst, err := net.Dial("tcp", r.URL.Host)
 	if err != nil {
-		log.Printf("[%d] Error: net.Dial: %s\n", s.ID, err.Error())
+		s.Error("net.Dial: %s", err.Error())
 		src.Close()
 		return
 	}
@@ -86,7 +85,7 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 	copyAndWait := func(w io.Writer, r io.Reader) {
 		_, err := io.Copy(w, r)
 		if err != nil {
-			log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
+			s.Error("io.Copy: %s", err.Error())
 		}
 		wg.Done()
 	}
@@ -100,5 +99,5 @@ func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Req
 	src.Close()
 	dst.Close()
 
-	log.Printf("[%d] CLOSE %s\n", s.ID, r.URL.Host)
+	s.Info("CLOSE %s", r.URL.Host)
 }

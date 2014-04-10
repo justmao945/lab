@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/gob"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -19,32 +18,32 @@ func NewEngineGAE(appspot string) *EngineGAE {
 
 func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "CONNECT" {
-		log.Printf("[%d] Error: this function can not handle CONNECT method", s.ID)
+		s.Error("this function can not handle CONNECT method")
 		return
 	}
 
 	var buf bytes.Buffer
 	// encode the client request and post to remote
 	if err := gob.NewEncoder(&buf).Encode(r); err != nil {
-		log.Printf("[%d] Error: gob.Encoder.Encode: %s\n", err.Error())
+		s.Error("gob.Encoder.Encode: %s", err.Error())
 		return
 	}
 
 	resp, err := http.Post(self.AppSpot, "application/data", &buf)
 	if err != nil {
-		log.Printf("[%d] Error: http.Post: %s\n", err.Error())
+		s.Error("http.Post: %s", err.Error())
 		return
 	}
 
 	// the response for the requst of client
 	var cres http.Response
 	if err := gob.NewDecoder(resp.Body).Decode(&cres); err != nil {
-		log.Printf("[%d] Error: go.Decoder.Decode: %s\n", err.Error())
+		s.Error("gob.Decoder.Decode: %s", err.Error())
 		return
 	}
 	// Must close body after read
 	if err := resp.Body.Close(); err != nil {
-		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
+		s.Error("http.Response.Body.Close: %s", err.Error())
 		return
 	}
 
@@ -56,21 +55,21 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 
 	_, err = io.Copy(w, cres.Body)
 	if err != nil {
-		log.Printf("[%d] Error: io.Copy: %s\n", s.ID, err.Error())
+		s.Error("io.Copy: %s", err.Error())
 		return
 	}
 
 	// Must close body after read
 	if err := cres.Body.Close(); err != nil {
-		log.Printf("[%d] Error: http.Response.Body.Close: %s\n", s.ID, err.Error())
+		s.Error("http.Response.Body.Close: %s", err.Error())
 		return
 	}
-	log.Printf("[%d] RESPONSE %s %s\n", s.ID, r.URL.Host, resp.Status)
+	s.Info("RESPONSE %s %s", r.URL.Host, resp.Status)
 }
 
 func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Request) {
 	if r.Method != "CONNECT" {
-		log.Printf("[%d] Error: this function can only handle CONNECT method\n", s.ID)
+		s.Error("this function can only handle CONNECT method")
 		return
 	}
 }
