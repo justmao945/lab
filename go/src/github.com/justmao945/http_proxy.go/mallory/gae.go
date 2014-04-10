@@ -1,8 +1,8 @@
 package mallory
 
 import (
+	"bufio"
 	"bytes"
-	"encoding/gob"
 	"io"
 	"net/http"
 )
@@ -22,10 +22,11 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	// write the client request and post to remote
+	// Note: WriteProxy keeps the full request URI
 	var buf bytes.Buffer
-	// encode the client request and post to remote
-	if err := gob.NewEncoder(&buf).Encode(r); err != nil {
-		s.Error("gob.Encoder.Encode: %s", err.Error())
+	if err := r.WriteProxy(&buf); err != nil {
+		s.Error("http.Request.WriteProxy: %s", err.Error())
 		return
 	}
 
@@ -36,19 +37,14 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 	}
 
 	// the response for the requst of client
-	var cres http.Response
-	if err := gob.NewDecoder(resp.Body).Decode(&cres); err != nil {
-		s.Error("gob.Decoder.Decode: %s", err.Error())
-		return
-	}
-	// Must close body after read
-	if err := resp.Body.Close(); err != nil {
-		s.Error("http.Response.Body.Close: %s", err.Error())
+	cres, err := http.ReadResponse(bufio.NewReader(resp.Body), r)
+	if err != nil {
+		s.Error("http.ReadResponse: %s", err.Error())
 		return
 	}
 
 	// copy headers
-	CopyResponseHeader(w, &cres)
+	CopyResponseHeader(w, cres)
 
 	// please prepare header first and write them
 	w.WriteHeader(cres.StatusCode)
@@ -59,11 +55,13 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	// Must close body after read
-	if err := cres.Body.Close(); err != nil {
+	// Must close body after read,
+	// Note that cres.Body is rely on resp.Body
+	if err := resp.Body.Close(); err != nil {
 		s.Error("http.Response.Body.Close: %s", err.Error())
 		return
 	}
+
 	s.Info("RESPONSE %s %s", r.URL.Host, resp.Status)
 }
 

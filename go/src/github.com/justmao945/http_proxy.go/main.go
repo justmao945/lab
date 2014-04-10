@@ -5,6 +5,7 @@ import (
 	"github.com/justmao945/http_proxy.go/mallory"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 type Env struct {
@@ -24,6 +25,13 @@ func (self *Env) Parse() {
 
 	if self.MalloryEngine != "gae" && self.MalloryEngine != "direct" {
 		log.Fatalln(`engine should be "direct" or "gae"`)
+	}
+
+	if self.MalloryEngine == "gae" {
+		_, err := url.Parse(self.AppSpot)
+		if err != nil {
+			log.Fatalf(`Inavlid appspot: %s\n`, self.AppSpot)
+		}
 	}
 }
 
