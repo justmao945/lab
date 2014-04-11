@@ -9,12 +9,12 @@ import (
 // proxy server or something...
 type Engineer interface {
 	// normal http methods except CONNECT
-	Serve(*Session, http.ResponseWriter, *http.Request)
+	Serve(*Session)
 
 	// handle CONNECT method, a secure tunnel
 	// Tunneling TCP based protocols through Web proxy servers
 	//  - http://www.web-cache.com/Writings/Internet-Drafts/draft-luotonen-web-proxy-tunneling-01.txt
-	Connect(*Session, http.ResponseWriter, *http.Request)
+	Connect(*Session)
 }
 
 type Server struct {
@@ -22,6 +22,15 @@ type Server struct {
 	IDZygote int64
 	// different fetch engine can be adapted to the server
 	Engine Engineer
+}
+
+func NewServer(e *Env) *Server {
+	srv := &Server{}
+	srv.Engine = NewEngineDirect(e)
+	if env.Engine == "gae" {
+		srv.Engine = NewEngineGAE(e)
+	}
+	return srv
 }
 
 // HTTP proxy accepts requests with following two types:
@@ -48,7 +57,8 @@ type Server struct {
 //    to the remote server and copy the reponse to client.
 //
 func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s := NewSession(atomic.AddInt64(&self.IDZygote, 1))
+	sid := atomic.AddInt64(&self.IDZygote, 1)
+	s := NewSession(sid, w, r)
 
 	s.Info("%s %s %s", r.Method, r.URL.Host, r.Proto)
 
@@ -69,14 +79,8 @@ func (self *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.Header.Del("Connection")
 
 	if r.Method == "CONNECT" {
-		self.Engine.Connect(s, w, r)
+		self.Engine.Connect(s)
 	} else {
-		self.Engine.Serve(s, w, r)
+		self.Engine.Serve(s)
 	}
-}
-
-func NewServer() *Server {
-	srv := &Server{}
-	srv.Engine = NewEngineDirect()
-	return srv
 }

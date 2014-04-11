@@ -3,6 +3,7 @@ package mallory
 import (
 	"bufio"
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"
@@ -11,10 +12,15 @@ import (
 type EngineGAE struct {
 	// application ID
 	AppSpot string
+	// the address local server is listening, used by Connect handle
+	LocalAddr string
 }
 
-func NewEngineGAE(appspot string) *EngineGAE {
-	return &EngineGAE{AppSpot: appspot}
+func NewEngineGAE(e *Env) *EngineGAE {
+	return &EngineGAE{
+		AppSpot:   e.AppSpot,
+		LocalAddr: e.Addr,
+	}
 }
 
 // 1. Receive client request R1
@@ -23,7 +29,8 @@ func NewEngineGAE(appspot string) *EngineGAE {
 // 4. Receive response P1 from GAE
 // 5. Read remote server(which the client want to connect with) resonse P2 from the body of P1
 // 6. Send P2 as the response to client
-func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
+func (self *EngineGAE) Serve(s *Session) {
+	w, r := s.ResponseWriter, s.Request
 	if r.Method == "CONNECT" {
 		s.Error("this function can not handle CONNECT method")
 		return
@@ -81,7 +88,8 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 	s.Info("RESPONSE %s %s", r.URL.Host, resp.Status)
 }
 
-func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Request) {
+func (self *EngineGAE) Connect(s *Session) {
+	w, r := s.ResponseWriter, s.Request
 	if r.Method != "CONNECT" {
 		s.Error("this function can only handle CONNECT method")
 		return
@@ -97,4 +105,18 @@ func (self *EngineGAE) Connect(s *Session, w http.ResponseWriter, r *http.Reques
 	// data from client to server, and copy the response from the server to client without any interpret.
 	// Now what we can do and had been done by some GAE proxies is that, extract the underlying protocol!!!
 	// GAE can only handle limited protocols with urlfetch module, such as http and https.
+	// Use Hijacker to get the underlying connection
+
+	hij, ok := w.(http.Hijacker)
+	if !ok {
+		s.Error("Server does not support Hijacker")
+		return
+	}
+
+	cli, _, err := hij.Hijack()
+	if err != nil {
+		s.Error("http.Hijacker.Hijack: %s", err.Error())
+		return
+	}
+
 }

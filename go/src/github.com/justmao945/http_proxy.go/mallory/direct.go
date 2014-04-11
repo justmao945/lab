@@ -9,7 +9,7 @@ import (
 
 type EngineDirect struct{}
 
-func NewEngineDirect() *EngineDirect {
+func NewEngineDirect(e *Env) *EngineDirect {
 	return &EngineDirect{}
 }
 
@@ -17,7 +17,8 @@ func NewEngineDirect() *EngineDirect {
 // 2. Re-post request R1 to remote server(the one client want to connect)
 // 3. Receive response P1 from remote server
 // 4. Send response P1 to client
-func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Serve(s *Session) {
+	w, r := s.ResponseWriter, s.Request
 	if r.Method == "CONNECT" {
 		s.Error("this function can not handle CONNECT method")
 		return
@@ -56,7 +57,8 @@ func (self *EngineDirect) Serve(s *Session, w http.ResponseWriter, r *http.Reque
 // 2. Dial the remote server(the one client want to conenct)
 // 3. Send 200 OK to client if the connection is established
 // 4. Exchange data between client and server
-func (self *EngineDirect) Connect(s *Session, w http.ResponseWriter, r *http.Request) {
+func (self *EngineDirect) Connect(s *Session) {
+	w, r := s.ResponseWriter, s.Request
 	if r.Method != "CONNECT" {
 		s.Error("this function can only handle CONNECT method")
 		return
