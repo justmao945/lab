@@ -8,6 +8,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/url"
 )
 
 // all write on this should be sync between threads
@@ -110,6 +111,16 @@ func (self *EngineGAE) Serve(s *Session) {
 // Now what we can do and had been done by some GAE proxies is that, extract the underlying protocol!!!
 // GAE can only handle limited protocols with urlfetch module, such as http and https.
 // Use Hijacker to get the underlying connection
+//
+// 1. Detect host and port, currectly only support 443 HTTPS request
+// 2. Hijack the client connection
+// 3. Dial self
+// 4. Return 200 OK if is successfully
+// 5. Get cached or create new signed certificate
+// 6. Wrap client connection with TLS and make handshake
+// 7. Receive http request
+// 8. Write request as a proxy request to self, HTTP handler
+// 9. Copy response to client...
 func (self *EngineGAE) Connect(s *Session) {
 	w, r := s.ResponseWriter, s.Request
 	if r.Method != "CONNECT" {
@@ -176,14 +187,39 @@ func (self *EngineGAE) Connect(s *Session) {
 		ServerName:   host,
 	}
 	sconn := tls.Server(conn, config)
+	defer sconn.Close()
 
+	// The TLS connection goes here
 	if err := sconn.Handshake(); err != nil {
+		// re-open browser to recover the handshake error:
+		//    remote error: bad certificate
 		s.Error("tls.Server.Handshake: %s", err.Error())
 		return
 	}
 
+	// finally, we are at application layer, http request comes
 	req, err := http.ReadRequest(bufio.NewReader(sconn))
-	s.Info("%s", req.URL.String())
+	if err != nil {
+		s.Error("http.ReadRequest: %s", err.Error())
+		return
+	}
+
+	// should re-wrap the URL with scheme "https://"
+	req.URL, err = url.Parse("https://" + r.Host + req.URL.String())
+
+	// Now re-write the client request to self, HTTP handler
+	err = req.WriteProxy(rconn)
+	if err != nil {
+		s.Error("http.Request.WriteProxy: %s", err.Error())
+		return
+	}
+
+	// copy response
+	_, err = io.Copy(sconn, rconn)
+	if err != nil {
+		s.Error("io.Copy: %s", err.Error())
+		return
+	}
 
 	s.Info("CLOSE %s", r.URL.Host)
 }
