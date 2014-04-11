@@ -300,13 +300,8 @@ map! <silent> <C-J>  <esc>:tabprevious<cr>
 map  <silent> <C-K> <esc>:tabnext<cr>
 map! <silent> <C-K> <esc>:tabnext<cr>
 
-map  <silent> <C-q>  <esc>:qa!<cr>
-map! <silent> <C-q>  <esc>:qa!<cr>
-
-map  <silent> <C-S>  <esc>:update<cr>
-map! <silent> <C-S>  <esc>:update<cr>
-
-imap  <silent> <M-/>  <C-X><C-P>
+map  <silent> <C-S>  <esc>:w<cr>
+map! <silent> <C-S>  <esc>:w<cr>
 
 " leader section
 map  <silent> <Leader>d <esc>:tabclose<cr>
