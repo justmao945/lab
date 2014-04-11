@@ -23,7 +23,7 @@ func (self *Env) Parse() error {
 	flag.StringVar(&self.AppSpot, "appspot", "oribe-yasuna", "GAE application ID")
 	flag.Parse()
 
-	if self.MalloryEngine != "gae" && self.MalloryEngine != "direct" {
+	if self.Engine != "gae" && self.Engine != "direct" {
 		return errors.New(`engine should be "direct" or "gae"`)
 	}
 	return nil

@@ -3,7 +3,6 @@ package mallory
 import (
 	"bufio"
 	"bytes"
-	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"

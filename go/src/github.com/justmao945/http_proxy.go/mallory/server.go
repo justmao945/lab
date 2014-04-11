@@ -27,7 +27,7 @@ type Server struct {
 func NewServer(e *Env) *Server {
 	srv := &Server{}
 	srv.Engine = NewEngineDirect(e)
-	if env.Engine == "gae" {
+	if e.Engine == "gae" {
 		srv.Engine = NewEngineGAE(e)
 	}
 	return srv
