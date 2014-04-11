@@ -13,6 +13,10 @@ func NewEngineDirect(e *Env) *EngineDirect {
 	return &EngineDirect{}
 }
 
+func (self *EngineDirect) Init() (err error) {
+	return
+}
+
 // 1. Receive request R1 from client
 // 2. Re-post request R1 to remote server(the one client want to connect)
 // 3. Receive response P1 from remote server
@@ -72,6 +76,7 @@ func (self *EngineDirect) Connect(s *Session) {
 	}
 
 	src, _, err := hij.Hijack()
+	defer src.Close()
 	if err != nil {
 		s.Error("http.Hijacker.Hijack: %s", err.Error())
 		return
@@ -79,9 +84,9 @@ func (self *EngineDirect) Connect(s *Session) {
 
 	// connect the remote client directly
 	dst, err := net.Dial("tcp", r.URL.Host)
+	defer dst.Close()
 	if err != nil {
 		s.Error("net.Dial: %s", err.Error())
-		src.Close()
 		return
 	}
 
@@ -107,8 +112,6 @@ func (self *EngineDirect) Connect(s *Session) {
 	// so we will not close the connection until both connection recv
 	// EOF and are done!
 	wg.Wait()
-	src.Close()
-	dst.Close()
 
 	s.Info("CLOSE %s", r.URL.Host)
 }

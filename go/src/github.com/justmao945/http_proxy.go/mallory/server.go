@@ -8,6 +8,9 @@ import (
 // The method to fetch data from remote server or connect to another
 // proxy server or something...
 type Engineer interface {
+	// called by server
+	Init() error
+
 	// normal http methods except CONNECT
 	Serve(*Session)
 
@@ -31,6 +34,10 @@ func NewServer(e *Env) *Server {
 		srv.Engine = NewEngineGAE(e)
 	}
 	return srv
+}
+
+func (self *Server) Init() error {
+	return self.Engine.Init()
 }
 
 // HTTP proxy accepts requests with following two types:

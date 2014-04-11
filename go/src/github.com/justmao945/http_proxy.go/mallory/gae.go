@@ -3,23 +3,36 @@ package mallory
 import (
 	"bufio"
 	"bytes"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"io"
+	"math/big"
+	"net"
 	"net/http"
 )
 
 type EngineGAE struct {
-	// application ID
-	AppSpot string
-	// the address local server is listening, used by Connect handle
-	LocalAddr string
+	// Global config
+	Env *Env
+	// Loaded certificate, contains the root certificate and private key
+	RootCA *tls.Certificate
+	// Pool of auto generated fake certificates signed by RootCert
+	Certs *CertPool
 }
 
 func NewEngineGAE(e *Env) *EngineGAE {
-	return &EngineGAE{
-		AppSpot:   e.AppSpot,
-		LocalAddr: e.Addr,
+	return &EngineGAE{Env: e}
+}
+
+func (self *EngineGAE) Init() (err error) {
+	rcert, err := tls.LoadX509KeyPair(self.Env.Cert, self.Env.Key)
+	if err != nil {
+		return
 	}
+	self.RootCA = &rcert
+	self.Certs = NewCertPool()
+	return
 }
 
 // 1. Receive client request R1
@@ -45,9 +58,9 @@ func (self *EngineGAE) Serve(s *Session) {
 
 	// use httpS to keep all things secure,
 	// the second phase of CONNECT also uses this.
-	url := fmt.Sprintf("https://%s.appspot.com/http", self.AppSpot)
+	url := fmt.Sprintf("https://%s.appspot.com/http", self.Env.AppSpot)
 	// for debug
-	if self.AppSpot == "debug" {
+	if self.Env.AppSpot == "debug" {
 		url = "http://localhost:8080/http"
 	}
 
@@ -87,6 +100,17 @@ func (self *EngineGAE) Serve(s *Session) {
 	s.Info("RESPONSE %s %s", r.URL.Host, resp.Status)
 }
 
+// FIXME: Impossible to connect gae and handle it as a normal TCP connection?
+// GAE only provide http handlers? At least I don't know how to handle to TCP connection on GAE server.
+// NOTE: GAE socket service can only be available for billing users. So free users is unable to use the
+// long term connection. And do what we did in EngineDirect.
+// So we can only use urlfetch.Client.Transport.RoundTrip to do http or https method.
+// Generally, the CONNECT method can be used for any purpose for the advantage of TCP connection.
+// The proxy doesn't need to know what the real underlying protocol or what it is, just need to copy
+// data from client to server, and copy the response from the server to client without any interpret.
+// Now what we can do and had been done by some GAE proxies is that, extract the underlying protocol!!!
+// GAE can only handle limited protocols with urlfetch module, such as http and https.
+// Use Hijacker to get the underlying connection
 func (self *EngineGAE) Connect(s *Session) {
 	w, r := s.ResponseWriter, s.Request
 	if r.Method != "CONNECT" {
@@ -94,28 +118,87 @@ func (self *EngineGAE) Connect(s *Session) {
 		return
 	}
 
-	// FIXME: Impossible to connect gae and handle it as a normal TCP connection?
-	// GAE only provide http handlers? At least I don't know how to handle to TCP connection on GAE server.
-	// NOTE: GAE socket service can only be available for billing users. So free users is unable to use the
-	// long term connection. And do what we did in EngineDirect.
-	// So we can only use urlfetch.Client.Transport.RoundTrip to do http or https method.
-	// Generally, the CONNECT method can be used for any purpose for the advantage of TCP connection.
-	// The proxy doesn't need to know what the real underlying protocol or what it is, just need to copy
-	// data from client to server, and copy the response from the server to client without any interpret.
-	// Now what we can do and had been done by some GAE proxies is that, extract the underlying protocol!!!
-	// GAE can only handle limited protocols with urlfetch module, such as http and https.
-	// Use Hijacker to get the underlying connection
+	// Only support HTTPS protocol, which is connected with port 443
+	host, port, err := net.SplitHostPort(r.URL.Host)
+	if err != nil {
+		s.Error("net.SplitHostPort: %s", err.Error())
+		return
+	}
 
+	if port != "443" {
+		s.Error("unsupported CONNECT port: %s", port)
+		return
+	}
+
+	// hijack the connection to make SSL handshake
 	hij, ok := w.(http.Hijacker)
 	if !ok {
 		s.Error("Server does not support Hijacker")
 		return
 	}
 
-	cli, _, err := hij.Hijack()
+	conn, _, err := hij.Hijack()
+	defer conn.Close()
 	if err != nil {
 		s.Error("http.Hijacker.Hijack: %s", err.Error())
 		return
 	}
 
+	// dial self to transport application data, http request
+	rconn, err := net.Dial("tcp", self.Env.Addr)
+	defer rconn.Close()
+	if err != nil {
+		s.Error("net.Dial: %s", err.Error())
+		return
+	}
+
+	// Once connected successfully, return OK
+	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+
+	// get the fake cert, every host should have its own cert
+	cert := self.Certs.GetSafe(host)
+	if cert == nil {
+		cert, err = self.CreateSignedCert(s, host)
+		if err != nil {
+			s.Error("EngineGAE.CreateSignedCert: %s", err.Error())
+			return
+		}
+		self.Certs.AddSafe(host, cert)
+	}
+
+	// assume the protocol of client connection is HTTPS
+	// wrap it with TSL server
+	config := &tls.Config{
+		Certificates: []tls.Certificate{*cert},
+		ServerName:   host,
+	}
+	sconn := tls.Server(conn, config)
+
+	if err := sconn.Handshake(); err != nil {
+		s.Error("tls.Server.Handshake: %s", err.Error())
+		return
+	}
+
+	s.Info("CLOSE %s", r.URL.Host)
+}
+
+// this function do the trick that create signed certificates on the fly
+func (self *EngineGAE) CreateSignedCert(s *Session, host string) (cert *tls.Certificate, err error) {
+	// root certificate, the first one in the list
+	rcert, err := x509.ParseCertificate(self.RootCA.Certificate[0])
+
+	template := &x509.Certificate{
+		// This should be unique for each certificate issued by a CA
+		SerialNumber: new(big.Int).SetInt64(s.ID),
+		Subject:      rcert.Subject,
+		NotBefore:    rcert.NotBefore,
+		NotAfter:     rcert.NotAfter,
+	}
+
+	// FIXME: Common Name mismatch, the host may not be the real hostname
+	// the client is connecting to.
+	// http://mitmproxy.org/doc/howmitmproxy.html
+	template.Subject.CommonName = host
+	cert, err = CreateSignedCert(template, rcert)
+	return
 }

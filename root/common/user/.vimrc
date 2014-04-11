@@ -300,9 +300,6 @@ map! <silent> <C-J>  <esc>:tabprevious<cr>
 map  <silent> <C-K> <esc>:tabnext<cr>
 map! <silent> <C-K> <esc>:tabnext<cr>
 
-map  <silent> <C-S>  <esc>:w<cr>
-map! <silent> <C-S>  <esc>:w<cr>
-
 " leader section
 map  <silent> <Leader>d <esc>:tabclose<cr>
 map  <silent> <Leader>t <esc>:tabnew .<cr>
