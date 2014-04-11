@@ -12,9 +12,11 @@ type Engineer interface {
 	Init() error
 
 	// normal http methods except CONNECT
+	// all operations in this function should be thread safe
 	Serve(*Session)
 
 	// handle CONNECT method, a secure tunnel
+	// all operations in this function should be thread safe
 	// Tunneling TCP based protocols through Web proxy servers
 	//  - http://www.web-cache.com/Writings/Internet-Drafts/draft-luotonen-web-proxy-tunneling-01.txt
 	Connect(*Session)

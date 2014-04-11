@@ -4,14 +4,13 @@ import (
 	"bufio"
 	"bytes"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"io"
-	"math/big"
 	"net"
 	"net/http"
 )
 
+// all write on this should be sync between threads
 type EngineGAE struct {
 	// Global config
 	Env *Env
@@ -158,7 +157,11 @@ func (self *EngineGAE) Connect(s *Session) {
 	// get the fake cert, every host should have its own cert
 	cert := self.Certs.GetSafe(host)
 	if cert == nil {
-		cert, err = self.CreateSignedCert(s, host)
+		config := &CertConfig{
+			SerialNumber: s.ID,
+			CommonName:   host, // FIXME: common name mismatch
+		}
+		cert, err = CreateSignedCert(self.RootCA, config)
 		if err != nil {
 			s.Error("EngineGAE.CreateSignedCert: %s", err.Error())
 			return
@@ -179,26 +182,8 @@ func (self *EngineGAE) Connect(s *Session) {
 		return
 	}
 
+	req, err := http.ReadRequest(bufio.NewReader(sconn))
+	s.Info("%s", req.URL.String())
+
 	s.Info("CLOSE %s", r.URL.Host)
-}
-
-// this function do the trick that create signed certificates on the fly
-func (self *EngineGAE) CreateSignedCert(s *Session, host string) (cert *tls.Certificate, err error) {
-	// root certificate, the first one in the list
-	rcert, err := x509.ParseCertificate(self.RootCA.Certificate[0])
-
-	template := &x509.Certificate{
-		// This should be unique for each certificate issued by a CA
-		SerialNumber: new(big.Int).SetInt64(s.ID),
-		Subject:      rcert.Subject,
-		NotBefore:    rcert.NotBefore,
-		NotAfter:     rcert.NotAfter,
-	}
-
-	// FIXME: Common Name mismatch, the host may not be the real hostname
-	// the client is connecting to.
-	// http://mitmproxy.org/doc/howmitmproxy.html
-	template.Subject.CommonName = host
-	cert, err = CreateSignedCert(template, rcert)
-	return
 }

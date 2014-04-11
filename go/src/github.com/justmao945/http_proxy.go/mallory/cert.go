@@ -1,52 +1,57 @@
 package mallory
 
 import (
-	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
-	"encoding/pem"
-	"errors"
+	"math/big"
 	"sync"
 )
 
-// certificate and private key pair
-// signee is a template to be signed by signer, self-signed is not supported
-func CreateSignedCert(signee, signer *x509.Certificate) (cert *tls.Certificate, err error) {
-	if signee == signer {
-		err = errors.New("Signee and Signer can not be the same")
-		return
-	}
+// simple config used to create signed certificate
+type CertConfig struct {
+	SerialNumber int64
+	CommonName   string
+}
 
-	bits := signer.PublicKey.(*rsa.PublicKey).N.BitLen()
+// root is a certificate loaded from external
+// return a new certificate signed by the root CA and the root CA chain
+func CreateSignedCert(root *tls.Certificate, config *CertConfig) (cert *tls.Certificate, err error) {
+	bits := root.PrivateKey.(*rsa.PrivateKey).N.BitLen()
 	key, err := rsa.GenerateKey(rand.Reader, bits)
 	if err != nil {
 		return
 	}
 
-	var keypem bytes.Buffer
-	err = pem.Encode(&keypem, &pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: x509.MarshalPKCS1PrivateKey(key),
-	})
+	signer, err := x509.ParseCertificate(root.Certificate[0])
 	if err != nil {
 		return
 	}
 
-	crtder, err := x509.CreateCertificate(rand.Reader, signee, signer, &key.PublicKey, key)
+	signee := &x509.Certificate{
+		SerialNumber:          new(big.Int).SetInt64(config.SerialNumber),
+		Issuer:                signer.Issuer,
+		Subject:               signer.Subject,
+		NotBefore:             signer.NotBefore,
+		NotAfter:              signer.NotAfter,
+		KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
+		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+		BasicConstraintsValid: true,
+	}
+
+	signee.Subject.CommonName = config.CommonName
+
+	crtder, err := x509.CreateCertificate(rand.Reader, signee, signer, &key.PublicKey, root.PrivateKey)
 	if err != nil {
 		return
 	}
 
-	var crtpem bytes.Buffer
-	err = pem.Encode(&crtpem, &pem.Block{Type: "CERTIFICATE", Bytes: crtder})
-	if err != nil {
-		return
+	cert = &tls.Certificate{
+		Certificate: [][]byte{crtder, root.Certificate[0]},
+		PrivateKey:  key,
 	}
-
-	crt, err := tls.X509KeyPair(crtpem.Bytes(), keypem.Bytes())
-	return &crt, err
+	return
 }
 
 // certificates pool, able to thread safely add and fetch
