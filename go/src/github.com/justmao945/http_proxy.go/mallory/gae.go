@@ -37,8 +37,9 @@ func (self *EngineGAE) Serve(s *Session, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	// http is enough, though appspot support https, which doesn't help.
-	url := fmt.Sprintf("http://%s.appspot.com/http", self.AppSpot)
+	// use httpS to keep all things secure,
+	// the second phase of CONNECT also uses this.
+	url := fmt.Sprintf("https://%s.appspot.com/http", self.AppSpot)
 	// for debug
 	if self.AppSpot == "debug" {
 		url = "http://localhost:8080/http"

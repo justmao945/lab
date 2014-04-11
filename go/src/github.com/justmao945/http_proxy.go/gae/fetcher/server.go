@@ -13,6 +13,10 @@ func init() {
 	http.HandleFunc("/connect", HandleConnect)
 }
 
+// 1. read the real client request R1 from the body of request R2
+// 2. round trip the request R1 by urlfetch
+// 3. write response P1 of request R1 as the body of response P2
+// 4. send back response P2
 func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 	// create context for gae request
 	ctx := appengine.NewContext(r)
@@ -27,6 +31,7 @@ func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// round trip the client request
+	// in fact RoundTrip supports both http and https
 	resp, err := cli.Transport.RoundTrip(creq)
 	if err != nil {
 		s.HTTPError("urlfetch.Client.Transport.RoundTrip: %s", err.Error())
@@ -46,6 +51,7 @@ func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleConnect(w http.ResponseWriter, r *http.Request) {
+	// TODO: socket?
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
