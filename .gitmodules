@@ -16,3 +16,6 @@
 [submodule "vim-plugins/vim-hemisu"]
 	path = vim-plugins/vim-hemisu
 	url = https://github.com/noahfrederick/vim-hemisu.git
+[submodule "go/src/github.com/justmao945/mallory"]
+	path = go/src/github.com/justmao945/mallory
+	url = git@github.com:justmao945/mallory
