@@ -186,7 +186,7 @@ au FileType python inoremap <expr> <buffer> . CodeAutoCompleteDot()
 au FileType go inoremap <expr> <buffer> . CodeAutoCompleteDot()
 
 " Format go before save
-au FileType go au! BufWritePre <buffer> silent Fmt
+"au FileType go au! BufWritePre <buffer> silent Fmt
 
 
 " =====================================
