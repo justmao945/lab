@@ -182,11 +182,35 @@ au FileType python inoremap <expr> <buffer> . CodeAutoCompleteDot()
 " =====================================
 " Golang
 " =====================================
+" gofmt with quickfix
+"   :ll to see errors
+"   :lopen to open the quickfix window
+func! GoFmt()
+  let cmd = printf("gofmt -w %s", shellescape(expand('%')))
+  let raw = split(system(l:cmd), '\n')
+  let errors = []
+  for line in raw
+    let tokens = matchlist(line, '^\(.\{-}\):\(\d\+\):\(\d\+\)\s*\(.*\)')
+    if !empty(tokens)
+      call add(errors, {"filename": tokens[1],
+                       \"lnum":     tokens[2],
+                       \"col":      tokens[3],
+                       \"text":     tokens[4]})
+    endif
+  endfor
+  if !empty(errors)
+    call setloclist(0, errors, 'r')
+    ll
+  else
+    call setloclist(0, [], 'r')
+  endif
+endf
+
 " Auto completion after .
 au FileType go inoremap <expr> <buffer> . CodeAutoCompleteDot()
 
 " Format go before save
-au FileType go au! BufWritePre <buffer> silent Fmt
+au FileType go au! BufWritePost <buffer> call GoFmt()
 
 
 " =====================================
