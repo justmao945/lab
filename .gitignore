@@ -13,3 +13,6 @@ cov.report/
 *.gc*
 
 .netrwhist
+
+go/src/code.google.com/
+go/src/github.com/

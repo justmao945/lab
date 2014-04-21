@@ -106,7 +106,7 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "Chrome", chrome .. ' --scroll-pixels=200 --allow-file-access-from-files' },
+                                    { "Chrome", chrome .. ' --scroll-pixels=200 ' },
                                     { "Lock", xlock },
                                     { "Next", nextbg_cmd },
                                   }

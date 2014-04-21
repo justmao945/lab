@@ -204,7 +204,7 @@ func! GoFmt()
   else
     call setloclist(0, [], 'r')
     " I don't know the why ':e' clears syntax...
-    call feedkeys(":e\<Enter>")
+    "call feedkeys(":e\<Enter>")
   endif
 endf
 
