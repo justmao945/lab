@@ -1,29 +1,21 @@
-//-------------------------------
-//  Very happy to F**K GFW !!!
-//-------------------------------
+// proxy auto-config template
 
 var direct = 'DIRECT';
-var http_proxy = 'PROXY 127.0.0.1:8087; DIRECT';
+var http_proxy = 'PROXY 127.0.0.1:18087; DIRECT';
 
 var domains =
 {
-  "github.com":   true, // F**K GXB
-  "golang.org":   true,
-  "appspot.com":  true,
-  "blogger.com":  true,
+  "appspot.com": true,
   "blogspot.com": true,
-  "facebook.com": true,
-  "google.com":   true,
+  "golang.org": true,
   "twitter.com":  true,
-  "wordpress.com":true,
-  "youtube.com":  true,
+  "wordpress.com": true,
 };
 
 // host can override domains
 var hosts =
 {
-  "www.google.com.hk": true,
-  "github.global.ssl.fastly.net": true,
+//  "github.global.ssl.fastly.net": true,
 };
 
 

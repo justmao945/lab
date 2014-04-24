@@ -1,13 +1,11 @@
 #---------------+
 #    env        |
 #---------------+
-set -x GOPATH $HOME/github/lab/go
-set -x PATH $GOPATH/bin $PATH
+set BUNDLE /usr/local/bundle/config.fish
+[ -f $BUNDLE ]; and source $BUNDLE
 
-set BUNDLE_CONFIG $HOME/.bundle/config.fish
-if [ -f $BUNDLE_CONFIG ]
-  source $BUNDLE_CONFIG
-end
+set -x GOPATH $HOME/github/lab/go
+set -x PATH   $PATH $GOPATH/bin
 
 
 #---------------+
@@ -29,6 +27,3 @@ function rm --description 'Remove interactively'
   command rm -i $argv
 end
 
-function mkproj_cocos2dx3 --description 'create_project.py for Cocos2d-x 3.0'
-  python $HOME/github/cocos2d-x/tools/project-creator/create_project.py $argv
-end
