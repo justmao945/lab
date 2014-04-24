@@ -203,6 +203,8 @@ func! GoFmt()
     ll
   else
     call setloclist(0, [], 'r')
+    " I don't know the why ':e' clears syntax...
+    "call feedkeys(":e\<Enter>")
   endif
 endf
 
@@ -210,7 +212,7 @@ endf
 au FileType go inoremap <expr> <buffer> . CodeAutoCompleteDot()
 
 " Format go before save
-au FileType go au! BufWritePost <buffer> call GoFmt()
+au BufWritePost *.go call GoFmt()
 
 
 " =====================================
