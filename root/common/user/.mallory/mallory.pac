@@ -8,7 +8,6 @@ var domains =
   "appspot.com": true,
   "blogspot.com": true,
   "golang.org": true,
-  "googlevideo.com": true,
   "twitter.com":  true,
   "wordpress.com": true,
 };
@@ -20,6 +19,12 @@ var hosts =
   "d3js.org": true,
 //  "github.global.ssl.fastly.net": true,
 };
+
+// regex to match URL
+var regex = 
+[
+  /^http:\/\/.*google.*/,
+];
 
 
 function host2domain(host) {
@@ -37,6 +42,15 @@ function FindProxyForURL(url, host) {
   var q = hosts[host];
   if( q === true ) return http_proxy;
   else if( q === false ) return direct;
-  
-  return domains[host2domain(host)] ? http_proxy : direct;
+ 
+  q = domains[host2domain(host)]
+  if(q === true) return http_proxy;
+  else if(q == false) return direct;
+
+  for(var i = 0; i < regex.length; ++i) {
+    if(regex[i].test(url)) {
+      return http_proxy;
+    }
+  }
+  return direct;
 };
