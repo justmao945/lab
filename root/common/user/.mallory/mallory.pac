@@ -18,7 +18,7 @@ var hosts =
 {
   "cdn.sstatic.net": true,
   "d3js.org": true,
-//  "github.global.ssl.fastly.net": true,
+  "github.global.ssl.fastly.net": true,
 };
 
 
