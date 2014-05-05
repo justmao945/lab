@@ -1,0 +1,83 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost 
+fe80::1%lo0	localhost
+
+
+## for google
+74.125.128.199 0.drive.google.com
+74.125.128.199 1.drive.google.com
+74.125.128.199 2.drive.google.com
+74.125.128.199 3.drive.google.com
+74.125.128.199 4.drive.google.com
+74.125.128.199 5.drive.google.com
+74.125.128.199 6.drive.google.com
+74.125.128.199 accounts.google.com
+74.125.128.199 ajax.googleapis.com
+74.125.128.199 apis.google.com
+74.125.128.199 appengine.google.com
+74.125.128.199 code.google.com
+74.125.128.199 clients1.google.com
+74.125.128.199 clients2.google.com
+74.125.128.199 clients3.google.com
+74.125.128.199 clients4.google.com
+74.125.128.199 clients5.google.com
+74.125.128.199 clients6.google.com
+74.125.128.199 commondatastorage.googleapis.com
+74.125.128.199 csi.gstatic.com
+74.125.128.199 docs.google.com
+74.125.128.199 drive.google.com
+74.125.128.199 fonts.googleapis.com
+74.125.128.199 gg.google.com
+74.125.128.199 groups.google.com
+74.125.128.199 i1.ytimg.com
+74.125.128.199 i2.ytimg.com
+74.125.128.199 i3.ytimg.com
+74.125.128.199 i4.ytimg.com
+74.125.128.199 i5.ytimg.com
+74.125.128.199 i6.ytimg.com
+74.125.128.199 lh1.googleusercontent.com
+74.125.128.199 lh2.googleusercontent.com
+74.125.128.199 lh3.googleusercontent.com
+74.125.128.199 lh4.googleusercontent.com
+74.125.128.199 lh5.googleusercontent.com
+74.125.128.199 lh6.googleusercontent.com
+74.125.128.199 lh1.ggpht.com
+74.125.128.199 lh2.ggpht.com
+74.125.128.199 lh3.ggpht.com
+74.125.128.199 lh4.ggpht.com
+74.125.128.199 lh5.ggpht.com
+74.125.128.199 lh6.ggpht.com
+74.125.128.199 mail.google.com
+74.125.128.199 maps.google.com
+74.125.128.199 maps.google.com.hk
+74.125.128.199 maps.gstatic.com
+74.125.128.199 mts0.google.com
+74.125.128.199 mts1.google.com
+74.125.128.199 oribe-yasuna.appspot.com
+74.125.128.199 oauth.googleusercontent.com
+74.125.128.199 play.google.com
+74.125.128.199 plus.google.com
+74.125.128.199 s.ytimg.com
+74.125.128.199 ssl.gstatic.com
+74.125.128.199 storage.googleapis.com
+74.125.128.199 talkgadget.google.com
+74.125.128.199 talkx.google.com
+74.125.128.199 themes.googleusercontent.com
+74.125.128.199 wallet.google.com
+74.125.128.199 www.google.com
+74.125.128.199 www.google.com.hk
+74.125.128.199 www.gstatic.com
+74.125.128.199 www.youtube.com
+74.125.128.199 yt1.ggpht.com
+74.125.128.199 yt2.ggpht.com
+74.125.128.199 yt3.ggpht.com
+74.125.128.199 yt4.ggpht.com
+74.125.128.199 yt5.ggpht.com
+74.125.128.199 yt6.ggpht.com

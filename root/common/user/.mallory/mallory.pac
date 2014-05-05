@@ -8,6 +8,7 @@ var domains =
   "appspot.com": true,
   "blogspot.com": true,
   "golang.org": true,
+  "googlevideo.com": true,
   "twitter.com":  true,
   "wordpress.com": true,
 };
@@ -15,6 +16,8 @@ var domains =
 // host can override domains
 var hosts =
 {
+  "cdn.sstatic.net": true,
+  "d3js.org": true,
 //  "github.global.ssl.fastly.net": true,
 };
 
