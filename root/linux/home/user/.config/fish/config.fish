@@ -5,12 +5,12 @@ function c  --description 'Clear screen'
     clear
 end
 
-function df --description 'Print sizes in human readable'
-    command df -h $argv
+function cmake-clang --description 'Use clang as the C/C++ compiler'
+    command cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang $argv
 end
 
-function ga --description 'Start GoAgent proxy server'
-    python $HOME/github/3rd/goagent/local/proxy.py
+function df --description 'Print sizes in human readable'
+    command df -h $argv
 end
 
 function man --description 'Use vim viewer to display manpage'
