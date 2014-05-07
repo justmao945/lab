@@ -27,3 +27,7 @@ function rm --description 'Remove interactively'
   command rm -i $argv
 end
 
+function reset_launchpad --description 'Reset launchpad apps'
+  set db (find ~/Library/Application\ Support/Dock/ -type f ! -name 'desktoppicture.db')
+  rm -f $db; and killall -HUP Dock
+end
