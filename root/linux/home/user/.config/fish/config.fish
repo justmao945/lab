@@ -26,6 +26,10 @@ function t  --description 'Resource top usage'
     env TERM=screen htop $argv
 end
 
+function ssh --description 'SSH'
+    env TERM=screen ssh $argv
+end
+
 #---------------+
 #    env        |
 #---------------+
