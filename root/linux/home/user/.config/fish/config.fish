@@ -26,11 +26,15 @@ function t  --description 'Resource top usage'
     env TERM=screen htop $argv
 end
 
+function ssh --description 'SSH'
+    env TERM=screen ssh $argv
+end
+
 #---------------+
 #    env        |
 #---------------+
 set -x EDITOR   vim
-set -x GOPATH   $HOME/github/lab/go
+set -x GOPATH   $HOME/go
 set -x PATH     $HOME/gitlab/bin $GOPATH/bin /usr/local/go/bin /usr/local/go_appengine $PATH
 
 set -x GTK_IM_MODULE    fcitx
