@@ -20,6 +20,8 @@ int main (int argc, const char* argv[]) {
         
     @autoreleasepool {
         Fraction *frac = [[Fraction alloc] init];
+        Fraction *frac1 = [Fraction new];
+        [frac1 setDenominator:10];
         [frac setNumerator: 1];
         [frac setDenominator: 3];
         NSLog(@"The value of frac is:");
