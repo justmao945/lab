@@ -1,6 +1,3 @@
-[submodule "SimpleSpritePacker/cimg"]
-	path = SimpleSpritePacker/cimg
-	url = http://git.code.sf.net/p/cimg/source
 [submodule "vim-plugins/vim-pathogen"]
 	path = vim-plugins/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
@@ -16,6 +13,3 @@
 [submodule "go/src/github.com/justmao945/mallory"]
 	path = go/src/github.com/justmao945/mallory
 	url = git@github.com:justmao945/mallory
-[submodule "go/src/github.com/nsf/gocode"]
-	path = go/src/github.com/nsf/gocode
-	url = https://github.com/nsf/gocode
