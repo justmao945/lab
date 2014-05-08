@@ -34,7 +34,7 @@ end
 #    env        |
 #---------------+
 set -x EDITOR   vim
-set -x GOPATH   $HOME/github/lab/go
+set -x GOPATH   $HOME/go
 set -x PATH     $HOME/gitlab/bin $GOPATH/bin /usr/local/go/bin /usr/local/go_appengine $PATH
 
 set -x GTK_IM_MODULE    fcitx
