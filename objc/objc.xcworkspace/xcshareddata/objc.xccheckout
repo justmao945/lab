@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A619C777-3FA3-4F8B-BA03-392CD50CF2F6</string>
+	<string>ACD613DF-52CD-406E-AAE9-8CD5836C25E0</string>
 	<key>IDESourceControlProjectName</key>
 	<string>objc</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -19,6 +19,8 @@
 	<dict>
 		<key>5B814D5B-ECFF-4735-82AE-90B10D893C75</key>
 		<string>../..</string>
+		<key>B25E7171-5DC1-47AB-AFEF-8D7870A57DA5</key>
+		<string>../block</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/justmao945/lab</string>
@@ -28,6 +30,14 @@
 	<string>5B814D5B-ECFF-4735-82AE-90B10D893C75</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B25E7171-5DC1-47AB-AFEF-8D7870A57DA5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>block</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

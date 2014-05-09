@@ -16,8 +16,14 @@
 
 @end
 
+@protocol Drawing <NSObject>
+
+@required
+
+@end
+
 int main (int argc, const char* argv[]) {
-        
+    
     @autoreleasepool {
         Fraction *frac = [[Fraction alloc] init];
         Fraction *frac1 = [Fraction new];

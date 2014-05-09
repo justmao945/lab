@@ -7,6 +7,7 @@ var domains =
 {
   "appspot.com": true,
   "blogspot.com": true,
+  "feedly.com": true,
   "golang.org": true,
   "twitter.com":  true,
   "wordpress.com": true,
