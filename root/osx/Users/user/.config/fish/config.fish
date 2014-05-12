@@ -4,7 +4,7 @@
 set BUNDLE /usr/local/bundle/config.fish
 [ -f $BUNDLE ]; and source $BUNDLE
 
-set -x GOPATH $HOME/Documents/source/go
+set -x GOPATH $HOME/Source/go
 set -x PATH   $PATH $GOPATH/bin
 
 
