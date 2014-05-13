@@ -10,13 +10,5 @@
 
 @implementation Penguin
 
--(id)init
-{
-    self = [super init];
-    if (self) {
-        NSLog(@"Penguin created");
-    }
-    return self;
-}
 
 @end
