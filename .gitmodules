@@ -13,3 +13,6 @@
 [submodule "go/src/github.com/justmao945/mallory"]
 	path = go/src/github.com/justmao945/mallory
 	url = git@github.com:justmao945/mallory
+[submodule "vim-plugins/python-mode"]
+	path = vim-plugins/python-mode
+	url = https://github.com/klen/python-mode.git
