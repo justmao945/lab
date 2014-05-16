@@ -95,6 +95,11 @@
 		</dict>
 		<key>Sprites</key>
 		<dict/>
+		<key>animation</key>
+		<dict>
+			<key>isSmartSpriteSheet</key>
+			<true/>
+		</dict>
 		<key>ccbResources/ccbButtonHighlighted.png</key>
 		<dict>
 			<key>scaleFrom</key>

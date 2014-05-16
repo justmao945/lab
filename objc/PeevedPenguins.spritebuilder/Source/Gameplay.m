@@ -46,8 +46,8 @@
     CCScene* level = [CCBReader loadAsScene:@"Levels/Level1"];
     [_levelNode addChild:level];
     
-    //visualize physics bodies and joints
-    _physicsNode.debugDraw = YES;
+    ////visualize physics bodies and joints
+    //_physicsNode.debugDraw = YES;
     
     // setup delegate
     _physicsNode.collisionDelegate = self;
@@ -165,6 +165,10 @@
 
 -(void) sealRemoved:(CCNode*)seal
 {
+    CCParticleSystem* explosion = (CCParticleSystem*)[CCBReader load:@"SealExplosion"];
+    explosion.autoRemoveOnFinish = YES;
+    explosion.position = seal.position;
+    [seal.parent addChild:explosion];
     [seal removeFromParent];
 }
 
