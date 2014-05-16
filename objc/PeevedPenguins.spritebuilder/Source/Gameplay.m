@@ -38,11 +38,6 @@
     CCPhysicsJoint *_penguinCatapultJoint;
 }
 
--(void)retry
-{
-    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"Gameplay"]];
-}
-
 -(void)didLoadFromCCB
 {
     // tell this scene to accept touches
@@ -53,6 +48,10 @@
     
     //visualize physics bodies and joints
     _physicsNode.debugDraw = YES;
+    
+    // setup delegate
+    _physicsNode.collisionDelegate = self;
+    
     
     // arm and catapult should not collide, disable this by using the same collision group
     [_catapultArm.physicsBody setCollisionGroup:_catapult];
@@ -73,6 +72,13 @@
     // deactive the collision
     _mouseJointNode.physicsBody.collisionMask = @[];
 }
+
+
+-(void)retry
+{
+    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"Gameplay"]];
+}
+
 
 -(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -147,5 +153,19 @@
     [_gameNode runAction:follow];
 }
 
+-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair seal:(CCNode *)nodeA wildcard:(CCNode *)nodeB
+{
+    CCLOG(@"Something collided with a seal!");
+    float energy = [pair totalKineticEnergy];
+    if (energy > 5000) {
+        [self sealRemoved:nodeA];
+    }
+}
+
+
+-(void) sealRemoved:(CCNode*)seal
+{
+    [seal removeFromParent];
+}
 
 @end

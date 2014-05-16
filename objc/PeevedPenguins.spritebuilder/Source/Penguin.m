@@ -10,5 +10,9 @@
 
 @implementation Penguin
 
+-(void) didLoadFromCCB
+{
+    CCLOG(@"load penguin");
+}
 
 @end
