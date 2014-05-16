@@ -32,6 +32,10 @@
     
     // except buttons...
     CCNode *_gameNode;
+    
+    // about penguins
+    CCNode* _currentPenguin;
+    CCPhysicsJoint *_penguinCatapultJoint;
 }
 
 -(void)retry
@@ -57,9 +61,9 @@
     // BodyA and anchorA should come from the same one
     // Joint anchor point is not the anchor point of a CCNode, it's a relative position to bottom left of the node.
     // Not relative to the anchor point of the node
-    CGPoint pivotAnchor = ccp(_catapultArm.contentSize.width * _catapultArm.anchorPoint.x, _catapultArm.contentSize.height * _catapultArm.anchorPoint.y);
+    //CGPoint pivotAnchor = ccp(_catapultArm.contentSize.width * _catapultArm.anchorPoint.x, _catapultArm.contentSize.height * _catapultArm.anchorPoint.y);
     //CGPoint pivotAnchor = ccp(10, 10);
-    _catapultJoint = [CCPhysicsJoint connectedPivotJointWithBodyA:_catapultArm.physicsBody bodyB:_catapult.physicsBody anchorA:pivotAnchor];
+    _catapultJoint = [CCPhysicsJoint connectedPivotJointWithBodyA:_catapultArm.physicsBody bodyB:_catapult.physicsBody anchorA:_catapultArm.anchorPointInPoints];
     CCLOG(@"arm anchor: %f %f", _catapultArm.anchorPoint.x, _catapultArm.anchorPoint.y);
     
     // nothing should collide with our pullback node
@@ -78,6 +82,14 @@
     if (CGRectContainsPoint(_catapultArm.boundingBox, touchLocation)) {
         _mouseJointNode.position = touchLocation;
         _mouseJoint = [CCPhysicsJoint connectedSpringJointWithBodyA:_mouseJointNode.physicsBody bodyB:_catapultArm.physicsBody anchorA:ccp(0, 0) anchorB:ccp(34, 138) restLength:0 stiffness:3000 damping:150];
+        
+        _currentPenguin = [CCBReader load:@"Penguin"];
+        // 34, 138 is a point in arm, need to get its position in world, and then covert to node position in physicsNode, as the penguin is a child of it.
+        CGPoint penguinPosition = [_catapultArm convertToWorldSpace:ccp(34, 138)];
+        _currentPenguin.position = [_physicsNode convertToNodeSpace:penguinPosition];
+        [_physicsNode addChild:_currentPenguin];
+        _currentPenguin.physicsBody.allowsRotation = NO;
+        _penguinCatapultJoint = [CCPhysicsJoint connectedPivotJointWithBodyA:_currentPenguin.physicsBody bodyB:_catapultArm.physicsBody anchorA:_currentPenguin.anchorPointInPoints];
     }
     CCLOG(@"touch began");
 }
@@ -106,6 +118,14 @@
     if (_mouseJoint != nil) {
         [_mouseJoint invalidate];
         _mouseJoint = nil;
+        
+        [_penguinCatapultJoint invalidate];
+        _penguinCatapultJoint = nil;
+        
+        _currentPenguin.physicsBody.allowsRotation = YES;
+        
+        CCActionFollow *follow = [CCActionFollow actionWithTarget:_currentPenguin worldBoundary:_gameNode.boundingBox];
+        [_gameNode runAction:follow];
     }
 }
 
