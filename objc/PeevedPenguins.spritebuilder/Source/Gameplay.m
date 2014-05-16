@@ -10,9 +10,27 @@
 
 @implementation Gameplay
 {
+    // all physics bodies must be children of this
     CCPhysicsNode *_physicsNode;
+    
+    // drag
+    CCNode *_mouseJointNode;
+    CCPhysicsJoint *_mouseJoint;
+    
+    // a node to pullback catapultArm
+    CCNode *_pullbackNode;
+    CCPhysicsJoint *_pullbackJoint;
+    
+    // catapult related
+    CCNode *_catapult;
     CCNode *_catapultArm;
+    CCPhysicsJoint *_catapultJoint;
+
+    
+    // changed in every level, a sub scene
     CCNode *_levelNode;
+    
+    // except buttons...
     CCNode *_gameNode;
 }
 
@@ -28,11 +46,67 @@
     
     CCScene* level = [CCBReader loadAsScene:@"Levels/Level1"];
     [_levelNode addChild:level];
+    
+    //visualize physics bodies and joints
+    _physicsNode.debugDraw = YES;
+    
+    // arm and catapult should not collide, disable this by using the same collision group
+    [_catapultArm.physicsBody setCollisionGroup:_catapult];
+    [_catapult.physicsBody setCollisionGroup:_catapult];
+    
+    // BodyA and anchorA should come from the same one
+    // Joint anchor point is not the anchor point of a CCNode, it's a relative position to bottom left of the node.
+    // Not relative to the anchor point of the node
+    CGPoint pivotAnchor = ccp(_catapultArm.contentSize.width * _catapultArm.anchorPoint.x, _catapultArm.contentSize.height * _catapultArm.anchorPoint.y);
+    //CGPoint pivotAnchor = ccp(10, 10);
+    _catapultJoint = [CCPhysicsJoint connectedPivotJointWithBodyA:_catapultArm.physicsBody bodyB:_catapult.physicsBody anchorA:pivotAnchor];
+    CCLOG(@"arm anchor: %f %f", _catapultArm.anchorPoint.x, _catapultArm.anchorPoint.y);
+    
+    // nothing should collide with our pullback node
+    _pullbackNode.physicsBody.collisionMask = @[];
+    _pullbackJoint = [CCPhysicsJoint connectedSpringJointWithBodyA:_pullbackNode.physicsBody bodyB:_catapultArm.physicsBody anchorA:ccp(0, 0) anchorB:ccp(34, 138) restLength:60 stiffness:500 damping:40];
+    
+    // deactive the collision
+    _mouseJointNode.physicsBody.collisionMask = @[];
 }
 
 -(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [self launchPenguins];
+//    [self launchPenguins];
+    // get location from _gameNode is because everything is contained in it.
+    CGPoint touchLocation = [touch locationInNode:_gameNode];
+    if (CGRectContainsPoint(_catapultArm.boundingBox, touchLocation)) {
+        _mouseJointNode.position = touchLocation;
+        _mouseJoint = [CCPhysicsJoint connectedSpringJointWithBodyA:_mouseJointNode.physicsBody bodyB:_catapultArm.physicsBody anchorA:ccp(0, 0) anchorB:ccp(34, 138) restLength:0 stiffness:3000 damping:150];
+    }
+    CCLOG(@"touch began");
+}
+
+-(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [touch locationInNode:_gameNode];
+    _mouseJointNode.position = touchLocation;
+    CCLOG(@"touch moved");
+}
+
+-(void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    [self releaseCatapult];
+    CCLOG(@"touch ended");
+}
+
+-(void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    [self releaseCatapult];
+    CCLOG(@"touch cancelled");
+}
+
+-(void)releaseCatapult
+{
+    if (_mouseJoint != nil) {
+        [_mouseJoint invalidate];
+        _mouseJoint = nil;
+    }
 }
 
 -(void)launchPenguins
@@ -49,13 +123,9 @@
     // ensure followed object is in visible are when starting
     // reset position to left most when launch
     _gameNode.position = ccp(0,0);
-    CCLOG(@"%f %f", self.position.x, self.position.y);
     CCActionFollow *follow = [CCActionFollow actionWithTarget:penguin worldBoundary:_gameNode.boundingBox];
     [_gameNode runAction:follow];
 }
-
-
-
 
 
 @end
