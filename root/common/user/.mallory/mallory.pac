@@ -5,19 +5,27 @@ var http_proxy = 'SOCKS 127.0.0.1:18081; PROXY 127.0.0.1:18087; DIRECT';
 
 var domains =
 {
+  "2shared.com":true,
   "appspot.com": true,
   "blogspot.com": true,
+  "coco2d-iphone.org": true,
   "facebook.net": true,
   "feedly.com": true,
   "golang.org": true,
   "makegameswith.us": true,
   "twitter.com":  true,
   "wordpress.com": true,
+  "uploaded.net": true,
+  "ul.to": true,
+  "mediafire.com":true,
+  "bit.ly": true,
+  "nodejs.org": true,
 };
 
 // host can override domains
 var hosts =
 {
+  "api.github.com": true,
   "cdn.sstatic.net": true,
   "d3js.org": true,
   "github.global.ssl.fastly.net": true,
