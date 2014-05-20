@@ -47,8 +47,10 @@ name of the platform to which the binding applies if it is not universal.-->
 <keyBinding commandName="Line Down" keySequence="ARROW_DOWN"/>
 <keyBinding commandName="Line End" keySequence="END"/>
 <keyBinding commandName="Line End" keySequence="COMMAND+ARROW_RIGHT" platform="cocoa"/>
+<keyBinding commandName="Line End" keySequence="CTRL+E" platform="cocoa"/>
 <keyBinding commandName="Line Start" keySequence="HOME"/>
 <keyBinding commandName="Line Start" keySequence="COMMAND+ARROW_LEFT" platform="cocoa"/>
+<keyBinding commandName="Line Start" keySequence="CTRL+A" platform="cocoa"/>
 <keyBinding commandName="Line Up" keySequence="ARROW_UP"/>
 <keyBinding commandName="Manage Launches" keySequence="COMMAND+SHIFT+M"/>
 <keyBinding commandName="Maximize Active View or Editor" keySequence="COMMAND+M"/>
