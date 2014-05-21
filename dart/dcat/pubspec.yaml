@@ -1,0 +1,3 @@
+name: dcat
+dependencies:
+  args: any
