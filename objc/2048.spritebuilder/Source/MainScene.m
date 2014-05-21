@@ -12,8 +12,6 @@
 @implementation MainScene
 
 {
-    CCLabelTTF* _scoreLabel;
-    CCLabelTTF* _highscoreLabel;
     Grid* _grid;
 }
 

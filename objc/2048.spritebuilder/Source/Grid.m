@@ -35,6 +35,9 @@ static const int GRID_SIZE = 4;
     _tileMarginHr = (self.contentSize.width - tile.contentSize.width * GRID_SIZE) / (GRID_SIZE + 1);
     _tileMarginVt = (self.contentSize.height - tile.contentSize.height * GRID_SIZE) / (GRID_SIZE + 1);
     
+    // setup swipe gestrues
+    [self setupGestures];
+
     // setup independent bg
     [self setupBg];
     
@@ -42,6 +45,26 @@ static const int GRID_SIZE = 4;
     [self loadATile];
 }
 
+// add swipe gestures for node Grid
+-(void)setupGestures
+{
+    UISwipeGestureRecognizer* swl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft)];
+    swl.direction = UISwipeGestureRecognizerDirectionLeft;
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swl];
+    
+    UISwipeGestureRecognizer* swr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight)];
+    swr.direction = UISwipeGestureRecognizerDirectionRight;
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swr];
+    
+    
+    UISwipeGestureRecognizer* swu = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp)];
+    swu.direction = UISwipeGestureRecognizerDirectionUp;
+    [[[CCDirector sharedDirector] view] addGestureRecognizer:swu];
+    
+    UISwipeGestureRecognizer* swd = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown)];
+    swd.direction = UISwipeGestureRecognizerDirectionDown;
+    [[[CCDirector sharedDirector]view]addGestureRecognizer:swd];
+}
 
 // fill _gridBg
 -(void)setupBg
@@ -101,6 +124,26 @@ static const int GRID_SIZE = 4;
     [self addChild:tile];
     
     return YES;
+}
+
+-(void) swipeLeft
+{
+    CCLOG(@"left");
+}
+
+-(void) swipeRight
+{
+    CCLOG(@"right");
+}
+
+-(void) swipeUp
+{
+    CCLOG(@"up");
+}
+
+-(void) swipeDown
+{
+    CCLOG(@"down");
 }
 
 @end
