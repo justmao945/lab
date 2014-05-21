@@ -12,6 +12,36 @@
 {
     CCNodeColor *_backgroundNode;
     CCLabelTTF *_valueLabel;
+    int _value;
+}
+
+-(int)value
+{
+    return _value;
+}
+
+-(void)setValue:(int)value
+{
+    _value = value;
+    _valueLabel.string  = [NSString stringWithFormat:@"%d", _value];
+}
+
++(instancetype)load
+{
+    Tile* tile = (Tile*)[CCBReader load:@"Tile"];
+    int value = 2;
+    if (arc4random() % 4 == 0) {
+        value = 4;
+    }
+    [tile setValue:value];
+    return tile;
+}
+
++(instancetype)loadWithValue:(int)value
+{
+    Tile* tile = (Tile*)[CCBReader load:@"Tile"];
+    [tile setValue:value];
+    return tile;
 }
 
 @end

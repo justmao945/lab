@@ -9,4 +9,18 @@
 #import "CCNode.h"
 
 @interface Tile : CCNode
+
+// index in grid
+@property (nonatomic, assign) int x, y;
+
+// load tile and generate a random value, 2 or 4
++(instancetype)load;
+
+// load tile and generate value with the given one
++(instancetype)loadWithValue:(int) value;
+
+// value getter and setter
+-(int)value;
+-(void)setValue:(int)value;
+
 @end
