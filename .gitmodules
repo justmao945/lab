@@ -16,3 +16,6 @@
 [submodule "vim-plugins/python-mode"]
 	path = vim-plugins/python-mode
 	url = https://github.com/klen/python-mode.git
+[submodule "vim-plugins/dart"]
+	path = vim-plugins/dart
+	url = https://github.com/dart-lang/dart-vim-plugin.git

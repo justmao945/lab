@@ -20,6 +20,7 @@ var domains =
   "mediafire.com":true,
   "bit.ly": true,
   "nodejs.org": true,
+  "chromium.org": true,
 };
 
 // host can override domains
