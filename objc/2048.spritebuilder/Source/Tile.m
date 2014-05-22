@@ -26,13 +26,8 @@
     _valueLabel.string  = [NSString stringWithFormat:@"%d", _value];
 }
 
--(void)setIndex:(int)x Y:(int)y
-{
-    self.x = x;
-    self.y = y;
-}
 
-+(instancetype)load
++(instancetype)loadWithIndex:(Index *)index
 {
     Tile* tile = (Tile*)[CCBReader load:@"Tile"];
     int value = 2;
@@ -40,13 +35,15 @@
         value = 4;
     }
     [tile setValue:value];
+    [tile setIndex:index];
     return tile;
 }
 
-+(instancetype)loadWithValue:(int)value
++(instancetype)loadWithIndex:(Index *)index andValue:(int)value
 {
     Tile* tile = (Tile*)[CCBReader load:@"Tile"];
     [tile setValue:value];
+    [tile setIndex:index];
     return tile;
 }
 

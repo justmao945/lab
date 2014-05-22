@@ -7,23 +7,17 @@
 //
 
 #import "CCNode.h"
+#import "Index.h"
 
 @interface Tile : CCNode
 
-// index in grid
-@property (nonatomic, assign) int x, y;
+@property (nonatomic, strong) Index* index;
 
-// load tile and generate a random value, 2 or 4
-+(instancetype)load;
++(instancetype)loadWithIndex:(Index*)index;
 
-// load tile and generate value with the given one
-+(instancetype)loadWithValue:(int) value;
++(instancetype)loadWithIndex:(Index*)index andValue:(int) value;
 
-// value getter and setter
 -(int)value;
 -(void)setValue:(int)value;
-
-// set index x and y
--(void)setIndex:(int)x Y:(int)y;
 
 @end

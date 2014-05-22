@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75218E06192E23650020228D /* Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 75218E05192E23650020228D /* Index.m */; };
 		7599CA17192CD8AC00488291 /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 7599CA16192CD8AC00488291 /* Grid.m */; };
 		7599CA1B192CD8EE00488291 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7599CA1A192CD8EE00488291 /* Tile.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
@@ -57,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		75218E04192E23650020228D /* Index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Index.h; path = Source/Index.h; sourceTree = "<group>"; };
+		75218E05192E23650020228D /* Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Index.m; path = Source/Index.m; sourceTree = "<group>"; };
 		7599CA15192CD8AC00488291 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Grid.h; path = Source/Grid.h; sourceTree = SOURCE_ROOT; };
 		7599CA16192CD8AC00488291 /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Grid.m; path = Source/Grid.m; sourceTree = SOURCE_ROOT; };
 		7599CA19192CD8EE00488291 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tile.h; path = Source/Tile.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				7599CA16192CD8AC00488291 /* Grid.m */,
 				7599CA19192CD8EE00488291 /* Tile.h */,
 				7599CA1A192CD8EE00488291 /* Tile.m */,
+				75218E04192E23650020228D /* Index.h */,
+				75218E05192E23650020228D /* Index.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75218E06192E23650020228D /* Index.m in Sources */,
 				7599CA1B192CD8EE00488291 /* Tile.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,

@@ -10,14 +10,4 @@
 #import "MainScene.h"
 
 @implementation MainScene
-
-{
-    Grid* _grid;
-}
-
--(void) didLoadFromCCB
-{
-    
-}
-
 @end
