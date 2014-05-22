@@ -131,10 +131,14 @@ static const CCTime SWIPE_DUR = 0.2;
         CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
         CCActionCallBlock *update = [CCActionCallBlock actionWithBlock:^(){
             [a setValue:a.value * 2];
+            CCLOG(@"dest: (%f, %f)", dest.x, dest.y);
+            CCLOG(@"a pos: %f, %f", a.position.x, a.position.y);
         }];
         CCActionSequence *seq = [CCActionSequence actionWithArray:@[moveTo, update]];
         [a runAction:seq];
         
+        // !! important, action can't be used by multiple CCNode !!
+        moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
         CCActionRemove* rm = [CCActionRemove action];
         seq = [CCActionSequence actionWithArray:@[moveTo, rm]];
         [b runAction:seq];
@@ -144,6 +148,7 @@ static const CCTime SWIPE_DUR = 0.2;
         
         [a setIndex:ix];
         _grid[ix.x][ix.y] = a;
+        CCLOG(@"x: %d, y: %d", ix.x, ix.y);
         return hasNewEvent;
     }
     return NO;
@@ -189,6 +194,7 @@ static const CCTime SWIPE_DUR = 0.2;
                 }
             }
             Index* pj = [[Index alloc] initWithX:p andY:j];
+            CCLOG(@"p: %d, j: %d", p, j);
             if (s && s.value == t.value) {
                 shouldLoadATile |= [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
                 i = k + 1;
