@@ -90,6 +90,12 @@ static const int GRID_SIZE = 4;
     }
 }
 
+// need x and y value for tile
+-(CGPoint) nodePositionX:(int)x Y:(int)y
+{
+    return ccp(_tileMarginHr * (x + 1) + _tileWidth * x , _tileMarginVt * (y  + 1) + _tileWidth * y);
+}
+
 // return NO if is full, or YES
 // after calling this, loaded tile will be set to correct position
 // and x,y of Tile will be set.
@@ -120,7 +126,7 @@ static const int GRID_SIZE = 4;
     
     // fill _grid
     _grid[tile.x][tile.y] = tile;
-    [tile setPosition:ccp(_tileMarginHr * (tile.x + 1) + _tileWidth * tile.x , _tileMarginVt * (tile.y  + 1) + _tileWidth * tile.y)];
+    [tile setPosition:[self nodePositionX:tile.x Y:tile.y]];
     [self addChild:tile];
     
     return YES;
@@ -128,7 +134,52 @@ static const int GRID_SIZE = 4;
 
 -(void) swipeLeft
 {
-    CCLOG(@"left");
+    CCTime d = 0.2;
+    [self performSelector:@selector(loadATile) withObject:self afterDelay:d];
+    
+    for (int j = 0; j < GRID_SIZE; ++j) {
+        int merged = 0;
+        for (int i = 0; i < GRID_SIZE; ++i) {
+            Tile* tile = _grid[i][j], *sibling;
+            if (tile == nil) {
+                continue;
+            }
+            int k = i + 1;
+            for (; k < GRID_SIZE; ++k) {
+                sibling = _grid[k][j];
+                if (sibling == nil) {
+                    continue;
+                }
+            }
+            
+            CGPoint dest = [self nodePositionX:merged Y:j];
+            CCActionMoveTo* moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
+
+            if (sibling != nil && sibling.value == tile.value) {
+                // move tile and sibling to left, then merge
+                CCActionCallBlock *updateValue = [CCActionCallBlock actionWithBlock:^(){ tile.value *= 2; }];
+                CCActionSequence* seq = [CCActionSequence actionWithArray:@[moveTo, updateValue]];
+                [tile runAction:seq];
+                
+                CCActionMoveTo* sto = [CCActionMoveTo actionWithDuration:d position:dest];
+                CCActionRemove* srm = [CCActionRemove action];
+                CCActionSequence* sseq = [CCActionSequence actionWithArray:@[sto, srm]];
+                [sibling runAction:sseq];
+                ++i;
+                ++merged;
+                _grid[i][j] = nil;
+                _grid[k][j] = nil;
+                _grid[merged][j] = tile;
+            }else {
+                // move tile to left
+                CCActionSequence* seq = [CCActionSequence actionWithArray:@[moveTo]];
+                [tile runAction:seq];
+                _grid[i][j] = nil;
+                _grid[merged][j] = tile;
+                ++merged;
+            }
+        }
+    }
 }
 
 -(void) swipeRight

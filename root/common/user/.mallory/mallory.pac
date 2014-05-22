@@ -5,22 +5,20 @@ var http_proxy = 'SOCKS 127.0.0.1:18081; PROXY 127.0.0.1:18087; DIRECT';
 
 var domains =
 {
-  "2shared.com":true,
+  "angulardart.org": true,
   "appspot.com": true,
   "blogspot.com": true,
+  "blogspot.co.at": true,
+  "chromium.org": true,
   "coco2d-iphone.org": true,
+  "coco2d-x.org": true,
   "facebook.net": true,
   "feedly.com": true,
   "golang.org": true,
   "makegameswith.us": true,
+  "nodejs.org": true,
   "twitter.com":  true,
   "wordpress.com": true,
-  "uploaded.net": true,
-  "ul.to": true,
-  "mediafire.com":true,
-  "bit.ly": true,
-  "nodejs.org": true,
-  "chromium.org": true,
 };
 
 // host can override domains
@@ -35,7 +33,7 @@ var hosts =
 // regex to match URL
 var regex = 
 [
-  /^http:\/\/.*google.*/,
+  /.*google.*/,
 ];
 
 
