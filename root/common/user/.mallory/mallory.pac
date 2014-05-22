@@ -6,6 +6,7 @@ var http_proxy = 'SOCKS 127.0.0.1:18081; PROXY 127.0.0.1:18087; DIRECT';
 var domains =
 {
   "angulardart.org": true,
+  "angularjs.org": true,
   "appspot.com": true,
   "blogspot.com": true,
   "blogspot.co.at": true,
