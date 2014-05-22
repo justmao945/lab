@@ -136,48 +136,50 @@ static const int GRID_SIZE = 4;
 {
     CCTime d = 0.2;
     [self performSelector:@selector(loadATile) withObject:self afterDelay:d];
-    
-    for (int j = 0; j < GRID_SIZE; ++j) {
-        int merged = 0;
-        for (int i = 0; i < GRID_SIZE; ++i) {
-            Tile* tile = _grid[i][j], *sibling;
-            if (tile == nil) {
+    for (int j = 0; j < GRID_SIZE; j++) {
+        int p = 0;
+        for (int i = 0; i < GRID_SIZE;) {
+            Tile* t = _grid[i][j], *s = nil;
+            // empty node, skip
+            if (t == nil) {
+                i++;
                 continue;
             }
+            // find next sibling
             int k = i + 1;
-            for (; k < GRID_SIZE; ++k) {
-                sibling = _grid[k][j];
-                if (sibling == nil) {
-                    continue;
+            for (; k < GRID_SIZE; k++) {
+                s = _grid[k][j];
+                if (s != nil) {
+                    break;
                 }
             }
-            
-            CGPoint dest = [self nodePositionX:merged Y:j];
-            CCActionMoveTo* moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
-
-            if (sibling != nil && sibling.value == tile.value) {
-                // move tile and sibling to left, then merge
-                CCActionCallBlock *updateValue = [CCActionCallBlock actionWithBlock:^(){ tile.value *= 2; }];
-                CCActionSequence* seq = [CCActionSequence actionWithArray:@[moveTo, updateValue]];
-                [tile runAction:seq];
+            CGPoint dest = [self nodePositionX:p Y:j];
+            if (s && s.value == t.value) {
+                // merge, move it and sibling to left, then remove sibling
+                CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
+                CCActionCallBlock *update = [CCActionCallBlock actionWithBlock:^(){
+                    [t setValue:t.value * 2];
+                }];
+                CCActionSequence *seq = [CCActionSequence actionWithArray:@[moveTo, update]];
+                [t runAction:seq];
+                [t setIndex:p Y:j];
                 
-                CCActionMoveTo* sto = [CCActionMoveTo actionWithDuration:d position:dest];
-                CCActionRemove* srm = [CCActionRemove action];
-                CCActionSequence* sseq = [CCActionSequence actionWithArray:@[sto, srm]];
-                [sibling runAction:sseq];
-                ++i;
-                ++merged;
+                CCActionRemove* rm = [CCActionRemove action];
+                seq = [CCActionSequence actionWithArray:@[moveTo, rm]];
+                [s runAction:seq];
                 _grid[i][j] = nil;
                 _grid[k][j] = nil;
-                _grid[merged][j] = tile;
-            }else {
-                // move tile to left
-                CCActionSequence* seq = [CCActionSequence actionWithArray:@[moveTo]];
-                [tile runAction:seq];
+                _grid[p][j] = t;
+                i = k + 1;
+            } else {
+                CCActionSequence *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
+                [t runAction:moveTo];
+                [t setIndex:p Y:j];
                 _grid[i][j] = nil;
-                _grid[merged][j] = tile;
-                ++merged;
+                _grid[p][j] = t;
+                i = k;
             }
+            p++;
         }
     }
 }

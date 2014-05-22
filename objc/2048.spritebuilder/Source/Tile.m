@@ -26,6 +26,12 @@
     _valueLabel.string  = [NSString stringWithFormat:@"%d", _value];
 }
 
+-(void)setIndex:(int)x Y:(int)y
+{
+    self.x = x;
+    self.y = y;
+}
+
 +(instancetype)load
 {
     Tile* tile = (Tile*)[CCBReader load:@"Tile"];

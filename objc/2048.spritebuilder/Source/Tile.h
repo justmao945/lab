@@ -23,4 +23,7 @@
 -(int)value;
 -(void)setValue:(int)value;
 
+// set index x and y
+-(void)setIndex:(int)x Y:(int)y;
+
 @end
