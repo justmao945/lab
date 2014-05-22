@@ -23,7 +23,7 @@ static const CCTime SWIPE_DUR = 0.2;
 {
     [self setupGestures];
     [self setupBackground];
-    [self loadATile];
+    [self loadATileWithDuration:SWIPE_DUR];
 }
 
 // add swipe gestures for node Grid
@@ -87,7 +87,7 @@ static const CCTime SWIPE_DUR = 0.2;
 
 // return NO if is full, or YES
 // after calling this, loaded tile will be set to correct position
--(BOOL)loadATile
+-(BOOL)loadATileWithDuration:(CCTime)d
 {
     // used to generate random empty position
     Index* m[GRID_SIZE*GRID_SIZE];
@@ -111,15 +111,21 @@ static const CCTime SWIPE_DUR = 0.2;
     // fill _grid
     _grid[ix.x][ix.y] = tile;
     [tile setPosition:[self convertPositionFromIndex:ix]];
-    [self addChild:tile];
+    [tile setScale:0];
     
+    CCActionScaleTo* scaleTo = [CCActionScaleTo actionWithDuration:d scale:1];
+    [tile runAction:scaleTo];
+    
+    [self addChild:tile];
     return YES;
 }
 
 // finally, b will be removed, and a will be updated
--(void) mergeTileA:(Tile*)a andB:(Tile*)b toIndex:(Index*)ix withDuration:(CCTime)d
+// return YES if a and b are not the same one and merge successfully, otherwise NO.
+-(BOOL) mergeTileA:(Tile*)a andB:(Tile*)b toIndex:(Index*)ix withDuration:(CCTime)d
 {
-    if (a && b && a.value == b.value) {
+    if (a && b && ix && a.value == b.value) {
+        BOOL hasNewEvent = a.index.x != b.index.x || a.index.y != b.index.y;
         CGPoint dest = [self convertPositionFromIndex:ix];
 
         CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
@@ -132,31 +138,39 @@ static const CCTime SWIPE_DUR = 0.2;
         CCActionRemove* rm = [CCActionRemove action];
         seq = [CCActionSequence actionWithArray:@[moveTo, rm]];
         [b runAction:seq];
+        
         _grid[a.index.x][a.index.y] = nil;
         _grid[b.index.x][b.index.y] = nil;
         
         [a setIndex:ix];
         _grid[ix.x][ix.y] = a;
+        return hasNewEvent;
     }
+    return NO;
 }
 
--(void) moveTile:(Tile*)t toIndex:(Index*)ix withDuration:(CCTime)d
+// return YES if t is moved, otherwise NO.
+-(BOOL) moveTile:(Tile*)t toIndex:(Index*)ix withDuration:(CCTime)d
 {
     CGPoint dest = [self convertPositionFromIndex:ix];
 
-    if (t) {
+    if (t && ix) {
+        BOOL hasMoved = t.index.x != ix.x || t.index.y != ix.y;
         CCActionSequence *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
         [t runAction:moveTo];
+        
         _grid[t.index.x][t.index.y] = nil;
         
         [t setIndex:ix];
         _grid[ix.x][ix.y] = t;
+        return hasMoved;
     }
+    return NO;
 }
 
 -(void) swipeLeft
 {
-    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    BOOL shouldLoadATile = NO;
     for (int j = 0; j < GRID_SIZE; j++) {
         int p = 0;
         for (int i = 0; i < GRID_SIZE;) {
@@ -176,20 +190,23 @@ static const CCTime SWIPE_DUR = 0.2;
             }
             Index* pj = [[Index alloc] initWithX:p andY:j];
             if (s && s.value == t.value) {
-                [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
                 i = k + 1;
             } else {
-                [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
                 i = k;
             }
             p++;
         }
     }
+    if (shouldLoadATile) {
+        [self loadATileWithDuration:SWIPE_DUR];
+    }
 }
 
 -(void) swipeRight
 {
-    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    BOOL shouldLoadATile = NO;
     for (int j = 0; j < GRID_SIZE; j++) {
         int p = GRID_SIZE-1;
         for (int i = GRID_SIZE-1; i >= 0;) {
@@ -209,20 +226,23 @@ static const CCTime SWIPE_DUR = 0.2;
             }
             Index* pj = [[Index alloc] initWithX:p andY:j];
             if (s && s.value == t.value) {
-                [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
                 i = k - 1;
             } else {
-                [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
                 i = k;
             }
             p--;
         }
     }
+    if (shouldLoadATile) {
+        [self loadATileWithDuration:SWIPE_DUR];
+    }
 }
 
 -(void) swipeUp
 {
-    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    BOOL shouldLoadATile = NO;
     for (int i = 0; i < GRID_SIZE; i++) {
         int p = GRID_SIZE-1;
         for (int j = GRID_SIZE-1; j >= 0;) {
@@ -242,20 +262,23 @@ static const CCTime SWIPE_DUR = 0.2;
             }
             Index* ip = [[Index alloc] initWithX:i andY:p];
             if (s && s.value == t.value) {
-                [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
                 j = k - 1;
             } else {
-                [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
                 j = k;
             }
             p--;
         }
     }
+    if (shouldLoadATile) {
+        [self loadATileWithDuration:SWIPE_DUR];
+    }
 }
 
 -(void) swipeDown
 {
-    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    BOOL shouldLoadATile = NO;
     for (int i = 0; i < GRID_SIZE; i++) {
         int p = 0;
         for (int j = 0; j < GRID_SIZE;) {
@@ -275,14 +298,17 @@ static const CCTime SWIPE_DUR = 0.2;
             }
             Index* ip = [[Index alloc] initWithX:i andY:p];
             if (s && s.value == t.value) {
-                [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
                 j = k + 1;
             } else {
-                [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
+                shouldLoadATile |= [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
                 j = k;
             }
             p++;
         }
+    }
+    if (shouldLoadATile) {
+        [self loadATileWithDuration:SWIPE_DUR];
     }
 }
 
