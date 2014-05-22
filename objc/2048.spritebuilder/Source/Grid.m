@@ -11,6 +11,7 @@
 
 // a 4x4 grid
 static const int GRID_SIZE = 4;
+static const CCTime SWIPE_DUR = 0.2;
 
 @implementation Grid
 {
@@ -78,8 +79,8 @@ static const int GRID_SIZE = 4;
     CGFloat w = tile.contentSize.width;
     CGFloat h = tile.contentSize.height;
     
-    CGFloat mh = (self.contentSize.width - tile.contentSize.width * GRID_SIZE) / (GRID_SIZE + 1);
-    CGFloat mv = (self.contentSize.height - tile.contentSize.height * GRID_SIZE) / (GRID_SIZE + 1);
+    CGFloat mh = (self.contentSize.width - w * GRID_SIZE) / (GRID_SIZE + 1);
+    CGFloat mv = (self.contentSize.height - h * GRID_SIZE) / (GRID_SIZE + 1);
 
     return ccp(mh * (index.x + 1) + w * index.x , mv * (index.y  + 1) + h * index.y);
 }
@@ -115,10 +116,47 @@ static const int GRID_SIZE = 4;
     return YES;
 }
 
--(void) moveWithDirection:(Index*)dir
+// finally, b will be removed, and a will be updated
+-(void) mergeTileA:(Tile*)a andB:(Tile*)b toIndex:(Index*)ix withDuration:(CCTime)d
 {
-    CCTime d = 0.2;
-    [self performSelector:@selector(loadATile) withObject:self afterDelay:d];
+    if (a && b && a.value == b.value) {
+        CGPoint dest = [self convertPositionFromIndex:ix];
+
+        CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
+        CCActionCallBlock *update = [CCActionCallBlock actionWithBlock:^(){
+            [a setValue:a.value * 2];
+        }];
+        CCActionSequence *seq = [CCActionSequence actionWithArray:@[moveTo, update]];
+        [a runAction:seq];
+        
+        CCActionRemove* rm = [CCActionRemove action];
+        seq = [CCActionSequence actionWithArray:@[moveTo, rm]];
+        [b runAction:seq];
+        _grid[a.index.x][a.index.y] = nil;
+        _grid[b.index.x][b.index.y] = nil;
+        
+        [a setIndex:ix];
+        _grid[ix.x][ix.y] = a;
+    }
+}
+
+-(void) moveTile:(Tile*)t toIndex:(Index*)ix withDuration:(CCTime)d
+{
+    CGPoint dest = [self convertPositionFromIndex:ix];
+
+    if (t) {
+        CCActionSequence *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
+        [t runAction:moveTo];
+        _grid[t.index.x][t.index.y] = nil;
+        
+        [t setIndex:ix];
+        _grid[ix.x][ix.y] = t;
+    }
+}
+
+-(void) swipeLeft
+{
+    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
     for (int j = 0; j < GRID_SIZE; j++) {
         int p = 0;
         for (int i = 0; i < GRID_SIZE;) {
@@ -137,30 +175,11 @@ static const int GRID_SIZE = 4;
                 }
             }
             Index* pj = [[Index alloc] initWithX:p andY:j];
-            CGPoint dest = [self convertPositionFromIndex:pj];
             if (s && s.value == t.value) {
-                // merge, move it and sibling to left, then remove sibling
-                CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
-                CCActionCallBlock *update = [CCActionCallBlock actionWithBlock:^(){
-                    [t setValue:t.value * 2];
-                }];
-                CCActionSequence *seq = [CCActionSequence actionWithArray:@[moveTo, update]];
-                [t runAction:seq];
-                [t setIndex:pj];
-                
-                CCActionRemove* rm = [CCActionRemove action];
-                seq = [CCActionSequence actionWithArray:@[moveTo, rm]];
-                [s runAction:seq];
-                _grid[i][j] = nil;
-                _grid[k][j] = nil;
-                _grid[p][j] = t;
+                [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
                 i = k + 1;
             } else {
-                CCActionSequence *moveTo = [CCActionMoveTo actionWithDuration:d position:dest];
-                [t runAction:moveTo];
-                [t setIndex:pj];
-                _grid[i][j] = nil;
-                _grid[p][j] = t;
+                [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
                 i = k;
             }
             p++;
@@ -168,24 +187,103 @@ static const int GRID_SIZE = 4;
     }
 }
 
--(void) swipeLeft
-{
-    [self moveWithDirection:[[Index alloc] initWithX:-1 andY:0]];
-}
-
 -(void) swipeRight
 {
-    [self moveWithDirection:[[Index alloc] initWithX:1 andY:0]];
+    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    for (int j = 0; j < GRID_SIZE; j++) {
+        int p = GRID_SIZE-1;
+        for (int i = GRID_SIZE-1; i >= 0;) {
+            Tile* t = _grid[i][j], *s = nil;
+            // empty node, skip
+            if (t == nil) {
+                i--;
+                continue;
+            }
+            // find next sibling
+            int k = i - 1;
+            for (; k >= 0; k--) {
+                s = _grid[k][j];
+                if (s != nil) {
+                    break;
+                }
+            }
+            Index* pj = [[Index alloc] initWithX:p andY:j];
+            if (s && s.value == t.value) {
+                [self mergeTileA:t andB:s toIndex:pj withDuration:SWIPE_DUR];
+                i = k - 1;
+            } else {
+                [self moveTile:t toIndex:pj withDuration:SWIPE_DUR];
+                i = k;
+            }
+            p--;
+        }
+    }
 }
 
 -(void) swipeUp
 {
-    [self moveWithDirection:[[Index alloc] initWithX:0 andY:1]];
+    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    for (int i = 0; i < GRID_SIZE; i++) {
+        int p = GRID_SIZE-1;
+        for (int j = GRID_SIZE-1; j >= 0;) {
+            Tile* t = _grid[i][j], *s = nil;
+            // empty node, skip
+            if (t == nil) {
+                j--;
+                continue;
+            }
+            // find next sibling
+            int k = j - 1;
+            for (; k >= 0; k--) {
+                s = _grid[i][k];
+                if (s != nil) {
+                    break;
+                }
+            }
+            Index* ip = [[Index alloc] initWithX:i andY:p];
+            if (s && s.value == t.value) {
+                [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
+                j = k - 1;
+            } else {
+                [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
+                j = k;
+            }
+            p--;
+        }
+    }
 }
 
 -(void) swipeDown
 {
-    [self moveWithDirection:[[Index alloc] initWithX:0 andY:-1]];
+    [self performSelector:@selector(loadATile) withObject:self afterDelay:SWIPE_DUR];
+    for (int i = 0; i < GRID_SIZE; i++) {
+        int p = 0;
+        for (int j = 0; j < GRID_SIZE;) {
+            Tile* t = _grid[i][j], *s = nil;
+            // empty node, skip
+            if (t == nil) {
+                j++;
+                continue;
+            }
+            // find next sibling
+            int k = j + 1;
+            for (; k < GRID_SIZE; k++) {
+                s = _grid[i][k];
+                if (s != nil) {
+                    break;
+                }
+            }
+            Index* ip = [[Index alloc] initWithX:i andY:p];
+            if (s && s.value == t.value) {
+                [self mergeTileA:t andB:s toIndex:ip withDuration:SWIPE_DUR];
+                j = k + 1;
+            } else {
+                [self moveTile:t toIndex:ip withDuration:SWIPE_DUR];
+                j = k;
+            }
+            p++;
+        }
+    }
 }
 
 @end

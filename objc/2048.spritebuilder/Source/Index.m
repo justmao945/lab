@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         self.x = x;
-        self.y = x;
+        self.y = y;
     }
     return self;
 }
