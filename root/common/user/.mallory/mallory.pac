@@ -26,12 +26,19 @@ var domains =
 var hosts =
 {
   "api.github.com": true,
+  "cdn.bitbucket.org": true,
   "cdn.sstatic.net": true,
   "d3js.org": true,
   "github.global.ssl.fastly.net": true,
 };
 
 // regex to match URL
+var regexNot = 
+[
+  /.*calendar\.google\.com.*/,
+  /.*talk.*\.google\.com.*/,
+];
+
 var regex = 
 [
   /.*google.*/,
@@ -57,6 +64,12 @@ function FindProxyForURL(url, host) {
   q = domains[host2domain(host)]
   if(q === true) return http_proxy;
   else if(q == false) return direct;
+
+  for(var i = 0; i < regexNot.length; ++i) {
+    if(regexNot[i].test(url)) {
+      return direct;
+    }
+  }
 
   for(var i = 0; i < regex.length; ++i) {
     if(regex[i].test(url)) {
