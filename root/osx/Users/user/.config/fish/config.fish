@@ -31,3 +31,7 @@ function reset_launchpad --description 'Reset launchpad apps'
   set db (find ~/Library/Application\ Support/Dock/ -type f ! -name 'desktoppicture.db')
   rm -f $db; and killall -HUP Dock
 end
+
+function reset_appstore --description 'Resolve a failed download, "Use Purchases Page to download again"'
+  rm -rf $TMPDIR/../C/com.apple.appstore
+end
