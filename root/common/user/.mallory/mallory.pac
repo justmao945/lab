@@ -1,26 +1,31 @@
 // proxy auto-config template
 
 var direct = 'DIRECT';
-var http_proxy = 'PROXY 127.0.0.1:18087; DIRECT';
+var http_proxy = 'SOCKS 127.0.0.1:18081; PROXY 192.9.200.237:18087; DIRECT';
 
 var domains =
 {
+  "amazon.com": true,
   "angulardart.org": true,
   "angularjs.org": true,
   "appspot.com": true,
+  "atom.io": true,
   "blogspot.com": true,
   "blogspot.co.at": true,
   "chromium.org": true,
+  "cloudfront.net": true,
   "coco2d-iphone.org": true,
   "coco2d-x.org": true,
   "facebook.net": true,
   "feedly.com": true,
   "golang.org": true,
+  "gstatic.com": true,
   "makegameswith.us": true,
   "ng-book.com": true,
   "nodejs.org": true,
   "twitter.com":  true,
   "wordpress.com": true,
+  "ytimg.com": true,
   "youtube.com": true,
 };
 

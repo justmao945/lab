@@ -35,3 +35,7 @@ end
 function reset_appstore --description 'Resolve a failed download, "Use Purchases Page to download again"'
   rm -rf $TMPDIR/../C/com.apple.appstore
 end
+
+function simple_httpd --description 'Start the SimpleHTTPServer module of Python'
+  python -m SimpleHTTPServer 18086
+end
