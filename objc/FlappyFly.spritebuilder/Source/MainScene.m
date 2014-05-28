@@ -9,6 +9,8 @@
 #import "MainScene.h"
 
 static const CGFloat scrollSpeed = 80.f;
+static const CGFloat firstObstaclePosition = 280.f;
+static const CGFloat distanceBetweenObstacles = 160.f;
 
 @implementation MainScene
 {
@@ -18,12 +20,33 @@ static const CGFloat scrollSpeed = 80.f;
     CCNode *_ground2;
     NSArray *_grounds;
     NSTimeInterval _sinceTouch;
+    NSMutableArray *_obstacles;
 }
 
 -(void)didLoadFromCCB
 {
     self.userInteractionEnabled = YES;
     _grounds = @[_ground1, _ground2];
+    
+    _obstacles = [NSMutableArray array];
+    [self spawnNewObstacle];
+    [self spawnNewObstacle];
+    [self spawnNewObstacle];
+}
+
+-(void)spawnNewObstacle
+{
+    CCNode *previousObstacle = [_obstacles lastObject];
+    CGFloat previousObstacleXPosition;
+    if (!previousObstacle) {
+        previousObstacleXPosition = firstObstaclePosition;
+    } else {
+        previousObstacleXPosition = previousObstacle.position.x;
+    }
+    CCNode* obstacle = [CCBReader load:@"Obstacle"];
+    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
+    [_physicsNode addChild:obstacle];
+    [_obstacles addObject:obstacle];
 }
 
 
@@ -71,6 +94,23 @@ static const CGFloat scrollSpeed = 80.f;
     _sinceTouch += delta;
     if (_sinceTouch > 0.5) {
         [_hero.physicsBody applyAngularImpulse:-40000*delta];
+    }
+    
+    NSMutableArray *offScreenObstacles = nil;
+    for (CCNode* obstacle in _obstacles) {
+        CGPoint obstacleWorldPosition = [_physicsNode convertToWorldSpace:obstacle.position];
+        CGPoint obstacleScreenPosition = [self convertToNodeSpace:obstacleWorldPosition];
+        if (obstacleScreenPosition.x < -obstacle.contentSize.width) {
+            if (!offScreenObstacles) {
+                offScreenObstacles = [NSMutableArray array];
+            }
+            [offScreenObstacles addObject:obstacle];
+        }
+    }
+    for (CCNode* obstacle in offScreenObstacles) {
+        [obstacle removeFromParent];
+        [_obstacles removeObject:obstacle];
+        [self spawnNewObstacle];
     }
 }
 
