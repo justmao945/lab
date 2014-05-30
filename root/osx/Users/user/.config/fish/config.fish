@@ -39,3 +39,11 @@ end
 function simple_httpd --description 'Start the SimpleHTTPServer module of Python'
   python -m SimpleHTTPServer 18086
 end
+
+function ssh_tunnel --description 'SSH tunnel to AWS EC2'
+  echo 'Serving on port 18081...'
+  while [ true ]
+    ssh -CnNT -D 18081 -i .ssh/tokyo-ec2.pem ubuntu@tokyo-ec2.aws
+    sleep 10
+  end
+end

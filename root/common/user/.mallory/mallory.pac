@@ -1,7 +1,7 @@
 // proxy auto-config template
 
 var direct = 'DIRECT';
-var http_proxy = 'SOCKS 127.0.0.1:18081; PROXY 192.9.200.237:18087; DIRECT';
+var http_proxy = 'SOCKS localhost:18081; PROXY 192.9.200.237:18087; DIRECT';
 
 var domains =
 {
@@ -20,6 +20,7 @@ var domains =
   "feedly.com": true,
   "golang.org": true,
   "gstatic.com": true,
+  "linode.com": true,
   "makegameswith.us": true,
   "ng-book.com": true,
   "nodejs.org": true,
