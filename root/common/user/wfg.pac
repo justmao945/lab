@@ -1,7 +1,8 @@
 // proxy auto-config template
 
 var direct = 'DIRECT';
-var http_proxy = 'SOCKS 198.199.104.175:1080; DIRECT';
+// 1080 for PAC file
+var http_proxy = 'SOCKS localhost:1081; SOCKS 198.199.104.175:1082; DIRECT';
 
 var domains =
 {
