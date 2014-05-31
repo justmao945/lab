@@ -40,10 +40,3 @@ function simple_httpd --description 'Start the SimpleHTTPServer module of Python
   python -m SimpleHTTPServer 18086
 end
 
-function ssh_tunnel --description 'SSH tunnel to fvck GFW'
-  echo 'Serving on port 18081...'
-  while [ true ]
-    ssh -CnNT -D 18081 198.199.104.175
-    sleep 10
-  end
-end

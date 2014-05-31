@@ -1,7 +1,7 @@
 // proxy auto-config template
 
 var direct = 'DIRECT';
-var http_proxy = 'SOCKS localhost:18081; PROXY 198.199.104.175:18087; DIRECT';
+var http_proxy = 'SOCKS 198.199.104.175:1080; DIRECT';
 
 var domains =
 {
