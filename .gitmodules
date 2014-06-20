@@ -19,3 +19,6 @@
 [submodule "vim-plugins/dart"]
 	path = vim-plugins/dart
 	url = https://github.com/dart-lang/dart-vim-plugin.git
+[submodule "vim-plugins/vim-ruby"]
+	path = vim-plugins/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
