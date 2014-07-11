@@ -1,0 +1,2 @@
+vo=vdpau,xv,
+vc=ffh264vdpau,ffmpeg12vdpau,ffodivxvdpau,ffwmv3vdpau,ffvc1vdpau,

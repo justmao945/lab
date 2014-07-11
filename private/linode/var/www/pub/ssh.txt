@@ -1,0 +1,58 @@
+1. Install ssh on your client.
+
+2. Run `ssh -p 1122 -vvvCTD 1314 106.185.24.106` on your cilent to start the SOCKS proxy.
+    It will create a SOCKS5 proxy on `localhost:1314`.
+
+        -p: Port to connect to on the remote host.
+        -vvv: Debug mode.
+        -C: Compress traffic.
+        -T: Disable pseudo-tty allocation.
+        -D: Specifies a local ``dynamic'' application-level port forwarding.
+
+    Or an infinite version:
+    ```fish
+    function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
+      while [ true ]
+         echo 'Connect and listen on port 1314...'
+         ssh -p 1122 -vvvCTD 1314 106.185.24.106
+         echo 'Retry in 3 seconds...'
+         sleep 3
+      end
+    end
+    ```
+
+    ```bash
+    start_tunnel() {
+        while [ true ]
+        do
+            echo 'Connect and listen on port 1314...'
+            ssh -p 1122 -vvvCTD 1314 106.185.24.106
+            echo 'Retry in 3 seconds...'
+            sleep 3
+        done
+    }
+    ```
+
+3. Add the Auto Proxy Configuration `http://106.185.24.106/pub/gfw.pac` to your system proxy.
+    * Google Chrome on Mac OS X not work ? Open it from terminal `open -a 'Google Chrome.app' --args --winhttp-proxy-resolver`
+    * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://106.185.24.106/gfw.pac`
+      * How to debug proxy: http://www.chromium.org/developers/design-documents/network-stack/debugging-net-proxy
+
+4. Everything goes well.
+
+5*. Need HTTP proxy over SSH? See https://github.com/justmao945/mallory
+    * Advantage of HTTP proxy: easy to use in command line
+      ```bash
+      with_proxy() {
+        http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 "$@"
+      }
+      ```
+      ```fish
+      function with_proxy --despcription 'Execute command with HTTP proxy on port 1315'
+        env http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 $argv
+      end
+      ```
+      test it with proxy
+      ```
+      with_proxy wget twitter.com
+      ```

@@ -1,0 +1,6 @@
+---
+gem: --user-install
+benchmark: false
+verbose: true
+backtrace: true
+http-proxy: localhost:1315

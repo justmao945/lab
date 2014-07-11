@@ -1,0 +1,14 @@
+* /var/www/
+    nginx root, index.html is here
+
+* /var/www/pub/
+    public shared files, can be accessed through http
+
+* /var/www/pub/gfw.pac
+    updated hourly
+
+* /var/www/pub/gfw.txt
+    user rules for gfw.pac, add domains to it if is blocked
+
+* /var/pub/
+    public shared files between users, not available for outside world

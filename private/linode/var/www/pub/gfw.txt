@@ -1,0 +1,36 @@
+!! Do not change the file name !
+!! User specified GFW list, and you can add domains line by line.
+!! Run /var/pub/update-gfw-pac to update the gfw.pac file
+!!
+ajax.googleapis.com
+android.com
+angularjs.org
+apple.com
+arnoldthebat.co.uk
+assets-cdn.github.com
+atlassian.com
+bitbucket.org
+chrome.com
+chromeos.hexxeh.net
+chromium.org
+chromium.arnoldthebat.co.uk
+coveralls.io
+d3js.org
+feedly.com
+fonts.googleapis.com
+ggpht.com
+github.com
+github.io
+golang.org
+google-analytics.com
+googleadservices.com
+googleapis.com
+googlecode.com
+icloud.com
+imgur.com
+linode.com
+makegameswith.us
+nodejs.org
+stackoverflow.com
+superuser.com
+waffle.io
