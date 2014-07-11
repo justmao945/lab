@@ -2,13 +2,9 @@
 #    env        |
 #---------------+
 set -x LC_CTYPE en_US.UTF-8
-
-set BUNDLE /usr/local/bundle/config.fish
-[ -f $BUNDLE ]; and source $BUNDLE
-
-set -x GOPATH  $HOME/Source/go
-set -x GEMPATH $HOME/.gem/ruby/2.0.0
-set -x PATH    $PATH $GOPATH/bin $GEMPATH/bin
+set -x GOPATH   $HOME/Source/go
+set -x GEMPATH  $HOME/.gem/ruby/2.0.0
+set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
 
 
 #---------------+

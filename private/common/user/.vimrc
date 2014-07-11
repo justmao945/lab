@@ -14,6 +14,9 @@ endif
 " =====================================
 " General Setup
 " =====================================
+" 256 color terminal
+set t_Co=256
+
 " Disable compatibility with vi(must come first)
 set nocompatible 
 
