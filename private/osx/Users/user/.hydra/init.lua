@@ -57,6 +57,12 @@ hotkey.new(modkey, "H", movewindow_lefthalf):enable()
 hotkey.new(modkey, "L", movewindow_righthalf):enable()
 
 
+-- Maximize the window
+hotkey.new(modkey, "M", function()
+  window.focusedwindow():maximize()
+end):enable()
+
+
 -- Update
 -- save the time when updates are checked
 function checkforupdates()
