@@ -305,12 +305,6 @@ endf
 map  <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
 map! <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
 
-map  <silent> <C-[>  <esc>:tabprevious<cr>
-map! <silent> <C-[>  <esc>:tabprevious<cr>
-
-map  <silent> <C-]> <esc>:tabnext<cr>
-map! <silent> <C-]> <esc>:tabnext<cr>
-
 " move between windows
 map <silent> <C-J> <C-W>j
 map <silent> <C-K> <C-W>k

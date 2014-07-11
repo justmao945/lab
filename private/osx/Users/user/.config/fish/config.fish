@@ -25,6 +25,14 @@ function c  --description 'Clear screen'
   clear
 end
 
+function cdgo --description 'Change dir to $GOPATH/src/github.com/justmao945'
+  cd $GOPATH/src/github.com/justmao945
+end
+
+function cdlab --description 'Change dir to $HOME/Git/lab'
+  cd $HOME/Git/lab
+end
+
 function df --description 'Print sizes in human readable'
   command df -h $argv
 end
