@@ -47,6 +47,10 @@ function start_tunnel --description 'Start SSH tunnel on localhost on port :1314
   end
 end
 
+function with_proxy -d 'Start under HTTP proxy localhost:1315'
+    env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
+end
+
 #---------------+
 #    env        |
 #---------------+
