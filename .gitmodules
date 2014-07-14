@@ -22,3 +22,6 @@
 [submodule "vim-plugins/vim-ruby"]
 	path = vim-plugins/vim-ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "vim-plugins/vim-json"]
+	path = vim-plugins/vim-json
+	url = https://github.com/elzr/vim-json.git

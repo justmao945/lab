@@ -10,10 +10,8 @@ set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
 function fish_title
   if [ $_ = 'fish' ]
     echo (prompt_pwd)
-  else if [ $_ = 'ssh' ]
-    echo $CMD
   else
-    echo $_
+    echo $CMD
   end
 end
 
