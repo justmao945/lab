@@ -7,11 +7,30 @@ set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
 
 
+function fish_title
+  if [ $_ = 'fish' ]
+    echo (prompt_pwd)
+  else if [ $_ = 'ssh' ]
+    echo $CMD
+  else
+    echo $_
+  end
+end
+
+
 #---------------+
 #    alias      |
 #---------------+
 function c  --description 'Clear screen'
   clear
+end
+
+function cdgo --description 'Change dir to $GOPATH/src/github.com/justmao945'
+  cd $GOPATH/src/github.com/justmao945
+end
+
+function cdlab --description 'Change dir to $HOME/Git/lab'
+  cd $HOME/Git/lab
 end
 
 function df --description 'Print sizes in human readable'
