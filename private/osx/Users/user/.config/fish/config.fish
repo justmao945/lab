@@ -11,7 +11,7 @@ function fish_title
   if [ $_ = 'fish' ]
     echo (prompt_pwd)
   else
-    echo $CMD
+    echo $argv[1]
   end
 end
 
