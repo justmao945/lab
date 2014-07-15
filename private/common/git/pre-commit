@@ -21,7 +21,8 @@ unformatted=$(gofmt -l $gofiles)
 for fn in $unformatted; do
   gofile=$PWD/$fn
 	echo >&2 "  gofmt: formating $gofile"
-  gofmt -w $gofile
+  gofmt -w $gofile || exit $?
+  git add $fn
 done
 
-exit 1
+exit 0
