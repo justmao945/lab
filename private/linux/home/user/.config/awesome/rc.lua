@@ -75,6 +75,9 @@ layouts =
 -- Next background command
 nextbg_cmd = "awsetbg -a -r " .. awful.util.getdir("config") .. "/bg"
 
+-- Brackets IDE
+brackets = 'brackets'
+
 -- Chrom browser
 chrome = 'google-chrome'
 
@@ -106,6 +109,7 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "Brackets", brackets },
                                     { "Chrome", chrome .. ' --scroll-pixels=200 --proxy-pac-url=http://linode/pub/gfw.pac ' },
                                     { "Lock", xlock },
                                     { "Next", nextbg_cmd },

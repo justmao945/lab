@@ -47,12 +47,16 @@ function start_tunnel --description 'Start SSH tunnel on localhost on port :1314
   end
 end
 
+function with_proxy -d 'Start under HTTP proxy localhost:1315'
+    env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
+end
+
 #---------------+
 #    env        |
 #---------------+
 set -x EDITOR   vim
 set -x GOPATH   $HOME/go
-set -x PATH     $HOME/gitlab/bin $GOPATH/bin /usr/local/go/bin /usr/local/go_appengine $PATH
+set -x PATH     $GOPATH/bin /usr/local/go/bin $PATH
 
 set -x GTK_IM_MODULE    fcitx
 set -x QT_IM_MODULE     fcitx
