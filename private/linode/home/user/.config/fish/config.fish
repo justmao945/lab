@@ -1,0 +1,76 @@
+#---------------+
+#    alias      |
+#---------------+
+function c  --description 'Clear screen'
+    clear
+end
+
+function cmake-clang --description 'Use clang as the C/C++ compiler'
+    command cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang $argv
+end
+
+function df --description 'Print sizes in human readable'
+    command df -h $argv
+end
+
+function man --description 'Use vim viewer to display manpage'
+    command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
+end
+
+function sudo --description 'Use user env to call sudo'
+    command sudo -E $argv
+end
+
+function rm --description 'Remove interactively'
+    command rm -i $argv
+end
+
+# htop can't refresh when TERM is rxvt-unicode-256color
+function t  --description 'Resource top usage'
+    env TERM=screen htop $argv
+end
+
+function tsocks --description 'User config tsocks'
+    env TSOCKS_CONF_FILE=$HOME/.tsocks.conf tsocks $argv
+end
+
+function ssh --description 'SSH'
+    env TERM=screen ssh $argv
+end
+
+function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
+  while [ true ]
+    echo 'Connect and listen on port 1314...'
+    ssh -vvvCTD 1314 linode
+    echo 'Retry in 3 seconds...'
+    sleep 3
+  end
+end
+
+#---------------+
+#    env        |
+#---------------+
+set -x EDITOR   vim
+set -x GOPATH   $HOME/go
+set -x PATH     $HOME/gitlab/bin $GOPATH/bin /usr/local/go/bin /usr/local/go_appengine $PATH
+
+set -x GTK_IM_MODULE    fcitx
+set -x QT_IM_MODULE     fcitx
+set -x XMODIFIERS       @im=fcitx
+set -x XIM              fcitx
+
+#---------------+
+#    fish title |
+#---------------+
+# Set thea fish window title, depending on whether we are running something, or just prompting
+function fish_title --description 'Set fish title'
+end
+
+#---------------+
+# external conf |
+#---------------+
+set config_ohio $HOME/.config/fish/config_ohio.fish
+if [ -f $config_ohio ]
+    source $config_ohio
+end
+
