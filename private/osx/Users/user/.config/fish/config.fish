@@ -9,9 +9,9 @@ set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
 
 function fish_title
   if [ $_ = 'fish' ]
-    echo (prompt_pwd)
+    echo (prompt_pwd)@(hostname)
   else
-    echo $argv[1]
+    echo $argv[1]@(hostname)
   end
 end
 
