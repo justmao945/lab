@@ -32,6 +32,9 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "D", donate)
 -- move the window
 function movewindow(fn)
   local win = window.focusedwindow()
+  if win == nil then
+    return
+  end
   local newframe = win:screen():frame_without_dock_or_menu()
   fn(newframe);
   win:setframe(newframe)
@@ -59,7 +62,10 @@ hotkey.new(modkey, "L", movewindow_righthalf):enable()
 
 -- Maximize the window
 hotkey.new(modkey, "M", function()
-  window.focusedwindow():maximize()
+  local win = window.focusedwindow()
+  if win ~= nil then
+    win:maximize()
+  end
 end):enable()
 
 
