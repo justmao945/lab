@@ -9,11 +9,9 @@ set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
 
 function fish_title
   if [ $_ = 'fish' ]
-    echo (prompt_pwd)
-  else if [ $_ = 'ssh' ]
-    echo $CMD
+    echo (prompt_pwd)@(hostname)
   else
-    echo $_
+    echo $argv[1]@(hostname)
   end
 end
 
