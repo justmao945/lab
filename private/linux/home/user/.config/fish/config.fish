@@ -70,14 +70,18 @@ set -x XIM              fcitx
 function fish_title -d 'Set tmux title'
     set max_length 19
     if [ "fish" != $_ ] # command as title
-        tmux rename-window "$_ $argv"
+        if [ ! -z "$TMUX" ]
+            tmux rename-window "$_ $argv"
+        end
     else if [ "$PWD" != "$LPWD" ]  # path as title
         set LPWD "$PWD"
         set SUBSTRING (eval echo $PWD | tail -c $max_length)
         if [ (expr length $PWD) -gt $max_length ]
             set SUBSTRING "..$SUBSTRING"
         end
-        tmux rename-window "$SUBSTRING"
+        if [ ! -z "$TMUX" ]
+            tmux rename-window "$SUBSTRING"
+        end
     end
 end
 
@@ -88,3 +92,9 @@ set config_ohio $HOME/.config/fish/config_ohio.fish
 if [ -f $config_ohio ]
     source $config_ohio
 end
+
+
+#---------------+
+# external conf |
+#---------------+
+# RVM: curl -L --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish
