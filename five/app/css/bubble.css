@@ -1,0 +1,82 @@
+/* speech bubble http://www.ilikepixels.co.uk/drop/bubbler/ */
+.left-bubble {
+    position: relative;
+    min-width: 30px;
+    min-height: 30px;
+    word-wrap: break-word;
+    vertical-align: top;
+    padding: 8px;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    background: #daebf9;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: #daebf9 solid 1px;
+}
+.left-bubble:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 6px 6px 0;
+    border-color: transparent #daebf9;
+    display: block;
+    width: 0;
+    z-index: 1;
+    left: -6px;
+    top: 7px;
+}
+.left-bubble:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 6px 6px 0;
+    border-color: transparent #daebf9;
+    display: block;
+    width: 0;
+    z-index: 0;
+    left: -7px;
+    top: 7px;
+}
+
+.right-bubble {
+    position: relative;
+    min-width: 30px;
+    min-height: 30px;
+    word-wrap: break-word;
+    vertical-align: top;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    padding: 8px;
+    background: #f0f3f4;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: #f0f3f4 solid 1px;
+}
+.right-bubble:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 0 6px 6px;
+    border-color: transparent #f0f3f4;
+    display: block;
+    width: 0;
+    z-index: 1;
+    right: -6px;
+    top: 7px;
+}
+.right-bubble:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 6px 0 6px 6px;
+    border-color: transparent #f0f3f4;
+    display: block;
+    width: 0;
+    z-index: 0;
+    right: -7px;
+    top: 7px;
+}

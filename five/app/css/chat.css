@@ -1,0 +1,167 @@
+/* global */
+.my-chat-box {
+    max-height: 768px;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #dfdfdf;
+}
+
+/* user */
+.my-chat-user-avatar {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+}
+.my-chat-user-avatar-left {
+    float: left;
+}
+.my-chat-user-avatar-right {
+    float: right;
+}
+.my-chat-user-name {
+    display: inline-block;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 13em;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+/* nav */
+.my-chat-user-center {
+}
+.my-chat-user-center .my-chat-user-name {
+    font-size: 1.5em;
+    vertical-align: bottom;
+}
+.my-chat-user-legend {
+    display: inline-block;
+    height: 30px;
+    position: relative;
+    right: 20px;
+}
+
+/* user list */
+.my-chat-user {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 5px;
+}
+.my-chat-user-nav-tab {
+}
+.my-chat-user-nav-tab a{
+    cursor: pointer;
+}
+.my-chat-user-nav-group-2nd {
+    position: relative;
+    left: -.5em;
+    top: -0.1em;
+}
+.my-chat-user-list {
+}
+.my-chat-user-item {
+    margin: 3px;
+    height: 44px;
+}
+.my-chat-user-item-active {
+    background-color: #438BDF;
+    border: 2px solid #438BDF;
+}
+.my-chat-user-item-active .my-chat-user-name {
+    color: #ffffff;
+}
+.my-chat-user-item .badge {
+    margin-top: 6px;
+}
+.my-chat-user-item a {
+    padding: 5px;
+    margin: 5px 0;
+    display: block;
+}
+.my-chat-user-item a:link {
+    text-decoration: none;
+}
+.my-chat-user-item a:visited {
+    text-decoration: none;
+}
+.my-chat-user-item a:hover {
+    border: 2px solid rgba(72, 172, 241, 0.60);
+    text-decoration: none;
+}
+.my-chat-user-item a:active {
+    text-decoration: none;
+}
+
+/* chat window */
+.my-chat-window {
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+}
+.my-chat-target {
+    position: relative;
+    z-index: 1;
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px;
+}
+.my-chat-target-sep {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+.my-chat-target .my-chat-user-name {
+    font-size: 1.3em;
+    color: #438BDF;
+}
+.my-chat-history-box {
+    position: relative;
+    top: -45px;
+    padding: 45px 0 40px;
+}
+.my-chat-history {
+    background-color: #ffffff;
+    padding: 5px 13px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.my-chat-history-item {
+    display: block;
+    clear: both;
+}
+.my-chat-history-item-say-left {
+    padding-left:5px;
+    padding-right: 20px;
+    overflow: hidden;
+}
+.my-chat-history-item-say-left .left-bubble {
+    max-width: 100%;
+    display: inline-block;
+}
+.my-chat-history-item-say-right {
+    padding-left: 20px;
+    padding-right: 5px;
+    overflow: hidden;
+}
+.my-chat-history-item-say-right .right-bubble {
+    max-width: 100%;
+    display: inline-block;
+}
+.my-chat-input-area {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+}
+/* this is very useful to put multiple elements in one line */
+.my-chat-input {
+    overflow: hidden;
+    padding-right: 1em;
+}
+.my-chat-submit {
+    float: right;
+    height: 34px;
+}
+

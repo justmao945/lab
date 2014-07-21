@@ -1,0 +1,37 @@
+{
+  "name": "five",
+  "private": true,
+  "version": "0.0.1",
+  "description": "A project based on Node.js and HTML5",
+  "repository": "https://github.com/angular/angular-seed",
+  "license": "MIT",
+  "devDependencies": {
+    "karma": "~0.10",
+    "protractor": "~0.20.1",
+    "http-server": "^0.6.1",
+    "bower": "^1.3.1",
+    "shelljs": "^0.2.6",
+    "karma-junit-reporter": "^0.2.2",
+    "socket.io": "~1.0.x",
+    "express": "~3.10.x",
+    "nodemon": "~1.2.x"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+
+    "prestart": "npm install",
+    "start": "nodemon server/app.js",
+
+    "pretest": "npm install",
+    "test": "karma start test/karma.conf.js",
+    "test-single-run": "karma start test/karma.conf.js  --single-run",
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js",
+
+    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+  }
+}

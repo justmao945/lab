@@ -1,0 +1,58 @@
+<div class="my-chat-user height100">
+    <tabset justified="true">
+        <tab class="my-chat-user-nav-tab my-chat-user-nav-tab1" active="my.utab.activeTab1" ng-click="my.utab.activeTab(1)">
+            <tab-heading>
+                <span class="glyphicon glyphicon-user"></span>
+            </tab-heading>
+            <div class="my-chat-user-list">
+                <div class="my-chat-user-item">
+                    <a href="#" ng-click="my.srv.activeTarget(my.dat.def.pub)"
+                       ng-class="{'my-chat-user-item-active': my.dat.def.pub == my.dat.target.email}"
+                       ng-init="msgs=my.dat.messages[my.dat.def.pub]">
+                        <span class="badge pull-right" ng-show="msgs.unread > 0">
+                            {{msgs.unread <= 99 ? msgs.unread : '99+'}}
+                        </span>
+                        <img class="my-chat-user-avatar" ng-src="{{my.dat.def.pub | gravatar}}?s=30" alt="..." />
+                        <span class="my-chat-user-name">Public Talk</span>
+                    </a>
+                </div>
+                <div class="my-chat-user-item" ng-repeat="user in (my.dat.users | sortChatUsers)">
+                    <a href="#" ng-click="my.srv.activeTarget(user.email)"
+                       ng-init="msgs=my.dat.messages[user.email]"
+                       ng-class="{'my-chat-user-item-active': user.email == my.dat.target.email}">
+                        <span class="badge pull-right" ng-show="msgs.unread > 0">
+                            {{msgs.unread <= 99 ? msgs.unread : '99+'}}
+                        </span>
+                        <img class="my-chat-user-avatar" ng-src="{{user.email | gravatar}}?s=30" alt="..." />
+                        <span class="my-chat-user-name">{{user.email}}</span>
+                    </a>
+                </div>
+            </div>
+        </tab>
+        <tab class="my-chat-user-nav-tab my-chat-user-nav-tab2" active="my.utab.activeTab2" ng-click="my.utab.activeTab(2)" >
+            <tab-heading>
+                    <span class="glyphicon glyphicon-user my-chat-user-nav-group-1st"></span>
+                    <span class="glyphicon glyphicon-user my-chat-user-nav-group-2nd"></span>
+            </tab-heading>
+        </tab>
+        <tab class="my-chat-user-nav-tab my-chat-user-nav-tab3" active="my.utab.activeTab3" ng-click="my.utab.activeTab(3)" >
+            <tab-heading>
+                <span class="glyphicon glyphicon-time"></span>
+                {{my.activeTab3|json}}
+            </tab-heading>
+            <div class="my-chat-user-list">
+                <div class="my-chat-user-item" ng-repeat="user in (my.dat.recentUsers | sortChatUsersWithLastUpdate)">
+                    <a href="#" ng-click="my.srv.activeTarget(user.email)"
+                       ng-init="msgs=my.dat.messages[user.email]"
+                       ng-class="{'my-chat-user-item-active': user.email == my.dat.target.email}">
+                        <span class="badge pull-right" ng-show="msgs.unread > 0">
+                            {{msgs.unread <= 99 ? msgs.unread : '99+'}}
+                        </span>
+                        <img class="my-chat-user-avatar" ng-src="{{user.email | gravatar}}?s=30" alt="..." />
+                        <span class="my-chat-user-name">{{user.email}}</span>
+                    </a>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>

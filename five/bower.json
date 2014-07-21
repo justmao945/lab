@@ -1,0 +1,19 @@
+{
+  "name": "five",
+  "description": "A project based on HTML5.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-bootstrap": "0.11.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "angular-md5": "~0.1.7",
+    "angularjs-scroll-glue-Luegg": "1.0.x",
+    "bootstrap": "~3.1.1",
+    "html5-boilerplate": "~4.3.0",
+    "holderjs": "~2.3.x",
+    "socket.io-client": "~1.0.x"
+  }
+}

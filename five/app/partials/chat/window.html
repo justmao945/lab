@@ -1,0 +1,29 @@
+<div class="my-chat-window height100" ng-init="msgs=my.dat.messages[my.dat.target.email]; ">
+    <div class="my-chat-target">
+        <img class="my-chat-user-avatar" ng-src="{{my.dat.target.email | gravatar}}?s=30" alt="..." />
+        <span class="my-chat-user-name">{{my.dat.target.email}}</span>
+    </div>
+    <hr class="my-chat-target-sep"/>
+    <div class="my-chat-history-box height100">
+        <div class="my-chat-history height100" scroll-glue>
+            <div class="my-chat-history-item" ng-repeat="msg in msgs.history" ng-init="dir=(msg.send ? 'right' : 'left')">
+                <img class="my-chat-user-avatar my-chat-user-avatar-{{dir}}" ng-src="{{msg.from | gravatar}}?s=30" alt="..." />
+                <div class="my-chat-history-item-say-{{dir}}">
+                <span class="{{dir}}-bubble">
+                    {{msg.say}}
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-chat-input-area">
+        <form role="form">
+            <button class="btn btn-success my-chat-submit" type="submit" ng-click="my.srv.sendMsg()"
+                    ng-disabled="!my.dat.user.status.signed || !msgs.current.say">Send</button>
+            <div class="my-chat-input">
+                <input class="form-control" type="text" placeholder="Message..."
+                       ng-model="msgs.current.say" ng-disabled="!my.dat.user.status.signed" ng-required="true" />
+            </div>
+        </form>
+    </div>
+</div>
