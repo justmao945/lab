@@ -277,17 +277,17 @@ if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
   set shiftwidth=2 softtabstop=2 tabstop=2
-  set guifont=Monaco:h12
   if has('gui_running')
+    set guifont=Monaco:h12
     set linespace=1 lines=40 columns=90
   endif
 elseif has("unix")
   set shiftwidth=4 softtabstop=4 tabstop=4
-  set guifont=Consolas\ 12
-  set guifontwide=SimSun\ 11
+  set background=light
   if has('gui_running')
     set linespace=3 lines=45 columns=84
-    set bg=light
+    set guifont=Consolas\ 12
+    set guifontwide=SimSun\ 11
   endif
 endif
 

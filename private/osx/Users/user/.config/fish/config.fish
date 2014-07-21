@@ -19,36 +19,36 @@ end
 #---------------+
 #    alias      |
 #---------------+
-function c  --description 'Clear screen'
+function c  -d 'Clear screen'
   clear
 end
 
-function cdgo --description 'Change dir to $GOPATH/src/github.com/justmao945'
+function cdgo -d 'Change dir to $GOPATH/src/github.com/justmao945'
   cd $GOPATH/src/github.com/justmao945
 end
 
-function cdlab --description 'Change dir to $HOME/Git/lab'
+function cdlab -d 'Change dir to $HOME/Git/lab'
   cd $HOME/Git/lab
 end
 
-function df --description 'Print sizes in human readable'
+function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
 
-function man --description 'Use vim viewer to display manpage'
+function man -d 'Use vim viewer to display manpage'
   command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
 end
 
-function rm --description 'Remove interactively'
+function rm -d 'Remove interactively'
   command rm -i $argv
 end
 
-function start_httpd --description 'Start the SimpleHTTPServer module of Python on port 8080'
+function start_httpd -d 'Start the SimpleHTTPServer module of Python on port 8080'
   python -m SimpleHTTPServer 8080
 end
 
-function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
+function start_tunnel -d 'Start SSH tunnel on localhost on port :1314'
   while [ true ]
     echo 'Connect and listen on port 1314...'
     ssh -p 1122 -vvvCTD 1314 linode
@@ -57,19 +57,19 @@ function start_tunnel --description 'Start SSH tunnel on localhost on port :1314
   end
 end
 
-function start_mallory --description 'Start mallory SSH tunnel on port :1315'
+function start_mallory -d 'Start mallory SSH tunnel on port :1315'
   mallory -engine=ssh -remote=ssh://linode:1122
 end
 
-function start_chrome --description 'Start Google Chrome with additional arguments'
+function start_chrome -d 'Start Google Chrome with additional arguments'
   open -a 'Google Chrome.app' --args --winhttp-proxy-resolver
 end
 
-function swift --description 'Start Swift language interactive command line'
+function swift -d 'Start Swift language interactive command line'
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift $argv
 end
 
-function with_proxy --description 'Start command with HTTP/HTTPS proxy on port 1315'
+function with_proxy -d 'Start command with HTTP/HTTPS proxy on port 1315'
   env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
 end
 
