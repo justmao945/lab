@@ -1,33 +1,44 @@
 -- Hi!
--- Save this as ~/.hydra/init.lua and choose Reload Config from the menu
+-- Save this as ~/.hydra/init.lua and choose Reload Config from the menu (or press cmd-alt-ctrl R}
+
+-- show an alert to let you know Hydra's running
 hydra.alert("Hydra config by justmao945 loaded", 1.5)
 
--- Uncomment this if you want Hydra to make sure it launches at login
-autolaunch.set(true)
+-- open a repl with mash-R; requires https://github.com/sdegutis/hydra-cli
+hotkey.bind({"cmd", "ctrl", "alt"}, "R", repl.open)
+
+-- show a helpful menu
+hydra.menu.show(function()
+    local t = {
+      {title = "Reload Config", fn = hydra.reload},
+      {title = "Open REPL", fn = repl.open},
+      {title = "-"},
+      {title = "About Hydra", fn = hydra.showabout},
+      {title = "Check for Updates...", fn = function() hydra.updates.check(nil, true) end},
+      {title = "Quit", fn = os.exit},
+    }
+
+    --[[if not hydra.license.haslicense() then
+      table.insert(t, 1, {title = "Buy or Enter License...", fn = hydra.license.enter})
+      table.insert(t, 2, {title = "-"})
+    end--]]
+
+    return t
+end)
+
+-- uncomment this line if you want Hydra to make sure it launches at login
+hydra.autolaunch.set(true)
+
+-- when the "update is available" notification is clicked, open the website
+notify.register("showupdate", function() os.execute('open https://github.com/sdegutis/Hydra/releases') end)
+
+-- check for updates every week, and also right now (when first launching)
+timer.new(timer.weeks(1), hydra.updates.check):start()
+hydra.updates.check()
+
 
 -- main modkey
 local modkey = {"cmd", "ctrl"}
-
-
--- open a repl
---   the repl is a Lua prompt; type "print('hello world')"
---   when you're in the repl, type "help" to get started
---   almost all readline functionality works in the repl
-hotkey.bind(modkey, "R", repl.open)
-
-
--- I've worked hard to make Hydra useful and easy to use. I've also
--- released it with a liberal open source license, so that you can do
--- with it as you please. So, instead of charging for licenses, I'm
--- asking for donations. If you find it helpful, I encourage you to
--- donate what you believe would have been a fair price for a license:
-
-local function donate()
-  os.execute("open 'https://www.paypal.com/cgi-bin/webscr?business=sbdegutis@gmail.com&cmd=_donations&item_name=Hydra.app%20donation'")
-end
-
-hotkey.bind({"cmd", "alt", "ctrl"}, "D", donate)
-
 
 -- move the window
 function movewindow(fn)
@@ -67,52 +78,3 @@ hotkey.new(modkey, "M", function()
     win:maximize()
   end
 end):enable()
-
-
--- Update
--- save the time when updates are checked
-function checkforupdates()
-  updates.check(updates.available)
-  settings.set('lastcheckedupdates', os.time())
-end
-
--- show available updates
-local function showupdate()
-  os.execute('open https://github.com/sdegutis/Hydra/releases')
-end
-
--- what to do when an update is checked
-function updates.available(available)
-  if available then
-    notify.show("Hydra update available", "", "Click here to see the changelog and maybe even install it", "showupdate")
-  else
-    hydra.alert("No update available.")
-  end
-end
-
--- check for updates every week
-timer.new(timer.weeks(1), checkforupdates):start()
-notify.register("showupdate", showupdate)
-
--- if this is your first time running Hydra, you're launching it more than a week later, check now
-local lastcheckedupdates = settings.get('lastcheckedupdates')
-if lastcheckedupdates == nil or lastcheckedupdates <= os.time() - timer.days(7) then
-  checkforupdates()
-end
-
-
--- show a helpful menu
-menu.show(function()
-    local updatetitles = {[true] = "Install Update", [false] = "Check for Update..."}
-    local updatefns = {[true] = updates.install, [false] = checkforupdates}
-    local hasupdate = (updates.newversion ~= nil)
-
-    return {
-      {title = "Reload Config", fn = hydra.reload},
-      {title = "Open REPL", fn = repl.open},
-      {title = "-"},
-      {title = "About", fn = hydra.showabout},
-      {title = updatetitles[hasupdate], fn = updatefns[hasupdate]},
-      {title = "Quit Hydra", fn = os.exit},
-    }
-end)
