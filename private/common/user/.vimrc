@@ -287,6 +287,7 @@ elseif has("unix")
     set linespace=3 lines=45 columns=84
     set guifont=Consolas\ 12
     set guifontwide=SimSun\ 11
+    set background=light
   elseif $DESKTOP_SESSION == 'awesome'
     set background=dark
   endif
