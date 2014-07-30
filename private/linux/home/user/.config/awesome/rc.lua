@@ -110,7 +110,7 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Brackets", brackets },
-                                    { "Chrome", chrome .. ' --scroll-pixels=200 --proxy-pac-url=http://linode/pub/gfw.pac ' },
+                                    { "Chrome", chrome .. ' --scroll-pixels=200 --proxy-pac-url=http://linode/pub/gfw1315.pac ' },
                                     { "Lock", xlock },
                                     { "Next", nextbg_cmd },
                                   }
