@@ -52,7 +52,7 @@ function tmux -d 'Start with TERM=screen-256color-bce'
 end
 
 function with_proxy -d 'Start under HTTP proxy localhost:1315'
-    env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
+    env http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 $argv
 end
 
 #---------------+
