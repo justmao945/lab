@@ -78,8 +78,8 @@ function fish_title -d 'Set tmux title'
         set TITLE $argv[1]^(hostname -s)
     end
     set MAX_LENGTH 19
-    set SHORT_TITLE (eval echo $TITLE | head -c $MAX_LENGTH)
-    if [ (expr length $TITLE) -gt $MAX_LENGTH ]
+    set SHORT_TITLE (echo "$TITLE" | head -c $MAX_LENGTH)
+    if [ (expr length "$TITLE") -gt $MAX_LENGTH ]
         set SHORT_TITLE $SHORT_TITLE..
     end
     if [ -z "$TMUX" ]
