@@ -73,9 +73,9 @@ set -x XIM              fcitx
 # Set the tmux window title, depending on whether we are running something, or just prompting
 function fish_title -d 'Set tmux title'
     if [ $_ = 'fish' ] # command as title
-        set TITLE (prompt_pwd)@(hostname)
+        set TITLE (prompt_pwd)@(hostname -s)
     else
-        set TITLE $argv[1]@(hostname)
+        set TITLE $argv[1]@(hostname -s)
     end
     if [ -z "$TMUX" ]
         echo $TITLE
