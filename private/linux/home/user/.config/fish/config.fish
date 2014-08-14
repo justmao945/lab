@@ -73,14 +73,19 @@ set -x XIM              fcitx
 # Set the tmux window title, depending on whether we are running something, or just prompting
 function fish_title -d 'Set tmux title'
     if [ $_ = 'fish' ] # command as title
-        set TITLE (prompt_pwd)@(hostname -s)
+        set TITLE (prompt_pwd)^(hostname -s)
     else
-        set TITLE $argv[1]@(hostname -s)
+        set TITLE $argv[1]^(hostname -s)
+    end
+    set MAX_LENGTH 19
+    set SHORT_TITLE (eval echo $TITLE | head -c $MAX_LENGTH)
+    if [ (expr length $TITLE) -gt $MAX_LENGTH ]
+        set SHORT_TITLE $SHORT_TITLE..
     end
     if [ -z "$TMUX" ]
-        echo $TITLE
+        echo $SHORT_TITLE
     else
-        tmux rename-window $TITLE 
+        tmux rename-window $SHORT_TITLE 
     end
 end
 
