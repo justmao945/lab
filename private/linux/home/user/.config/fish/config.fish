@@ -97,6 +97,10 @@ if [ -f $config_ohio ]
     source $config_ohio
 end
 
+set config_bundle /usr/local/bundle/config.fish
+if [ -f $config_bundle ]
+    source $config_bundle
+end
 
 #---------------+
 # external conf |
