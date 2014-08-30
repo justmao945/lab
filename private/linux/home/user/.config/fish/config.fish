@@ -37,10 +37,14 @@ end
 function start_tunnel -d 'Start SSH tunnel on localhost on port :1314'
   while [ true ]
     echo 'Connect and listen on port 1314...'
-    ssh -vvvCTD 1314 linode
+    ssh -p 1123 -vvvCTD 1314 linode
     echo 'Retry in 3 seconds...'
     sleep 3
   end
+end
+
+function start_mallory -d 'Start mallory HTTP proxy on port 1315'
+    mallory -engine=ssh -remote=ssh://linode:1123
 end
 
 function tmux -d 'Start with TERM=screen-256color-bce'
@@ -48,7 +52,7 @@ function tmux -d 'Start with TERM=screen-256color-bce'
 end
 
 function with_proxy -d 'Start under HTTP proxy localhost:1315'
-    env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
+    env http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 $argv
 end
 
 #---------------+
@@ -68,20 +72,20 @@ set -x XIM              fcitx
 #---------------+
 # Set the tmux window title, depending on whether we are running something, or just prompting
 function fish_title -d 'Set tmux title'
-    set max_length 19
-    if [ "fish" != $_ ] # command as title
-        if [ ! -z "$TMUX" ]
-            tmux rename-window "$_ $argv"
-        end
-    else if [ "$PWD" != "$LPWD" ]  # path as title
-        set LPWD "$PWD"
-        set SUBSTRING (eval echo $PWD | tail -c $max_length)
-        if [ (expr length $PWD) -gt $max_length ]
-            set SUBSTRING "..$SUBSTRING"
-        end
-        if [ ! -z "$TMUX" ]
-            tmux rename-window "$SUBSTRING"
-        end
+    if [ $_ = 'fish' ] # command as title
+        set TITLE (prompt_pwd)^(hostname -s)
+    else
+        set TITLE $argv[1]^(hostname -s)
+    end
+    set MAX_LENGTH 19
+    set SHORT_TITLE (echo "$TITLE" | head -c $MAX_LENGTH)
+    if [ (expr length "$TITLE") -gt $MAX_LENGTH ]
+        set SHORT_TITLE $SHORT_TITLE..
+    end
+    if [ -z "$TMUX" ]
+        echo $SHORT_TITLE
+    else
+        tmux rename-window $SHORT_TITLE 
     end
 end
 
@@ -93,6 +97,10 @@ if [ -f $config_ohio ]
     source $config_ohio
 end
 
+set config_bundle /usr/local/bundle/config.fish
+if [ -f $config_bundle ]
+    source $config_bundle
+end
 
 #---------------+
 # external conf |

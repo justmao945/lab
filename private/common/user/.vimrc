@@ -271,7 +271,7 @@ runtime! ftplugin/man.vim
 " =====================================
 " !! background should be set after colorscheme
 set guioptions=ai
-colorscheme hemisu
+silent! colorscheme hemisu
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
@@ -283,11 +283,13 @@ elseif has("mac") || system("uname -s") =~ "Darwin"
   endif
 elseif has("unix")
   set shiftwidth=4 softtabstop=4 tabstop=4
-  set background=light
   if has('gui_running')
     set linespace=3 lines=45 columns=84
     set guifont=Consolas\ 12
     set guifontwide=SimSun\ 11
+    set background=light
+  elseif $DESKTOP_SESSION == 'awesome'
+    set background=dark
   endif
 endif
 
