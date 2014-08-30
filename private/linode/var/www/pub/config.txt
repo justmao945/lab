@@ -1,0 +1,33 @@
+!! Do not change the file name !
+!! User specified list, and you can add domains line by line.
+!! Run /var/pub/update-pac to update PAC files
+!!
+amazonaws.com
+android.com
+angularjs.org
+atlassian.com
+bitbucket.org
+bootstrapcdn.com
+chrome.com
+chromium.org
+d3js.org
+feedly.com
+firebase.com
+ggpht.com
+github.io
+golang.org
+google.com
+google.co.jp
+google.com.hk
+google-analytics.com
+googleadservices.com
+googleapis.com
+googlecode.com
+googleusercontent.com
+imgur.com
+inoreader.com
+nodejs.org
+openbsd.org
+rubyforge.org
+sf.net
+sourceforge.net

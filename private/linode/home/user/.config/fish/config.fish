@@ -34,6 +34,9 @@ function tmux -d 'Start with TERM=screen-256color-bce'
     env TERM=screen-256color-bce tmux $argv
 end
 
+function fish_title
+end
+
 #---------------+
 #    env        |
 #---------------+
