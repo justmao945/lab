@@ -1,3 +1,4 @@
 #!/bin/bash
-/var/pub/pyenv/bin/gfwlist2pac -f /var/www/pub/socks1314.pac -p 'SOCKS 127.0.0.1:1314' --user-rule /var/www/pub/config.txt
-/var/pub/pyenv/bin/gfwlist2pac -f /var/www/pub/http1315.pac -p 'PROXY 127.0.0.1:1315' --user-rule /var/www/pub/config.txt
+source /var/pub/py/bin/activate
+/var/pub/py/bin/gfwlist2pac -f /var/pub/socks1314.pac -p 'SOCKS 127.0.0.1:1314' --user-rule /var/pub/config.txt
+/var/pub/py/bin/gfwlist2pac -f /var/pub/http1315.pac -p 'PROXY 127.0.0.1:1315' --user-rule /var/pub/config.txt

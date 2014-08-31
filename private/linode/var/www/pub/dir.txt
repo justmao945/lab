@@ -2,13 +2,7 @@
     nginx root, index.html is here
 
 * /var/www/pub/
-    public shared files, can be accessed through http
+    public shared files, can be accessed through HTTP
 
-* /var/www/pub/socks1314.pac
-    updated hourly
-
-* /var/www/pub/config.txt
-    user rules for socks1314.pac, add domains to it if is blocked
-
-* /var/pub/
-    public shared files between users, not available for outside world
+* /var/pub
+    private shared files, can be accessed by all users but not HTTP

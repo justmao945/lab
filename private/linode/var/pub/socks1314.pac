@@ -705,6 +705,7 @@ var domains = {
   "lastfm.es": 1, 
   "hkfront.org": 1, 
   "pbxes.com": 1, 
+  "dnscrypt.org": 1, 
   "getfreedur.com": 1, 
   "bobulate.com": 1, 
   "sevenload.com": 1, 
@@ -848,7 +849,7 @@ var domains = {
   "photofocus.com": 1, 
   "laomiu.com": 1, 
   "songjianjun.com": 1, 
-  "lsmkorean.org": 1, 
+  "genuitec.com": 1, 
   "monitorchina.org": 1, 
   "t66y.com": 1, 
   "files2me.com": 1, 
@@ -1368,7 +1369,7 @@ var domains = {
   "popularpages.net": 1, 
   "savevid.com": 1, 
   "pornoxo.com": 1, 
-  "genuitec.com": 1, 
+  "lsmkorean.org": 1, 
   "tiney.com": 1, 
   "netme.cc": 1, 
   "squarespace.com": 1, 
@@ -1520,7 +1521,6 @@ var domains = {
   "dizhidizhi.com": 1, 
   "pbwiki.com": 1, 
   "ruyiseek.com": 1, 
-  "docstoc.com": 1, 
   "12vpn.com": 1, 
   "eltondisney.com": 1, 
   "free.fr": 1, 
@@ -2488,18 +2488,28 @@ var domains = {
   "1-apple.com.tw": 1
 };
 
-var proxy = "PROXY 127.0.0.1:1315";
+var proxy = "SOCKS 127.0.0.1:1314";
 
 var direct = 'DIRECT;';
 
+var hasOwnProperty = Object.hasOwnProperty;
+
 function FindProxyForURL(url, host) {
-    var lastPos;
-    do {
-        if (domains.hasOwnProperty(host)) {
+    var suffix;
+    var pos = host.lastIndexOf('.');
+    pos = host.lastIndexOf('.', pos - 1);
+    while(1) {
+        if (pos <= 0) {
+            if (hasOwnProperty.call(domains, host)) {
+                return proxy;
+            } else {
+                return direct;
+            }
+        }
+        suffix = host.substring(pos + 1);
+        if (hasOwnProperty.call(domains, suffix)) {
             return proxy;
         }
-        lastPos = host.indexOf('.') + 1;
-        host = host.slice(lastPos);
-    } while (lastPos >= 1);
-    return direct;
+        pos = host.lastIndexOf('.', pos - 1);
+    }
 }

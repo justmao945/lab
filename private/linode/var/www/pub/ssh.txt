@@ -1,6 +1,8 @@
 1. Install ssh on your client.
 
-2. Run `ssh -p 1122 -vCTD 1314 106.185.39.244` on your cilent to start the SOCKS proxy.
+1.1 Add `106.185.39.244 linode` to your /etc/hosts
+
+2. Run `ssh -p 1122 -vCTD 1314 linode` on your cilent to start the SOCKS proxy.
     It will create a SOCKS5 proxy on `localhost:1314`.
 
         -p: Port to connect to on the remote host.
@@ -14,7 +16,7 @@
     function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
       while [ true ]
          echo 'Connect and listen on port 1314...'
-         ssh -p 1122 -vCTD 1314 106.185.39.244
+         ssh -p 1122 -vCTD 1314 linode
          echo 'Retry in 3 seconds...'
          sleep 3
       end
@@ -26,16 +28,19 @@
         while [ true ]
         do
             echo 'Connect and listen on port 1314...'
-            ssh -p 1122 -vCTD 1314 106.185.39.244
+            ssh -p 1122 -vCTD 1314 linode
             echo 'Retry in 3 seconds...'
             sleep 3
         done
     }
     ```
 
-3. Add the Auto Proxy Configuration `http://106.185.39.244/pub/socks1314.pac` to your system proxy.
+2.1 Copy linode:/var/pub/socks1314.pac to some path e.g. $HOME/.socks1314.pac and start a local http server.
+    Run `python -m SimpleHTTPServer 2000` in your $HOME directory to start a static file server on port 2000.
+
+3. Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac` to your system proxy.
     * Google Chrome on Mac OS X not work ? Open it from terminal `open -a 'Google Chrome.app' --args --winhttp-proxy-resolver`
-    * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://106.185.39.244/socks1314.pac`
+    * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://localhost:2000/.socks1314.pac`
       * How to debug proxy: http://www.chromium.org/developers/design-documents/network-stack/debugging-net-proxy
 
 4. Everything goes well.
@@ -56,16 +61,3 @@
       ```
       with_proxy wget twitter.com
       ```
-
-6. Minimum side affect of changing IP?
-    * add
-    ```
-    106.185.39.244  linode
-    ```
-    to /etc/hosts, then you can use the domain name linode instead of the raw IP.
-    e.g.
-    ```
-    ping linode
-    ssh linode
-    ```
-
