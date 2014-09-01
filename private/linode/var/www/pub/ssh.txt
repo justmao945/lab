@@ -2,11 +2,12 @@
 
 1.1 Add `106.185.39.244 linode` to your /etc/hosts
 
-2. Run `ssh -p 1122 -vCTD 1314 linode` on your cilent to start the SOCKS proxy.
+2. Run `ssh -p 1122 -vNCTD 1314 linode` on your cilent to start the SOCKS proxy.
     It will create a SOCKS5 proxy on `localhost:1314`.
 
         -p: Port to connect to on the remote host.
         -v: Debug mode.
+        -N: Do not execute a remote command.
         -C: Compress traffic.
         -T: Disable pseudo-tty allocation.
         -D: Specifies a local ``dynamic'' application-level port forwarding.
@@ -16,7 +17,7 @@
     function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
       while [ true ]
          echo 'Connect and listen on port 1314...'
-         ssh -p 1122 -vCTD 1314 linode
+         ssh -p 1122 -vNCTD 1314 linode
          echo 'Retry in 3 seconds...'
          sleep 3
       end
@@ -28,7 +29,7 @@
         while [ true ]
         do
             echo 'Connect and listen on port 1314...'
-            ssh -p 1122 -vCTD 1314 linode
+            ssh -p 1122 -vNCTD 1314 linode
             echo 'Retry in 3 seconds...'
             sleep 3
         done
@@ -37,6 +38,13 @@
 
 2.1 Copy linode:/var/pub/socks1314.pac to some path e.g. $HOME/.socks1314.pac and start a local http server.
     Run `python -m SimpleHTTPServer 2000` in your $HOME directory to start a static file server on port 2000.
+    ```
+    # copy file from linode to $HOME/
+    scp -P 1122 linode:/var/pub/socks1314.pac $HOME/.socks1314.pac
+    # start local server to serve file
+    cd $HOME
+    python -m SimpleHTTPServer 2000
+    ```
 
 3. Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac` to your system proxy.
     * Google Chrome on Mac OS X not work ? Open it from terminal `open -a 'Google Chrome.app' --args --winhttp-proxy-resolver`
