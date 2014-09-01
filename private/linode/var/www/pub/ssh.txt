@@ -1,10 +1,13 @@
 1. Install ssh on your client.
 
-2. Run `ssh -p 1122 -vvvCTD 1314 106.185.24.106` on your cilent to start the SOCKS proxy.
+1.1 Add `106.185.39.244 linode` to your /etc/hosts
+
+2. Run `ssh -p 1122 -vNCTD 1314 linode` on your cilent to start the SOCKS proxy.
     It will create a SOCKS5 proxy on `localhost:1314`.
 
         -p: Port to connect to on the remote host.
-        -vvv: Debug mode.
+        -v: Debug mode.
+        -N: Do not execute a remote command.
         -C: Compress traffic.
         -T: Disable pseudo-tty allocation.
         -D: Specifies a local ``dynamic'' application-level port forwarding.
@@ -14,7 +17,7 @@
     function start_tunnel --description 'Start SSH tunnel on localhost on port :1314'
       while [ true ]
          echo 'Connect and listen on port 1314...'
-         ssh -p 1122 -vvvCTD 1314 106.185.24.106
+         ssh -p 1122 -vNCTD 1314 linode
          echo 'Retry in 3 seconds...'
          sleep 3
       end
@@ -26,16 +29,26 @@
         while [ true ]
         do
             echo 'Connect and listen on port 1314...'
-            ssh -p 1122 -vvvCTD 1314 106.185.24.106
+            ssh -p 1122 -vNCTD 1314 linode
             echo 'Retry in 3 seconds...'
             sleep 3
         done
     }
     ```
 
-3. Add the Auto Proxy Configuration `http://106.185.24.106/pub/gfw.pac` to your system proxy.
+2.1 Copy linode:/var/pub/socks1314.pac to some path e.g. $HOME/.socks1314.pac and start a local http server.
+    Run `python -m SimpleHTTPServer 2000` in your $HOME directory to start a static file server on port 2000.
+    ```
+    # copy file from linode to $HOME/
+    scp -P 1122 linode:/var/pub/socks1314.pac $HOME/.socks1314.pac
+    # start local server to serve file
+    cd $HOME
+    python -m SimpleHTTPServer 2000
+    ```
+
+3. Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac` to your system proxy.
     * Google Chrome on Mac OS X not work ? Open it from terminal `open -a 'Google Chrome.app' --args --winhttp-proxy-resolver`
-    * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://106.185.24.106/gfw.pac`
+    * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://localhost:2000/.socks1314.pac`
       * How to debug proxy: http://www.chromium.org/developers/design-documents/network-stack/debugging-net-proxy
 
 4. Everything goes well.

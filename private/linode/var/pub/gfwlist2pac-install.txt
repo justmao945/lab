@@ -1,0 +1,3 @@
+source py/bin/activate.xxx
+cd gfwlist2pac
+python setup.py install

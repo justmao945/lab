@@ -4,7 +4,7 @@
 set -x LC_CTYPE en_US.UTF-8
 set -x GOPATH   $HOME/Source/go
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
-set -x PATH     $PATH $GOPATH/bin $GEMPATH/bin
+set -x PATH     /usr/local/sbin $PATH $GOPATH/bin $GEMPATH/bin
 
 
 function fish_title
