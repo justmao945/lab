@@ -37,14 +37,14 @@ end
 function start_tunnel -d 'Start SSH tunnel on localhost on port :1314'
   while [ true ]
     echo 'Connect and listen on port 1314...'
-    ssh -p 1123 -vvvCTD 1314 linode
+    ssh -p 1122 -vNCTD 1314 linode
     echo 'Retry in 3 seconds...'
     sleep 3
   end
 end
 
 function start_mallory -d 'Start mallory HTTP proxy on port 1315'
-    mallory -engine=ssh -remote=ssh://linode:1123
+    mallory -engine=ssh -remote=ssh://linode:1122
 end
 
 function tmux -d 'Start with TERM=screen-256color-bce'
