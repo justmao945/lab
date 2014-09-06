@@ -76,7 +76,7 @@ layouts =
 nextbg_cmd = "awsetbg -a -r " .. awful.util.getdir("config") .. "/bg"
 
 -- Chrom browser
-chrome = 'google-chrome --scroll-pixels=200 --proxy-pac-url=http://linode/pub/gfw1315.pac'
+chrome = 'google-chrome --scroll-pixels=200 --proxy-pac-url=file:///home/jianjun/.mallory/http1315.pac'
 
 -- File Explorer
 explorer = 'nautilus --no-desktop'
