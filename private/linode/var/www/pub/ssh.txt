@@ -36,17 +36,25 @@
     }
     ```
 
-2.1 Copy linode:/var/pub/socks1314.pac to some path e.g. $HOME/.socks1314.pac and start a local http server.
-    Run `python -m SimpleHTTPServer 2000` in your $HOME directory to start a static file server on port 2000.
-    ```
-    # copy file from linode to $HOME/
-    scp -P 1122 linode:/var/pub/socks1314.pac $HOME/.socks1314.pac
-    # start local server to serve file
-    cd $HOME
-    python -m SimpleHTTPServer 2000
-    ```
+2.1 Copy linode:/var/pub/socks1314.pac to some path e.g. $HOME/.socks1314.pac.
+    * Mac OS X user
+        * Run `python -m SimpleHTTPServer 2000` in your $HOME directory to start a static file server on port 2000.
+            ```
+            # copy file from linode to $HOME/
+            scp -P 1122 linode:/var/pub/socks1314.pac $HOME/.socks1314.pac
+            # start local server to serve file
+            cd $HOME
+            python -m SimpleHTTPServer 2000
+            ```
+        * Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac` to your system proxy.
+    * Linux user
+        * There's no need to start a web server.
+        * Add the Auto Proxy Configuration `file:///$HOME/.socks1314.pac` to your system proxy.
+    * Windows user
+        * There's no need to start a web server, either.
+        * Add the Auto Proxy Configuration `file:///C:/path/to/.socks1314.pac` to your system proxy.
 
-3. Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac` to your system proxy.
+3. Add the Auto Proxy Configuration `http://localhost:2000/.socks1314.pac`(Mac OS X) to your system proxy.
     * Google Chrome on Mac OS X not work ? Open it from terminal `open -a 'Google Chrome.app' --args --winhttp-proxy-resolver`
     * Start Google Chrome with auto proxy: `Google\ Chrome --proxy-pac-url=http://localhost:2000/.socks1314.pac`
       * How to debug proxy: http://www.chromium.org/developers/design-documents/network-stack/debugging-net-proxy
