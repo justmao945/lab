@@ -61,18 +61,17 @@ function start_mallory -d 'Start mallory SSH tunnel on port :1315'
   mallory -engine=ssh -remote=ssh://linode:1122
 end
 
-function start_chrome -d 'Start Google Chrome with additional arguments'
-  open -a 'Google Chrome.app' --args --winhttp-proxy-resolver
-end
-
-function swift -d 'Start Swift language interactive command line'
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift $argv
-end
-
 function with_proxy -d 'Start command with HTTP/HTTPS proxy on port 1315'
   env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
 end
 
 function tmux -d "tart with TERM=screen-256color-bce"
   env TERM=screen-256color-bce tmux $argv
+end
+
+function luarocks_install_mjolnir  -d "Install modules for mjolnir"
+  set MODUELS geometry screen application fnutils hotkey keycodes
+  for M in $MODUELS
+    luarocks install mjolnir.$M
+  end
 end
