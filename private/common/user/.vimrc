@@ -209,7 +209,7 @@ let c_no_curly_error=1
 set previewheight=4
 
 " Set to debug level 1, only used by plugin developer
-let g:clang_debug = 3
+let g:clang_debug = 0
 
 " Auto completion is OK for the new async mode
 let g:clang_auto = 1
@@ -253,6 +253,7 @@ let g:used_javascript_libs = 'jquery,angularjs'
 filetype plugin indent on
 
 au BufRead,BufNewFile *.md set filetype=mkd
+au BufRead,BufNewFile *.sv set filetype=verilog
 
 " This autocommand jumps to the last known position in a file
 " just after opening it, if the '" mark is set: >
