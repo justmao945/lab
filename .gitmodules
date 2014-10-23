@@ -16,12 +16,9 @@
 [submodule "vim-plugins/python-mode"]
 	path = vim-plugins/python-mode
 	url = https://github.com/klen/python-mode.git
-[submodule "vim-plugins/dart"]
-	path = vim-plugins/dart
-	url = https://github.com/dart-lang/dart-vim-plugin.git
-[submodule "vim-plugins/vim-ruby"]
-	path = vim-plugins/vim-ruby
-	url = https://github.com/vim-ruby/vim-ruby.git
 [submodule "vim-plugins/vim-json"]
 	path = vim-plugins/vim-json
 	url = https://github.com/elzr/vim-json.git
+[submodule "vim-plugins/vim-javascript"]
+	path = vim-plugins/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
