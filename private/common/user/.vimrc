@@ -256,6 +256,7 @@ let g:used_javascript_libs = 'jquery,angularjs'
 filetype plugin indent on
 
 au BufRead,BufNewFile *.md set filetype=mkd
+au BufRead,BufNewFile *.sv set filetype=verilog
 
 " This autocommand jumps to the last known position in a file
 " just after opening it, if the '" mark is set: >
