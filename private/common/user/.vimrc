@@ -38,6 +38,9 @@ set fileformats=unix,dos
 " Display line numbers
 set number
 
+" Display relative line number
+set relativenumber
+
 " Display commands in the bottom right corner as they are typed
 set showcmd
 
@@ -209,7 +212,7 @@ let c_no_curly_error=1
 set previewheight=4
 
 " Set to debug level 1, only used by plugin developer
-let g:clang_debug = 3
+let g:clang_debug = 0
 
 " Auto completion is OK for the new async mode
 let g:clang_auto = 1
