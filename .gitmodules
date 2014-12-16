@@ -25,3 +25,6 @@
 [submodule "vim-plugins/vim-coffee-script"]
 	path = vim-plugins/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "vim-jade"]
+	path = vim-jade
+	url = https://github.com/digitaltoad/vim-jade.git
