@@ -38,6 +38,7 @@ set fileformats=unix,dos
 " Display line numbers
 set number
 
+" Display relative line number
 set relativenumber
 
 " Display commands in the bottom right corner as they are typed
