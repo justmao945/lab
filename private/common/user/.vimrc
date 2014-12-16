@@ -38,6 +38,8 @@ set fileformats=unix,dos
 " Display line numbers
 set number
 
+set relativenumber
+
 " Display commands in the bottom right corner as they are typed
 set showcmd
 

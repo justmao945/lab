@@ -450,6 +450,7 @@ as_list =
 {
   nextbg_cmd,
   "xcompmgr",
+  "xautolock -locker 'gnome-screensaver-command --lock'",
   "start-pulseaudio-x11",
   "fcitx -r",
 }
