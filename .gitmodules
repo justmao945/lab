@@ -28,3 +28,6 @@
 [submodule "vim-plugins/vim-jade"]
 	path = vim-plugins/vim-jade
 	url = https://github.com/digitaltoad/vim-jade.git
+[submodule "vim-plugins/DrawIt"]
+	path = vim-plugins/DrawIt
+	url = https://github.com/vim-scripts/DrawIt.git
