@@ -317,12 +317,6 @@ map <silent> <C-K> <C-W>k
 map <silent> <C-H> <C-W>h
 map <silent> <C-L> <C-W>l
 
-" leader section
-map  <silent> <Leader>d <esc>:tabclose<cr>
-map  <silent> <Leader>t <esc>:tabnew .<cr>
-
-map  <silent> <Leader>c <esc>:ClangClosePreviewDiagWindow<cr>
-
 " tab page switch
 func! TabPos_ActivateBuffer(num)
   let s:count = a:num 
