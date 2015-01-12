@@ -28,7 +28,8 @@
     m = commit
     p = push
     s = status -sb
-    u = reset HEAD --
+    r = reset HEAD --
+    u = pull
     
     ma = commit --amend
 
