@@ -3,17 +3,48 @@
     email = justmao945@gmail.com
 
 [color]
-    ui = true
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+    ui = auto
 
-[alias]
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    lg = !"git lg1"
-    unstage = reset HEAD --
-    visual = !gitk
+[color "branch"]
+    current = green
+    remote = yellow
 
 [core]
     editor = vim
+    pager = less -FRSX
+    mergeoptions = --no-edit
+
+[alias]
+    a = add -A :/
+    b = branch
+    c = checkout
+    d = !git --no-pager diff
+    f = fetch origin
+    l = !"git lg1"
+    m = commit
+    p = push
+    s = status -sb
+    u = reset HEAD --
+    
+    ma = commit --amend
+
+    dt = difftool
+    stat = !git --no-pager diff --stat
+
+    # clean merged branches
+    sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
+
+    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+
+    # serve local repo, others can access via `git clone git://`
+    serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+
+    visual = !gitk
 
 [merge]
     tool = vimdiff
@@ -23,8 +54,13 @@
 
 [url "git@github.com:"]
     pushInsteadOf = https://github.com/
+
 [push]
     default = simple
+
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
+
+[help]
+    autocorrect = 1

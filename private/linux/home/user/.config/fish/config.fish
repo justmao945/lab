@@ -5,6 +5,10 @@ function c  -d 'Clear screen'
     clear
 end
 
+function g -d 'Git'
+    git $argv
+end
+
 function cmake-clang -d 'Use clang as the C/C++ compiler'
     command cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang $argv
 end
