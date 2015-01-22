@@ -22,7 +22,7 @@
     a = add -A :/
     b = branch
     c = checkout
-    d = !git --no-pager diff
+    d = diff
     f = fetch origin
     l = !"git lg1"
     m = commit
@@ -33,6 +33,7 @@
     
     ma = commit --amend
 
+    dc = diff --cached
     dt = difftool
     stat = !git --no-pager diff --stat
 
