@@ -31,3 +31,6 @@
 [submodule "vim-plugins/DrawIt"]
 	path = vim-plugins/DrawIt
 	url = https://github.com/vim-scripts/DrawIt.git
+[submodule "vim-plugins/vim-go"]
+	path = vim-plugins/vim-go
+	url = https://github.com/fatih/vim-go.git
