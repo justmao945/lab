@@ -63,7 +63,9 @@ function p -d 'Print absolute path of file'
     if [ (count $argv) -eq 0 ]
         pwd
     else
+        pushd
         echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
+        popd
     end
 end
 
