@@ -43,6 +43,16 @@ function man -d 'Use vim viewer to display manpage'
   command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
 end
 
+function p -d 'Print absolute path of file'
+    if [ (count $argv) -eq 0 ]
+        pwd
+    else
+        pushd
+        echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
+        popd
+    end
+end
+
 function rm -d 'Remove interactively'
   command rm -i $argv
 end
