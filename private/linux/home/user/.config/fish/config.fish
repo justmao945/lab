@@ -59,6 +59,16 @@ function with_proxy -d 'Start under HTTP proxy localhost:1315'
     env http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 $argv
 end
 
+function p -d 'Print absolute path of file'
+    if [ (count $argv) -eq 0 ]
+        pwd
+    else
+        pushd
+        echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
+        popd
+    end
+end
+
 #---------------+
 #    env        |
 #---------------+
