@@ -35,7 +35,7 @@ function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
-function df -d 'Git'
+function g -d 'Git'
   command git $argv
 end
 
