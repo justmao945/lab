@@ -35,26 +35,26 @@ function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
+function g -d 'Git'
+  command git $argv
+end
 
 function man -d 'Use vim viewer to display manpage'
   command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
 end
 
+function p -d 'Print absolute path of file'
+    if [ (count $argv) -eq 0 ]
+        pwd
+    else
+        pushd
+        echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
+        popd
+    end
+end
+
 function rm -d 'Remove interactively'
   command rm -i $argv
-end
-
-function start_httpd -d 'Start the SimpleHTTPServer module of Python on port 8080'
-  python -m SimpleHTTPServer 8080
-end
-
-function start_tunnel -d 'Start SSH tunnel on localhost on port :1314'
-  while [ true ]
-    echo 'Connect and listen on port 1314...'
-    ssh -p 1122 -vvvCTD 1314 linode
-    echo 'Retry in 3 seconds...'
-    sleep 3
-  end
 end
 
 function start_mallory -d 'Start mallory SSH tunnel on port :1315'
@@ -67,11 +67,4 @@ end
 
 function tmux -d "tart with TERM=screen-256color-bce"
   env TERM=screen-256color-bce tmux $argv
-end
-
-function luarocks_install_mjolnir  -d "Install modules for mjolnir"
-  set MODUELS geometry screen application fnutils hotkey keycodes
-  for M in $MODUELS
-    luarocks install mjolnir.$M
-  end
 end
