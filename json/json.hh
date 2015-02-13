@@ -7,6 +7,7 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -131,6 +132,18 @@ private:
         TokenType type;
         std::string text; // for TokenString, TokenTFN
         double num; // for TokenNumber
+        
+        std::string toString() const {
+            std::stringstream ss; ss << num;
+            switch(type) {
+                case TokenEOF:      return "EOF";
+                case TokenString:   return "\"" + text + "\"";
+                case TokenNumber:   return ss.str();
+                case TokenTFN:      return text;
+                case TokenError:    return "error: " + text;
+                default:            return text;
+            }
+        }
     };
 
     bool _isValueType() const {
@@ -172,7 +185,8 @@ private:
             return t;
         }
         enum State { s_start, s_str, s_tfn, s_esc, s_end } s = s_start; Token t; char c;
-        while(is.get(c) && s != s_end) {
+        // test end before get
+        while(s != s_end && is.get(c)) {
             bool sv = true;
             switch(s) {
             case s_start:
