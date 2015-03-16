@@ -17,6 +17,7 @@
     editor = vim
     pager = less -FRSX
     mergeoptions = --no-edit
+	quotepath = false
 
 [alias]
     a = add -A :/

@@ -112,6 +112,9 @@ set smartindent
 " Set fold method to markers. e.g. {{{ }}}
 set foldmethod=marker
 
+" switch case indent style
+set cinoptions=l1
+
 " =====================================
 " Searching/Replacing
 " =====================================
