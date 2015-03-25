@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -12,6 +14,7 @@ public:
         // data[i] means the parent index
         // data[i] == i means a standalone components
         data.resize(N);
+        count = N;
         for(int i = 0; i < N; i++) {
             data[i] = i;
         }
@@ -20,14 +23,22 @@ public:
     // add connection p <=> q
     void Union(int p, int q) {
         int i = Find(p), j = Find(q);
+        if(i == j) return;
         data[i] = j;
+        count--;
     }
 
     // find component id
     int Find(int p) {
         assert(p >= 0 && p < data.size());
+        int q = p;
         while(p != data[p]) {
             p = data[p];
+        }
+        // path compression
+        while(q != data[q]) {
+            q = data[q];
+            data[q] = p;
         }
         return p;
     }
@@ -39,17 +50,25 @@ public:
 
     // number of components
     int Count() {
-        int n = 0;
-        for(int i = 0; i < data.size(); i++) {
-            if(data[i] == i) {
-                n++;
-            }
-        }
-        return n;
+        return count;
     }
 
+    string String() {
+        stringstream os;
+        os << '[';
+        for(int i = 0; i < data.size(); i++) {
+            if(i != 0) {
+                os << ',';
+            }
+            os << i << ':' << data[i];
+        }
+        os << ']';
+        return os.str();
+    }
 private:
+
     vector<int> data;
+    int count;
 };
 
 
@@ -68,7 +87,9 @@ int main() {
     u.Union(6, 7);
 
     cout << boolalpha;
-    
+ 
+    cout << u.String();
+
     cout << "Have " << u.Count() << " components" << endl;
 
     cout << "Node => Component" << endl;
