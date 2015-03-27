@@ -14,8 +14,24 @@ public:
         v.resize(1);
     }
 
+    // build heap in bottom up order, sink nodes from n/2 to 1
+    // and it takes O(N)
     PQ(const int* A, int n) {
         v.resize(n+1);
+        for(int i = 0; i < n; i++) {
+            v[i+1] = A[i];
+        }
+        int k = n / 2, i, j;
+        while(k >= 1) {
+            i = k;
+            while(i * 2 <= n) {
+                j = i * 2;
+                if(j + 1 <= n && v[j+1] < v[j]) j++;
+                if(v[j] < v[i]) swap(v[i], v[j]);
+                i = j;
+            }
+            k--;
+        }
     }
 
     int top() {
@@ -82,8 +98,17 @@ int main() {
         q.push(x);
     }
     while(! q.empty()) {
-        cout << q.top() << endl;
+        cout << q.top() << " ";
         q.pop();
     }
+    cout << endl;
+
+    PQ q1(v.data(), v.size());
+    while(! q1.empty()) {
+        cout << q1.top() << " ";
+        q1.pop();
+    }
+    cout << endl;
+
     return 0;
 }
