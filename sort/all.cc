@@ -90,22 +90,73 @@ int select_kth_smallest(vector<int>& v, int k) {
 }
  
 
+// max-heap
+// k start from 1, k is the node to sink
+void heap_sink(vector<int>& v, int k, int N) {
+    assert(k <= N);
+    // get the one before, we will use index start from 1 to n
+    int* A = v.data() - 1;
+    int c;
+    while(k * 2 <= N) {
+        c = k * 2;
+        if(c + 1 <= N && A[c + 1] > A[c]) {
+            c++;
+        }
+        if(A[c] > A[k]) {
+            swap(A[c], A[k]);
+        } else {
+            break;
+        }
+        k = c;
+    }
+}
+
+void heap_make(vector<int>& v) {
+    // get the one before, we will use index start from 1 to n
+    int* A = v.data() - 1;
+    int N = v.size();
+    int k = N / 2;
+    while(k >= 1) {
+        heap_sink(v, k, N);
+        k--;
+    }
+}
+
+void heap_sort(vector<int>& v) {
+    int N = v.size();
+    heap_make(v);
+    while(--N) {
+        // swap max to last
+        swap(v[0], v[N]);
+        // sink the root
+        heap_sink(v, 1, N);
+    }
+}
+
+
 int main() {
     vector<int> a = {1,2,4,5,7,2,54,2,712,2,4,6,1};
     
-    vector<int> b = a, c = a, d = a, e = a;
+    vector<int> b = a, c = a, d = a, e = a, f = a;
 
+    cout << "selection sort" << endl;
     selection_sort(b);
     prt(b);
 
+    cout << "insertion sort" << endl;
     insertion_sort(c);
     prt(c);
 
+    cout << "quick sort" << endl;
     prt(d);
     quick_sort(d);
     prt(d);
 
-    cout << "5th: " << select_kth_smallest(e, 5) << endl;
+    cout << "heap sort" << endl;
+    heap_sort(f);
+    prt(f);
+
+    cout << "select 5th smallest: " << select_kth_smallest(e, 5) << endl;
     prt(e);
 
     return 0;
