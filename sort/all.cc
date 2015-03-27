@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <vector>
 
@@ -68,12 +69,31 @@ void quick_sort(vector<int>& v) {
     }
     quick_sort_dac(v, 0, v.size()-1);
 }
+
+// when k is 0, means the first
+// v is unsorted
+// the time complexity is O(N)! better than O(NlogN) and O(NLogK) <- heap
+int select_kth_smallest(vector<int>& v, int k) {
+    assert(! v.empty());
+    int l = 0, h = v.size() - 1;
+    while(l <= h) {
+        int j = quick_sort_partition(v, l, h);
+        if(j == k) { // found!
+            return v[k];
+        } else if (k < j) {
+            h = j-1;
+        } else { // k > j
+            l = j+1;
+        }
+    }
+    return v[k];
+}
  
 
 int main() {
     vector<int> a = {1,2,4,5,7,2,54,2,712,2,4,6,1};
     
-    vector<int> b = a, c = a, d = a;
+    vector<int> b = a, c = a, d = a, e = a;
 
     selection_sort(b);
     prt(b);
@@ -84,6 +104,9 @@ int main() {
     prt(d);
     quick_sort(d);
     prt(d);
+
+    cout << "5th: " << select_kth_smallest(e, 5) << endl;
+    prt(e);
 
     return 0;
 }
