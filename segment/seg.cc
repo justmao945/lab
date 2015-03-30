@@ -42,6 +42,30 @@ void seg_make(Node tree[], int A[], int root, int left, int right) {
     root_node.sum = tree[left_child].sum + tree[right_child].sum;
 }
 
+void seg_update(Node tree[], int A[], int root, int index, int value) {
+    Node& root_node = tree[root];
+    if(index  < root_node.left || index > root_node.right) 
+        return;
+
+    // restore the sum
+    root_node.sum -= A[index];
+    // add the sum
+    root_node.sum += value;
+    // set value in A
+    A[index] = value;
+    if(root_node.left == root_node.right) {
+        return;
+    }
+
+    const int mid = root_node.left + (root_node.right - root_node.left) / 2;
+    const int left_child = root * 2, right_child = left_child + 1;
+    if(index <= mid) {
+        seg_update(tree, A, left_child, index, value);
+    } else {
+        seg_update(tree, A, right_child, index, value);
+    }
+}
+
 int seg_query(Node tree[], int root, int left, int right) {
     const Node& root_node = tree[root];
     if(root_node.left == left && root_node.right == right) {
@@ -69,6 +93,14 @@ int main() {
     Node tree[N];
 
     seg_make(tree, A, 1, 1, 9);
+    cout << "1~9: " << seg_query(tree, 1, 1, 9) << endl;
+    cout << "1~1: " << seg_query(tree, 1, 1, 1) << endl;
+    cout << "2~3: " << seg_query(tree, 1, 2, 3) << endl;
+    cout << "2~8: " << seg_query(tree, 1, 2, 8) << endl;
+    cout << "4~7: " << seg_query(tree, 1, 4, 7) << endl;
+
+    seg_update(tree, A, 1, 5, 50);
+
     cout << "1~9: " << seg_query(tree, 1, 1, 9) << endl;
     cout << "1~1: " << seg_query(tree, 1, 1, 1) << endl;
     cout << "2~3: " << seg_query(tree, 1, 2, 3) << endl;
