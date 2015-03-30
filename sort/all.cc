@@ -70,6 +70,30 @@ void quick_sort(vector<int>& v) {
     quick_sort_dac(v, 0, v.size()-1);
 }
 
+// need an i to swap eq
+// [p <   |     =   |------|   >        ]
+//        ^         ^      ^ 
+//        lt        i      gt
+void quicksort_3way(vector<int>& v, int l, int h) {
+    int lt = l, gt = h, i = l+1;
+    int p = v[l];
+    if(l >= h) {
+        return;
+    }
+    while(i <= gt) {
+        if(v[i] < p) swap(v[i++], v[lt++]); // v[lt] is eq to p, replaced by the smaller one, and advanced
+        else if(v[i] > p) swap(v[i], v[gt--]); // put bigger to gt and put the under one to current i
+        else i++; // just advance
+    }
+    // [l,lt) is < v
+    // [lt,gt] is = v
+    // (gt,h] is > v
+    cout << "p: " << p << ", ";
+    prt(v);
+    quicksort_3way(v, l, lt-1);
+    quicksort_3way(v, gt+1, h);
+}
+
 // when k is 0, means the first
 // v is unsorted
 // the time complexity is O(N)! better than O(NlogN) and O(NLogK) <- heap
@@ -137,7 +161,7 @@ void heap_sort(vector<int>& v) {
 int main() {
     vector<int> a = {1,2,4,5,7,2,54,2,712,2,4,6,1};
     
-    vector<int> b = a, c = a, d = a, e = a, f = a;
+    vector<int> b = a, c = a, d = a, e = a, f = a, g = a;
 
     cout << "selection sort" << endl;
     selection_sort(b);
@@ -158,6 +182,10 @@ int main() {
 
     cout << "select 5th smallest: " << select_kth_smallest(e, 5) << endl;
     prt(e);
+
+    cout << "quicksort 3way" << endl;
+    quicksort_3way(g, 0, g.size()-1);
+    prt(g);
 
     return 0;
 }
