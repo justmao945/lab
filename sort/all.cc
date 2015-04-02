@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 
@@ -63,10 +64,21 @@ void quick_sort_dac(vector<int>& v, int l, int h) {
     quick_sort_dac(v, m+1, h);
 }
 
+void shuffle(vector<int>& v) {
+    unsigned short xsubi[3];
+    for(int i = 0; i < v.size(); i++) {
+        // [0, i], including i
+        int j = nrand48(xsubi) % (i+1);
+        swap(v[j], v[i]);
+    }
+}
+
 void quick_sort(vector<int>& v) {
     if(v.empty()) {
         return;
     }
+    shuffle(v);
+    prt(v);
     quick_sort_dac(v, 0, v.size()-1);
 }
 
