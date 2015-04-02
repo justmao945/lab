@@ -4,6 +4,7 @@
 using namespace std;
 
 void swap(int& a, int& b) {
+    if(&a == &b) return;
     a = a ^ b;
     b = a ^ b;
     a = a ^ b;
@@ -24,6 +25,10 @@ int main() {
     cout << a  << " ";
     swap(&a, &a);
     cout << a << endl;
+    
+    cout << c  << " ";
+    swap(c, c);
+    cout << c << endl;
     
     int d = 2;
     cout << b << "," << d  << " ";
