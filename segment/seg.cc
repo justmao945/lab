@@ -88,8 +88,8 @@ int seg_query(Node tree[], int root, int left, int right) {
 int main() {
     // index 0 is invalid
     int A[] = {0, 1,2,3,4,5,6,7,8,9,10,11,12,13};
-    // 2^(logN+1)
-    const int N = 2 * sizeof(A)/sizeof(int);
+    // about 4*N
+    const int N = 4 * sizeof(A)/sizeof(int);
     Node tree[N];
 
     seg_make(tree, A, 1, 1, 9);
