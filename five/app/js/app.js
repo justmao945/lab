@@ -1,8 +1,10 @@
 'use strict';
 
+/*
 window.onbeforeunload = function() {
     return "You're leaving the site.";
 };
+*/
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
