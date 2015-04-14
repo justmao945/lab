@@ -78,5 +78,7 @@ int main() {
   std::thread t1(p), t2(s), t3(p), t4(s);
   t1.join();
   t2.join();
+  t3.join();
+  t4.join();
   return 0;
 }
