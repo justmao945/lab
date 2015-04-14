@@ -6,7 +6,7 @@
             </tab-heading>
             <div class="my-chat-user-list">
                 <div class="my-chat-user-item">
-                    <a href="#" ng-click="my.srv.activeTarget(my.dat.def.pub)"
+                    <a href="###" ng-click="my.srv.activeTarget(my.dat.def.pub)"
                        ng-class="{'my-chat-user-item-active': my.dat.def.pub == my.dat.target.email}"
                        ng-init="msgs=my.dat.messages[my.dat.def.pub]">
                         <span class="badge pull-right" ng-show="msgs.unread > 0">
@@ -17,7 +17,7 @@
                     </a>
                 </div>
                 <div class="my-chat-user-item" ng-repeat="user in (my.dat.users | sortChatUsers)">
-                    <a href="#" ng-click="my.srv.activeTarget(user.email)"
+                    <a href="###" ng-click="my.srv.activeTarget(user.email)"
                        ng-init="msgs=my.dat.messages[user.email]"
                        ng-class="{'my-chat-user-item-active': user.email == my.dat.target.email}">
                         <span class="badge pull-right" ng-show="msgs.unread > 0">
@@ -42,7 +42,7 @@
             </tab-heading>
             <div class="my-chat-user-list">
                 <div class="my-chat-user-item" ng-repeat="user in (my.dat.recentUsers | sortChatUsersWithLastUpdate)">
-                    <a href="#" ng-click="my.srv.activeTarget(user.email)"
+                    <a href="###" ng-click="my.srv.activeTarget(user.email)"
                        ng-init="msgs=my.dat.messages[user.email]"
                        ng-class="{'my-chat-user-item-active': user.email == my.dat.target.email}">
                         <span class="badge pull-right" ng-show="msgs.unread > 0">

@@ -10,7 +10,7 @@
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
     "angular-md5": "~0.1.7",
-    "angularjs-scroll-glue-Luegg": "1.0.x",
+    "angular-scroll-glue": "~2.0.x",
     "bootstrap": "~3.1.1",
     "html5-boilerplate": "~4.3.0",
     "holderjs": "~2.3.x",
