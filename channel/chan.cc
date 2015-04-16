@@ -1,9 +1,11 @@
-#include <stdio.h>
+#include <iostream>
+#include <sstream>
 #include <queue>
 #include <mutex>
 #include <thread>
 #include <chrono>
 #include <condition_variable>
+#include <cstdio>
 
 template <class T> class Channel {
   std::mutex mutex;
@@ -16,24 +18,28 @@ public:
 
   T read() {
     T t;
-    std::unique_lock<std::mutex> ul(mutex);
-    // lock and wait when empty
-    //  wait means release lock and sleep thread
-    //  wakeup and re-lock when notified
-    not_empty.wait(ul, [this]() { return !queue.empty(); });
-    t = queue.front();
-    queue.pop();
-    ul.unlock();
+    {
+      std::unique_lock<std::mutex> ul(mutex);
+      // lock and wait when empty
+      //  wait means release lock and sleep thread
+      //  wakeup and re-lock when notified
+      not_empty.wait(ul, [this]() { return !queue.empty(); });
+      t = queue.front();
+      queue.pop();
+    }
+    // unlock before notify
     not_full.notify_one();
     return t;
   }
 
   void write(const T &t) {
-    std::unique_lock<std::mutex> ul(mutex);
-    // wait when full
-    not_full.wait(ul, [this]() { return capacity != queue.size(); });
-    queue.push(t);
-    ul.unlock();
+    {
+      std::unique_lock<std::mutex> ul(mutex);
+      // wait when full
+      not_full.wait(ul, [this]() { return capacity != queue.size(); });
+      queue.push(t);
+    }
+    // unlock before notify
     not_empty.notify_one();
   }
 };
@@ -46,9 +52,16 @@ public:
 
   void operator()() {
     for (int i = 0; i < 10; i++) {
-      printf("%ld: try to write %d\n", std::this_thread::get_id(), i);
+      std::stringstream ss;
+      ss << std::this_thread::get_id() << ": try to write " << i << "\n";
+      fputs(ss.str().c_str(), stderr);
+
       c.write(i);
-      printf("%ld: write %d done\n", std::this_thread::get_id(), i);
+
+      ss.clear();
+      ss << std::this_thread::get_id() << ": write " << i << " done\n";
+      fputs(ss.str().c_str(), stderr);
+
       std::this_thread::sleep_for(std::chrono::seconds(1));
     }
   }
@@ -64,9 +77,15 @@ public:
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
     while (true) {
-      printf("%ld: try to read\n", std::this_thread::get_id());
+      std::stringstream ss;
+      ss << std::this_thread::get_id() << ": try to read\n";
+      fputs(ss.str().c_str(), stderr);
+
       int x = c.read();
-      printf("%ld: read %d done\n", std::this_thread::get_id(), x);
+
+      ss.clear();
+      ss << std::this_thread::get_id() << ": read " << x << " done\n";
+      fputs(ss.str().c_str(), stderr);
     }
   }
 };
