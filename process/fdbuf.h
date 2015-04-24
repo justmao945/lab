@@ -24,10 +24,13 @@ public:
     typedef typename traits_type::pos_type pos_type;
     typedef typename traits_type::off_type off_type;
 
+    basic_fdbuf();
     explicit basic_fdbuf(int fd);   // Construct from Unix file descriptor
     virtual ~basic_fdbuf();         // *NOT* close fd
     void swap(basic_fdbuf& rhs);
-    
+
+    bool attach(int fd);
+
     // get fd
     int fd() const { return _fd; }
 
@@ -64,6 +67,15 @@ swap(basic_fdbuf<CharT, Traits>& x, basic_fdbuf<CharT, Traits>& y) {
 
 // Constructor
 template<class CharT, class Traits>
+basic_fdbuf<CharT, Traits>::basic_fdbuf() :
+        _fd(-1),
+        _fdfl(0),
+        _buf(0),
+        _bufsz(0),
+        _bufown(false),
+        _cm(0) { }
+
+template<class CharT, class Traits>
 basic_fdbuf<CharT, Traits>::basic_fdbuf(int fd) :
         _fd(fd),
         _fdfl(0),
@@ -71,9 +83,7 @@ basic_fdbuf<CharT, Traits>::basic_fdbuf(int fd) :
         _bufsz(0),
         _bufown(false),
         _cm(0) {
-    assert(fd >= 0 && "invalid file descriptor");
-    while( (_fdfl = ::fcntl(_fd, F_GETFL)) == -1 && errno == EINTR ) { }
-    setbuf(0, _BUFSZ); // init internal buffer with _BUFSZ
+    attach(fd);
 }
 
 // Destructor
@@ -83,6 +93,16 @@ basic_fdbuf<CharT, Traits>::~basic_fdbuf() {
     if(_bufown) {
         delete[] _buf;
     }
+}
+
+template<class CharT, class Traits>
+bool
+basic_fdbuf<CharT, Traits>::attach(int fd) {
+    assert(fd >= 0 && "invalid file descriptor");
+    _fd = fd;
+    while( (_fdfl = ::fcntl(_fd, F_GETFL)) == -1 && errno == EINTR ) { }
+    setbuf(0, _BUFSZ); // init internal buffer with _BUFSZ
+    return _fdfl != -1;
 }
 
 template<class CharT, class Traits>
@@ -97,7 +117,7 @@ basic_fdbuf<CharT, Traits>::swap(basic_fdbuf<CharT, Traits>& rhs) {
     std::swap(_cm,      rhs._cm);
 }
 
-// Remakrs: The public members of basic_streambuf call this virtual function only 
+// Remakrs: The public members of basic_streambuf call this virtual function only
 //          if gptr() is null or gptr() >= egptr()
 // Returns: traits::to_int_type(c), where c is the first character of the pending
 //          sequence, without moving the input sequence position past it. If the
