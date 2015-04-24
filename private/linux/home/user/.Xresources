@@ -21,6 +21,8 @@ URxvt.scrollTtyOutput:False
 URxvt.scrollWithBuffer:True
 URxvt.scrollTtyKeypress:True
 URxvt.cursorBlink:True
+URxvt.cursorColor: #666666
+URxvt.cursorColor2: #FFFFFF
 URxvt.saveLines:1024
 URxvt.letterSpace:-1
 URxvt.font:xft:Consolas:size=12:style=Regular:antialias=true,xft:SimSun:size=11:style=Regular:antialias=true

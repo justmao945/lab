@@ -9,10 +9,6 @@ function g -d 'Git'
     git $argv
 end
 
-function cmake-clang -d 'Use clang as the C/C++ compiler'
-    command cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang $argv
-end
-
 function df -d 'Print sizes in human readable'
     command df -h $argv
 end
@@ -34,26 +30,6 @@ function t  -d 'Resource top usage'
     env TERM=screen htop $argv
 end
 
-function ssh -d 'SSH'
-    env TERM=screen ssh $argv
-end
-
-function start_tunnel -d 'Start SSH tunnel on localhost on port :1314'
-  while [ true ]
-    echo 'Connect and listen on port 1314...'
-    ssh -p 1122 -vNCTD 1314 linode
-    echo 'Retry in 3 seconds...'
-    sleep 3
-  end
-end
-
-function start_mallory -d 'Start mallory HTTP proxy on port 1315'
-    mallory -engine=ssh -remote=ssh://linode:1122
-end
-
-function tmux -d 'Start with TERM=screen-256color-bce'
-    env TERM=screen-256color-bce tmux $argv
-end
 
 function with_proxy -d 'Start under HTTP proxy localhost:1315'
     env http_proxy=http://localhost:1315 https_proxy=http://localhost:1315 $argv
@@ -72,6 +48,7 @@ end
 #---------------+
 #    env        |
 #---------------+
+set -x TERM screen-256color
 set -x EDITOR   vim
 set -x GOPATH   $HOME/go
 set -x PATH     $GOPATH/bin /usr/local/go/bin $PATH
@@ -111,12 +88,3 @@ if [ -f $config_ohio ]
     source $config_ohio
 end
 
-set config_bundle /usr/local/bundle/config.fish
-if [ -f $config_bundle ]
-    source $config_bundle
-end
-
-#---------------+
-# external conf |
-#---------------+
-# RVM: curl -L --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish
