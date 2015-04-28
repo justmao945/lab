@@ -281,18 +281,18 @@ runtime! ftplugin/man.vim
 " =====================================
 " !! background should be set after colorscheme
 set guioptions=ai
-silent! colorscheme github
-set background=light
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
+  au BufReadPost * hi Comment guifg=#AAAAAA ctermfg=248 gui=NONE cterm=NONE
   set shiftwidth=2 softtabstop=2 tabstop=2
   if has('gui_running')
     set guifont=Monaco:h12
     set linespace=1 lines=40 columns=90
   endif
 elseif has("unix")
+  silent! colorscheme github
   set shiftwidth=4 softtabstop=4 tabstop=4
   if has('gui_running')
     set linespace=3 lines=45 columns=84
