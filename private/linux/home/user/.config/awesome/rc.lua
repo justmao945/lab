@@ -394,11 +394,12 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
+                     border_focus = beautiful.border_focus,
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "URxvt" },
-      properties = { opacity = 0.95, floating = true } },
+      properties = { floating = true } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
@@ -449,7 +450,7 @@ awful.util.spawn = function (s) busy_spawn(s, false) end
 as_list =
 {
   nextbg_cmd,
-  "xcompmgr",
+  -- "xcompmgr",
   "xautolock -locker 'gnome-screensaver-command --lock'",
   "start-pulseaudio-x11",
   "fcitx -r",

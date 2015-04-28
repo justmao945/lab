@@ -13,6 +13,10 @@ Xft.hintstyle:  hintslight
 ! rxvt-unicode settings
 URxvt.inputMethod:fcitx
 URxvt.depth:32
+!URxvt.externalBorder: 0
+!URxvt.internalBorder: 0
+!URxvt.borderLess: false
+!URxvt.borderColor: #DDDDDD
 URxvt.transparent: false
 URxvt.urlLauncher:google-chrome
 URxvt.scrollBar:False
