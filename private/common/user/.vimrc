@@ -21,16 +21,16 @@ set t_Co=256
 "set clipboard+=unnamed
 
 " Disable compatibility with vi(must come first)
-set nocompatible 
+set nocompatible
 
 " Restroe screen contents when exiting vim
 set restorescreen
 
 " Enable the mouse for all modes
-set mouse=a 
+set mouse=a
 
 " Hide mouse while typing text
-set mousehide 
+set mousehide
 
 " Preferably use Unix file format
 set fileformats=unix,dos
@@ -62,7 +62,7 @@ set ttyfast
 " Do not redraw when running macros
 set lazyredraw
 
-" Auto change to current directory. 
+" Auto change to current directory.
 " e.g. Nautilus does not change system directories.
 set autochdir
 
@@ -226,9 +226,6 @@ let g:clang_c_options = ''
 " Add clang options for C++ sources
 let g:clang_cpp_options = '-std=c++11'
 
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:SuperTabRetainCompletionDuration = 'insert'
-
 
 " =====================================
 " NERDTree settings
@@ -248,12 +245,6 @@ let g:ctrlp_custom_ignore = {
     \ 'file':   '\v\.(exe|so|dll|obj|o|ndb|d|gcda|gcna)$',
     \ 'link':   '',
     \ }
-
-
-" =====================================
-" javascript syntax settings.
-" =====================================
-let g:used_javascript_libs = 'jquery,angularjs'
 
 
 " =====================================
@@ -279,27 +270,22 @@ runtime! ftplugin/man.vim
 " =====================================
 " UI settings
 " =====================================
-" !! background should be set after colorscheme
 set guioptions=ai
+
+let g:solarized_termcolors=256
+set background=light
+colorscheme solarized
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
-  au BufReadPost * hi Comment guifg=#AAAAAA ctermfg=248 gui=NONE cterm=NONE
   set shiftwidth=2 softtabstop=2 tabstop=2
-  if has('gui_running')
-    set guifont=Monaco:h12
-    set linespace=1 lines=40 columns=90
-  endif
+  set linespace=1 lines=40 columns=90
 elseif has("unix")
-  silent! colorscheme github
   set shiftwidth=4 softtabstop=4 tabstop=4
-  if has('gui_running')
-    set linespace=3 lines=45 columns=84
-    set guifont=Consolas\ 12
-    set guifontwide=SimSun\ 11
-  elseif $DESKTOP_SESSION == 'awesome'
-  endif
+  set linespace=3 lines=45 columns=84
+  set guifont=Consolas\ 12
+  set guifontwide=SimSun\ 11
 endif
 
 
@@ -324,13 +310,13 @@ map <silent> <C-L> <C-W>l
 
 " tab page switch
 func! TabPos_ActivateBuffer(num)
-  let s:count = a:num 
+  let s:count = a:num
   exe "tabfirst"
-  exe "tabnext" s:count  
+  exe "tabnext" s:count
 endfunc
 
 func! TabPos_Initialize()
-  for i in range(1, 9) 
+  for i in range(1, 9)
     exe "map <M-" . i . "> :call TabPos_ActivateBuffer(" . i . ")<CR>"
   endfor
   exe "map <M-0> :call TabPos_ActivateBuffer(10)<CR>"
