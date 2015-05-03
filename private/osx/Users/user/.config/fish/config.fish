@@ -40,7 +40,7 @@ function g -d 'Git'
 end
 
 function man -d 'Use vim viewer to display manpage'
-  command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
+  command man $argv -P 'col -b | view -c "set ft=man noma nolist" -'
 end
 
 function p -d 'Print absolute path of file'
