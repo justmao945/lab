@@ -399,7 +399,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "URxvt" },
-      properties = { floating = true } },
+      properties = { floating = true, opacity=0.9 } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "gimp" },

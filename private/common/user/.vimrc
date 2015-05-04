@@ -272,7 +272,11 @@ runtime! ftplugin/man.vim
 " =====================================
 set guioptions=ai
 
-set background=light
+if has('unix') && !has('gui_running')
+  set background=dark
+else
+  set background=light
+endif
 let g:solarized_termcolors=256
 colorscheme solarized
 

@@ -13,8 +13,10 @@ function df -d 'Print sizes in human readable'
     command df -h $argv
 end
 
+# save to file /usr/local/bin/viewman
+# col -b | view -c 'set ft=man noma nolist' -
 function man -d 'Use vim viewer to display manpage'
-    command man $argv | col -b | command view -c 'set ft=man ts=8 nomod nolist' -
+    command man -P viewman $argv
 end
 
 function sudo -d 'Use user env to call sudo'
@@ -64,11 +66,11 @@ set -x XIM              fcitx
 # Set the tmux window title, depending on whether we are running something, or just prompting
 function fish_title -d 'Set tmux title'
     if [ $_ = 'fish' ] # command as title
-        set TITLE (prompt_pwd)^(hostname -s)
+        set TITLE (prompt_pwd)@(hostname -s)
     else
-        set TITLE $argv[1]^(hostname -s)
+        set TITLE $argv[1]@(hostname -s)
     end
-    set MAX_LENGTH 19
+    set MAX_LENGTH 15
     set SHORT_TITLE (echo "$TITLE" | head -c $MAX_LENGTH)
     if [ (expr length "$TITLE") -gt $MAX_LENGTH ]
         set SHORT_TITLE $SHORT_TITLE..

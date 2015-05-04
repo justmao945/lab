@@ -35,8 +35,8 @@ URxvt.boldFont:xft:Consolas:size=12:style=Bold:antialias=true,xft:SimSun:size=11
 
 ! to match gnome-terminal "Tango" scheme
 ! foreground/background
-URxvt*background: #FFFFFF
-URxvt*foreground: #000000
+URxvt*background: #000000
+URxvt*foreground: #FFFFFF
 ! black
 URxvt.color0  : #000000
 URxvt.color8  : #555753
