@@ -272,7 +272,7 @@ runtime! ftplugin/man.vim
 " =====================================
 set guioptions=ai
 
-if has('unix') && !has('gui_running')
+if has('unix') && !has('gui_running') && !has("mac")
   set background=dark
 else
   set background=light
