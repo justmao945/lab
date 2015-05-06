@@ -217,8 +217,8 @@ set previewheight=4
 " Set to debug level 1, only used by plugin developer
 let g:clang_debug = 0
 
-" Auto completion is OK for the new async mode
-let g:clang_auto = 1
+" Auto completion is OK for the new async mode, use neocomplete
+let g:clang_auto = 0
 
 " Add clang options for C sources
 let g:clang_c_options = ''
@@ -254,6 +254,17 @@ let g:neocomplete#enable_at_startup = 1
 
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+
+" input patterns
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+" for c and c++
+let g:neocomplete#force_omni_input_patterns.c =
+      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+let g:neocomplete#force_omni_input_patterns.cpp =
+      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
 
 " =====================================
