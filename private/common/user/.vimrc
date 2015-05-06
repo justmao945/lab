@@ -246,6 +246,15 @@ let g:ctrlp_custom_ignore = {
     \ 'link':   '',
     \ }
 
+" =====================================
+" neocomplete settings.
+" =====================================
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+
 
 " =====================================
 " File types and miscs.
