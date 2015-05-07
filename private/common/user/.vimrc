@@ -173,39 +173,6 @@ endf
 " Format string
 set statusline=%t\ \|\ %L\ lines%{StatuslineFilesize()}\ %y%m%=%l,%c\ %4p%%\ -
 
-
-" =====================================
-" Auto completion helper
-" =====================================
-func! CodeAutoCompleteDot()
-  for id in synstack(line('.'), col('.') - 1)
-    if synIDattr(id, 'name') =~ 'Comment\|String\|Number\|Char\|Label\|Special'
-      return '.'
-    endif
-  endfor
-  return ".\<C-x>\<C-o>"
-endf
-
-" =====================================
-" Python
-" =====================================
-au FileType python inoremap <expr> <buffer> . CodeAutoCompleteDot()
-
-
-" =====================================
-" Ruby
-" =====================================
-au FileType ruby inoremap <expr> <buffer> . CodeAutoCompleteDot()
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-
-
-" =====================================
-" Golang
-" =====================================
-" Auto completion after .
-au FileType go inoremap <expr> <buffer> . CodeAutoCompleteDot()
-
 " =====================================
 " Clang completion
 " =====================================
