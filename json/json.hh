@@ -61,11 +61,11 @@ public:
                 switch(*it) {
                 case '"' : os << "\\\""; break;
                 case '\\': os << "\\\\"; break;
-                case '\b': os << "\\\b"; break;
-                case '\f': os << "\\\f"; break;
-                case '\n': os << "\\\n"; break;
-                case '\r': os << "\\\r"; break;
-                case '\t': os << "\\\t"; break;
+                case '\b': os << "\\b"; break;
+                case '\f': os << "\\f"; break;
+                case '\n': os << "\\n"; break;
+                case '\r': os << "\\r"; break;
+                case '\t': os << "\\t"; break;
                 default:   os << *it;    break;
                 }
             }
@@ -130,8 +130,8 @@ private:
 
     struct Token {
         TokenType type;
-        std::string text; // for TokenString, TokenTFN
-        double num; // for TokenNumber
+        String text; // for TokenString, TokenTFN
+        Number num; // for TokenNumber
         
         std::string toString() const {
             std::stringstream ss; ss << num;

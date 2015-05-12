@@ -193,6 +193,8 @@ let g:clang_c_options = ''
 " Add clang options for C++ sources
 let g:clang_cpp_options = ''
 
+let g:clang_c_completeopt = 'menuone,preview'
+let g:clang_cpp_completeopt = 'menuone,preview'
 
 " =====================================
 " NERDTree settings
