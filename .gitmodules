@@ -46,3 +46,6 @@
 [submodule "vim-plugins/neocomplete.vim"]
 	path = vim-plugins/neocomplete.vim
 	url = git@github.com:Shougo/neocomplete.vim.git
+[submodule "vim-plugins/rust.vim"]
+	path = vim-plugins/rust.vim
+	url = git@github.com:rust-lang/rust.vim.git
