@@ -184,17 +184,14 @@ set previewheight=4
 " Set to debug level 1, only used by plugin developer
 let g:clang_debug = 0
 
-" Auto completion is OK for the new async mode, use neocomplete
-let g:clang_auto = 0
+" Auto completion is OK for the new async mode
+let g:clang_auto = 1
 
 " Add clang options for C sources
 let g:clang_c_options = ''
 
 " Add clang options for C++ sources
 let g:clang_cpp_options = ''
-
-let g:clang_c_completeopt = 'menuone,preview'
-let g:clang_cpp_completeopt = 'menuone,preview'
 
 " =====================================
 " NERDTree settings
@@ -214,27 +211,6 @@ let g:ctrlp_custom_ignore = {
     \ 'file':   '\v\.(exe|so|dll|obj|o|ndb|d|gcda|gcna)$',
     \ 'link':   '',
     \ }
-
-" =====================================
-" neocomplete settings.
-" =====================================
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-
-" input patterns
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-" for c and c++
-let g:neocomplete#force_omni_input_patterns.c =
-      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-let g:neocomplete#force_omni_input_patterns.cpp =
-      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
 
 " =====================================
 " File types and miscs.
