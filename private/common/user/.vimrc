@@ -145,7 +145,7 @@ set infercase
 set pumheight=8
 
 " General complete option
-set completeopt=longest,menuone
+set completeopt=longest,menuone,preview
 
 " =====================================
 " Status line
@@ -179,7 +179,7 @@ set statusline=%t\ \|\ %L\ lines%{StatuslineFilesize()}\ %y%m%=%l,%c\ %4p%%\ -
 " doesn't tag {} as error in ()
 let c_no_curly_error=1
 
-set previewheight=4
+set previewheight=1
 
 " Set to debug level 1, only used by plugin developer
 let g:clang_debug = 0
@@ -297,6 +297,28 @@ func! TabPos_Initialize()
   exe "map <M-0> :call TabPos_ActivateBuffer(10)<CR>"
 endfunc
 autocmd VimEnter * call TabPos_Initialize()
+
+
+" =====================================
+"  Auto completion
+" =====================================
+func! ShouldComplete()
+  for id in synstack(line('.'), col('.') - 1)
+    if synIDattr(id, 'name') =~# 'Comment\|String\|Number\|Char\|Label\|Special'
+      return 0
+    endif
+  endfor
+  return 1
+endf
+
+func! CompleteDot()
+  if ShouldComplete()
+    return ".\<C-x>\<C-o>"
+  endif
+  return '.'
+endf
+
+au FileType go,ruby,python imap <expr> <buffer> . CompleteDot()
 
 
 " =====================================
