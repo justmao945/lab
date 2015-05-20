@@ -6,15 +6,6 @@ function fish_prompt --description 'Write out the prompt'
   echo -n (whoami)
   set_color normal
 
-  # vim mode
-  switch $fish_bind_mode
-  case default
-    set_color red
-  case insert
-    set_color blue
-  case visual
-    set_color green
-  end
   echo -n '@'
 
   # Host
@@ -35,6 +26,20 @@ function fish_prompt --description 'Write out the prompt'
   if not test $last_status -eq 0
     set_color $fish_color_error
   end
+
+  # vim mode
+  switch $fish_bind_mode
+  case default
+    set_color blue
+    echo -n N
+  case insert
+    set_color green
+    echo -n I
+  case visual
+    set_color red
+    echo -n V
+  end
+  set_color normal
 
   echo -n '➤ '
   set_color normal
