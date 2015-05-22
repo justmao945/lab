@@ -90,6 +90,7 @@ set nojoinspaces
 
 " Insert spaces instead of tabs
 set expandtab
+set shiftwidth=2 softtabstop=2 tabstop=2
 
 " Allow the backspace key to delete anything in insert mode
 set backspace=indent,eol,start
@@ -182,7 +183,7 @@ let c_no_curly_error=1
 set previewheight=1
 
 " Set to debug level 1, only used by plugin developer
-let g:clang_debug = 0
+let g:clang_debug = 2
 
 " Auto completion is OK for the new async mode
 let g:clang_auto = 1
@@ -242,25 +243,17 @@ if has('unix') && !has('gui_running') && !has("mac")
 else
   set background=light
 endif
-let g:solarized_termcolors=256
-colorscheme solarized
 
 if has("win32")
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
-  set shiftwidth=2 softtabstop=2 tabstop=2
   " don't set them in non-gui
   if has('gui_running')
     set linespace=1 lines=40 columns=84
     set guifont=Monaco:h13
   endif
 elseif has("unix")
-  set shiftwidth=4 softtabstop=4 tabstop=4
-  " don't set them in non-gui
-  if has('gui_running')
-    set linespace=3 lines=45 columns=84
-    set guifont=Consolas\ 12 guifontwide=SimSun\ 11
-  endif
+  " default is Good on Ubuntu 14.04
 endif
 
 
