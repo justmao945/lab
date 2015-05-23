@@ -69,9 +69,6 @@ set autochdir
 " Set fixed swap file dir
 set dir=~/.vimswap//,~/.cache//,/tmp//,.
 
-" set default shell to sh
-set shell=sh
-
 
 " =====================================
 " Text edition
@@ -183,7 +180,7 @@ let c_no_curly_error=1
 set previewheight=1
 
 " Set to debug level 1, only used by plugin developer
-let g:clang_debug = 2
+let g:clang_debug = 0
 
 " Auto completion is OK for the new async mode
 let g:clang_auto = 1
@@ -245,15 +242,17 @@ else
 endif
 
 if has("win32")
+  " sh is default
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
+  set shell=sh
   " don't set them in non-gui
   if has('gui_running')
     set linespace=1 lines=40 columns=84
     set guifont=Monaco:h13
   endif
 elseif has("unix")
-  " default is Good on Ubuntu 14.04
+  set shell=sh
 endif
 
 

@@ -17,30 +17,22 @@
     editor = vim
     pager = less -FRSX
     mergeoptions = --no-edit
-	quotepath = false
+	  quotepath = false
 
 [alias]
     a = add -A :/
-    b = branch
-    c = checkout
     d = diff
-    f = fetch origin
-    l = !"git lg1"
     m = commit
-    p = push
-    s = status -sb
-    r = reset HEAD --
-    u = pull
-    
     ma = commit --amend
+    p = push
+    s = status
 
-    dc = diff --cached
-    dt = difftool
     stat = !git --no-pager diff --stat
 
     # clean merged branches
     sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
 
+    lg = !"git lg1"
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(magenta)- %an%C(reset)%C(bold red)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)%aD %C(bold green)(%ar)%C(reset)%C(bold red)%d%C(reset)%n''          %C(black)%s%C(reset) %C(magenta)- %an%C(reset)' --all
 
