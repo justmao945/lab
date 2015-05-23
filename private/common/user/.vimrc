@@ -245,14 +245,14 @@ if has("win32")
   " sh is default
   set guifont=Consolas:h9:cANSI
 elseif has("mac") || system("uname -s") =~ "Darwin"
-  set shell=sh
+  set shell=bash
   " don't set them in non-gui
   if has('gui_running')
     set linespace=1 lines=40 columns=84
     set guifont=Monaco:h13
   endif
 elseif has("unix")
-  set shell=sh
+  set shell=bash
 endif
 
 
