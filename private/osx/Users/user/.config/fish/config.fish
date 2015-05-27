@@ -62,3 +62,9 @@ end
 function with_proxy -d 'Start command with HTTP/HTTPS proxy on port 1315'
   env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
 end
+
+#---------------+
+#   work env    |
+#---------------+
+set QN $HOME/.config/fish/qiniu.fish
+[ -f $QN ];and source $QN
