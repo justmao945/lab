@@ -23,10 +23,6 @@ function fish_prompt --description 'Write out the prompt'
   __terlar_git_prompt
   echo
 
-  if not test $last_status -eq 0
-    set_color $fish_color_error
-  end
-
   # vim mode
   switch $fish_bind_mode
   case default
@@ -40,6 +36,10 @@ function fish_prompt --description 'Write out the prompt'
     echo -n V
   end
   set_color normal
+
+  if not test $last_status -eq 0
+    set_color $fish_color_error
+  end
 
   echo -n '➤ '
   set_color normal
