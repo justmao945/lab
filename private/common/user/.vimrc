@@ -143,7 +143,7 @@ set infercase
 set pumheight=8
 
 " General complete option
-set completeopt=longest,menuone,preview
+set completeopt=menuone,preview
 
 " =====================================
 " Status line
@@ -183,13 +183,63 @@ set previewheight=1
 let g:clang_debug = 0
 
 " Auto completion is OK for the new async mode
-let g:clang_auto = 1
+let g:clang_auto = 0
 
 " Add clang options for C sources
 let g:clang_c_options = ''
 
 " Add clang options for C++ sources
 let g:clang_cpp_options = ''
+
+
+let g:neocomplete#enable_auto_select = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+
+let g:neocomplete#auto_completion_start_length = 1
+
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 1
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+
+
+" default 'longest' can not work with neocomplete
+let g:clang_c_completeopt = 'menuone,preview'
+let g:clang_cpp_completeopt = 'menuone,preview'
+
+" use neocomplete
+" input patterns
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+" for c and c++
+let g:neocomplete#force_omni_input_patterns.c =
+      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+let g:neocomplete#force_omni_input_patterns.cpp =
+      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+
 
 " =====================================
 " NERDTree settings
@@ -310,7 +360,7 @@ func! CompleteDot()
   return '.'
 endf
 
-au FileType go,ruby,python imap <expr> <buffer> . CompleteDot()
+"au FileType go,ruby,python imap <expr> <buffer> . CompleteDot()
 
 
 " =====================================
