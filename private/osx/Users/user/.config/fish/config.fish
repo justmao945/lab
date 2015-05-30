@@ -61,8 +61,8 @@ function rm -d 'Remove interactively'
   command rm -i $argv
 end
 
-function with_proxy -d 'Start command with HTTP/HTTPS proxy on port 1315'
-  env http_proxy=localhost:1315 https_proxy=localhost:1315 $argv
+function with_proxy -d 'Start command with HTTP/HTTPS proxy'
+  env http_proxy=localhost:1316 https_proxy=localhost:1316 $argv
 end
 
 #---------------+
