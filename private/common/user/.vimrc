@@ -216,7 +216,7 @@ let g:ctrlp_custom_ignore = {
 " =====================================
 filetype plugin indent on
 
-au BufRead,BufNewFile *.md set filetype=mkd
+au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.sv set filetype=verilog
 
 " This autocommand jumps to the last known position in a file

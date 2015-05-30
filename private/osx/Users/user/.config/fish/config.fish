@@ -62,7 +62,7 @@ function rm -d 'Remove interactively'
 end
 
 function with_proxy -d 'Start command with HTTP/HTTPS proxy'
-  env http_proxy=localhost:1316 https_proxy=localhost:1316 $argv
+  env http_proxy=127.0.0.1:1316 https_proxy=127.0.0.1:1316 $argv
 end
 
 #---------------+

@@ -49,3 +49,6 @@
 [submodule "vim-plugins/rust.vim"]
 	path = vim-plugins/rust.vim
 	url = git@github.com:rust-lang/rust.vim.git
+[submodule "vim-plugins/tagbar"]
+	path = vim-plugins/tagbar
+	url = git@github.com:majutsushi/tagbar.git
