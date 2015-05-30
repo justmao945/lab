@@ -197,6 +197,9 @@ let g:clang_cpp_options = ''
 " =====================================
 let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$', '\.a$', '\.d$', '\.gcda$', '\.gcno$']
 
+" default is 31
+let NERDTreeWinSize = 20
+
 
 " =====================================
 " CtrlP settings.
@@ -210,6 +213,59 @@ let g:ctrlp_custom_ignore = {
     \ 'file':   '\v\.(exe|so|dll|obj|o|ndb|d|gcda|gcna)$',
     \ 'link':   '',
     \ }
+
+" =====================================
+" vim-go settings.
+" =====================================
+" default is disabled, let's start the colorful world
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" defualt is gofmt
+let g:go_fmt_command = "goimports"
+
+" Use this option to show the type info (|:GoInfo|) for the word under the cursor
+" automatically. Whenever the cursor changes the type info will be updated.
+let g:go_auto_type_info = 1
+
+
+" go to def with different options
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+" open godoc for the word under the cursor
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+" open godoc in browser
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+" show a list of interfaces which is implemented by the type under the type 
+au FileType go nmap <Leader>s <Plug>(go-implements)
+
+" show type info for the word under your cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+
+" rename identifier under the cursor to a new name
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+
+" =====================================
+" tagbar settings.
+" =====================================
+" default has empty lines
+let g:tagbar_compact = 1
+
+" default is 40, too width
+let g:tagbar_width = 20
+
+" default use big arrows
+let g:tagbar_iconchars = ['▸', '▾']
+
 
 " =====================================
 " File types and miscs.
@@ -235,6 +291,8 @@ runtime! ftplugin/man.vim
 " UI settings
 " =====================================
 set guioptions=ai
+let g:solarized_termcolors=256
+colorscheme solarized
 
 if has('unix') && !has('gui_running') && !has("mac")
   set background=dark
@@ -261,7 +319,7 @@ endif
 " Shortcut
 " =====================================
 " Toggle sidebar: NERDTree
-fu! ToggleSidebar()
+func! ToggleSidebar()
   let b = bufnr("%")
   exe "NERDTreeToggle"
   exe bufwinnr(b) . "wincmd w"
@@ -269,6 +327,16 @@ endf
 
 map  <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
 map! <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
+
+func! ToggleSidebar2()
+  let b = bufnr("%")
+  exe "TagbarToggle"
+  exe bufwinnr(b) . "wincmd w"
+endf
+
+map  <silent> <C-T>  <esc>:call ToggleSidebar2()<cr>
+map! <silent> <C-T>  <esc>:call ToggleSidebar2()<cr>
+
 
 " move between windows
 map <silent> <C-J> <C-W>j
