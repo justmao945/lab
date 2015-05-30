@@ -268,6 +268,13 @@ let g:tagbar_iconchars = ['▸', '▾']
 
 
 " =====================================
+" vim-markdown settings.
+" =====================================
+" don't fold
+let g:vim_markdown_folding_disabled=1
+
+
+" =====================================
 " File types and miscs.
 " =====================================
 filetype plugin indent on

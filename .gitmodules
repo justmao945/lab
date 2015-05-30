@@ -52,3 +52,9 @@
 [submodule "vim-plugins/tagbar"]
 	path = vim-plugins/tagbar
 	url = git@github.com:majutsushi/tagbar.git
+[submodule "vim-plugins/vim-markdown"]
+	path = vim-plugins/vim-markdown
+	url = git@github.com:plasticboy/vim-markdown.git
+[submodule "vim-plugins/vim-fish"]
+	path = vim-plugins/vim-fish
+	url = git@github.com:dag/vim-fish.git
