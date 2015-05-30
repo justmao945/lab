@@ -1,6 +1,8 @@
 #---------------+
 #    env        |
 #---------------+
+ulimit -n 1024
+
 set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
