@@ -297,7 +297,12 @@ runtime! ftplugin/man.vim
 " =====================================
 " UI settings
 " =====================================
-set guioptions=ai
+" GUI
+if has('gui_running')
+  set guioptions=aei
+endif
+
+" theme
 let g:solarized_termcolors=256
 colorscheme solarized
 
@@ -307,6 +312,7 @@ else
   set background=light
 endif
 
+" platform
 if has("win32")
   " sh is default
   set guifont=Consolas:h9:cANSI
@@ -359,12 +365,15 @@ func! TabPos_ActivateBuffer(num)
 endfunc
 
 func! TabPos_Initialize()
+  set guitablabel=%N\ %t
   for i in range(1, 9)
-    exe "map <M-" . i . "> :call TabPos_ActivateBuffer(" . i . ")<CR>"
+    exe "map <D-" . i . "> :call TabPos_ActivateBuffer(" . i . ")<CR>"
   endfor
-  exe "map <M-0> :call TabPos_ActivateBuffer(10)<CR>"
+  exe "map <D-0> :call TabPos_ActivateBuffer(10)<CR>"
 endfunc
-autocmd VimEnter * call TabPos_Initialize()
+if has("gui_running")
+  autocmd VimEnter * call TabPos_Initialize()
+endif
 
 
 " =====================================
