@@ -198,7 +198,7 @@ let g:clang_cpp_options = ''
 let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$', '\.a$', '\.d$', '\.gcda$', '\.gcno$']
 
 " default is 31
-let NERDTreeWinSize = 20
+let NERDTreeWinSize = 25
 
 
 " =====================================
@@ -261,7 +261,7 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 let g:tagbar_compact = 1
 
 " default is 40, too width
-let g:tagbar_width = 20
+let g:tagbar_width = 25
 
 " default use big arrows
 let g:tagbar_iconchars = ['▸', '▾']
