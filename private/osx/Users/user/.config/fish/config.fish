@@ -35,12 +35,20 @@ function cdlab -d 'Change dir to $HOME/Git/lab'
   cd $HOME/Git/lab
 end
 
+function cdqbox -d 'Change dir to qbox'
+  cd $HOME/Source/qbox
+end
+
 function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
 function g -d 'Git' --wraps git
   command git $argv
+end
+
+function grep -d 'Grep with line number and color' --wraps grep
+  command grep --color=auto -n $argv
 end
 
 function man -d 'Use vim viewer to display manpage'
