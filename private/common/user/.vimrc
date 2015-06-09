@@ -331,26 +331,6 @@ endif
 " =====================================
 " Shortcut
 " =====================================
-" Toggle sidebar: NERDTree
-func! ToggleSidebar()
-  let b = bufnr("%")
-  exe "NERDTreeToggle"
-  exe bufwinnr(b) . "wincmd w"
-endf
-
-map  <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
-map! <silent> <C-N>  <esc>:call ToggleSidebar()<cr>
-
-func! ToggleSidebar2()
-  let b = bufnr("%")
-  exe "TagbarToggle"
-  exe bufwinnr(b) . "wincmd w"
-endf
-
-map  <silent> <C-T>  <esc>:call ToggleSidebar2()<cr>
-map! <silent> <C-T>  <esc>:call ToggleSidebar2()<cr>
-
-
 " move between windows
 map <silent> <C-J> <C-W>j
 map <silent> <C-K> <C-W>k
@@ -374,6 +354,11 @@ endfunc
 if has("gui_running")
   autocmd VimEnter * call TabPos_Initialize()
 endif
+
+
+nmap ,r :NERDTreeFind<CR>
+nmap ,n :NERDTreeToggle<CR>
+nmap ,t :TagbarToggle<CR>
 
 
 " =====================================
