@@ -9,6 +9,7 @@ set -x LC_CTYPE en_US.UTF-8
 set -x GOPATH   $HOME/Source/go
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x PATH     /usr/local/sbin $PATH $GOPATH/bin $GEMPATH/bin
+set -x EDITOR   vim
 
 
 function fish_title
@@ -63,6 +64,10 @@ function p -d 'Print absolute path of file'
         echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
         popd
     end
+end
+
+function rsync -d 'Rsync' --wraps rsync
+  command rsync --progress $argv
 end
 
 function rm -d 'Remove interactively'
