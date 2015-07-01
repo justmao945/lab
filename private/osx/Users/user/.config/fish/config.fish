@@ -7,7 +7,7 @@ set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
-set -x PATH     /usr/local/sbin $PATH $GOPATH/bin $GEMPATH/bin
+set -x PATH     /usr/local/sbin $PATH $GEMPATH/bin
 set -x EDITOR   vim
 
 
@@ -45,6 +45,7 @@ end
 
 function mygo -d 'Use my private GOPATH'
   set -x GOPATH $HOME/Source/go
+  set -x PATH $PATH $HOME/Source/go/bin 
 end
 
 function p -d 'Print absolute path of file'
