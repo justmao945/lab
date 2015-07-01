@@ -6,7 +6,6 @@ ulimit -n 1024
 set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
-set -x GOPATH   $HOME/Source/go
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x PATH     /usr/local/sbin $PATH $GOPATH/bin $GEMPATH/bin
 set -x EDITOR   vim
@@ -28,18 +27,6 @@ function c  -d 'Clear screen'
   clear
 end
 
-function cdgo -d 'Change dir to $GOPATH/src/github.com/justmao945'
-  cd $GOPATH/src/github.com/justmao945
-end
-
-function cdlab -d 'Change dir to $HOME/Git/lab'
-  cd $HOME/Git/lab
-end
-
-function cdqbox -d 'Change dir to qbox'
-  cd $HOME/Source/qbox
-end
-
 function df -d 'Print sizes in human readable'
   command df -h $argv
 end
@@ -54,6 +41,10 @@ end
 
 function man -d 'Use vim viewer to display manpage'
   command man $argv -P 'col -b | view -c "set ft=man noma nolist" -'
+end
+
+function mygo -d 'Use my private GOPATH'
+  set -x GOPATH $HOME/Source/go
 end
 
 function p -d 'Print absolute path of file'
