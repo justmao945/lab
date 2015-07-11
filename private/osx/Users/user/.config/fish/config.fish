@@ -10,6 +10,7 @@ set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x PATH     /usr/local/sbin $PATH $GEMPATH/bin
 set -x EDITOR   vim
 
+set -x HOMEBREW_BOTTLE_DOMAIN http://7xkbgo.dl1.z0.glb.clouddn.com
 
 function fish_title
   if [ $_ = 'fish' ]
@@ -75,3 +76,6 @@ end
 #---------------+
 set QN $HOME/.config/fish/qiniu.fish
 [ -f $QN ];and source $QN
+
+set -x GOPATH $GOPATH:$HOME/Source/go
+set -x PATH $PATH $HOME/Source/go/bin
