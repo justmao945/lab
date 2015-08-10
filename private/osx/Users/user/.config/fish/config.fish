@@ -7,10 +7,11 @@ set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
-set -x PATH     /usr/local/sbin $PATH $GEMPATH/bin
+set -x GOPATH   $HOME/Go
+set -x PATH     /usr/local/sbin $PATH $GEMPATH/bin $GOPATH/bin
 set -x EDITOR   vim
 
-set -x HOMEBREW_BOTTLE_DOMAIN http://7xkbgo.dl1.z0.glb.clouddn.com
+set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
 function fish_title
   if [ $_ = 'fish' ]
@@ -44,19 +45,16 @@ function man -d 'Use vim viewer to display manpage'
   command man $argv -P 'col -b | view -c "set ft=man noma nolist" -'
 end
 
-function mygo -d 'Use my private GOPATH'
-  set -x GOPATH $HOME/Source/go
-  set -x PATH $PATH $HOME/Source/go/bin 
-end
-
 function p -d 'Print absolute path of file'
-    if [ (count $argv) -eq 0 ]
-        pwd
-    else
-        pushd
-        echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
-        popd
-    end
+  if [ (count $argv) -eq 0 ]
+    pwd
+  else if [ -e $argv[1] ]
+    pushd
+    echo (cd (dirname $argv[1]); and pwd -P)/(basename $argv[1])
+    popd
+  else
+    echo "not exist"
+  end
 end
 
 function rsync -d 'Rsync' --wraps rsync
@@ -67,15 +65,18 @@ function rm -d 'Remove interactively'
   command rm -i $argv
 end
 
-function with_proxy -d 'Start command with HTTP/HTTPS proxy'
+function w -d 'Setup working env'
+  set CFG $HOME/.config/fish/work.fish
+  [ -f $CFG ];and source $CFG
+end
+
+function wp -d 'Start command with HTTP/HTTPS proxy'
   env http_proxy=127.0.0.1:1316 https_proxy=127.0.0.1:1316 $argv
 end
 
 #---------------+
-#   work env    |
+# docker
 #---------------+
-set QN $HOME/.config/fish/qiniu.fish
-[ -f $QN ];and source $QN
-
-set -x GOPATH $GOPATH:$HOME/Source/go
-set -x PATH $PATH $HOME/Source/go/bin
+set -x DOCKER_CERT_PATH $HOME/.boot2docker/certs/boot2docker-vm
+set -x DOCKER_HOST tcp://192.168.59.103:2376
+set -x DOCKER_TLS_VERIFY 1
