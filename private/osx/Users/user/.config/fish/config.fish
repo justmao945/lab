@@ -69,6 +69,27 @@ function rm -d 'Remove interactively'
   command rm -i $argv
 end
 
+function sub -d 'sub <exist> <cmd...>'
+  if [ (count $argv) -lt 2 ]
+    echo "Usage: sub <exist> <cmd...>"
+    return
+  end
+  set EXIST $argv[1]
+  set CMD $argv[2..-1]
+  pushd .
+  for c in *
+    pushd $c
+    if [ -e $EXIST ]
+      set_color green
+      echo "Processing $c..."
+      set_color normal
+      eval $CMD; or break
+    end
+    popd
+  end
+  popd
+end
+
 function w -d 'Setup working env'
   set CFG $HOME/.config/fish/work.fish
   [ -f $CFG ];and source $CFG
