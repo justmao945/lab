@@ -13,6 +13,7 @@ set -x EDITOR   vim
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
+
 function fish_title
   if [ $_ = 'fish' ]
     echo (prompt_pwd)@(hostname)
@@ -21,6 +22,10 @@ function fish_title
   end
 end
 
+#---------------------+
+# abbr can't be alias |
+#---------------------+
+abbr -a w='source $HOME/.config/fish/work.fish'
 
 #---------------+
 #    alias      |
@@ -45,7 +50,7 @@ function grep -d 'Grep with line number and color' --wraps grep
   command grep --color=auto -n $argv
 end
 
-function man -d 'Use vim viewer to display manpage'
+function m -d 'Use vim viewer to display manpage'
   command man $argv -P 'col -b | view -c "set ft=man noma nolist" -'
 end
 
@@ -88,11 +93,6 @@ function sub -d 'sub <exist> <cmd...>'
     popd
   end
   popd
-end
-
-function w -d 'Setup working env'
-  set CFG $HOME/.config/fish/work.fish
-  [ -f $CFG ];and source $CFG
 end
 
 function wp -d 'Start command with HTTP/HTTPS proxy'
