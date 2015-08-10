@@ -33,6 +33,10 @@ function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
+function e -d 'Print go env'
+  command go env $argv
+end
+
 function g -d 'Git' --wraps git
   command git $argv
 end
