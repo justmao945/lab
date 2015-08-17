@@ -1,7 +1,7 @@
 #---------------+
 #    env        |
 #---------------+
-ulimit -n 1024
+ulimit -n 102400
 
 set -g fish_key_bindings fish_vi_key_bindings
 

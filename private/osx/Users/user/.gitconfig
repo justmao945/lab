@@ -1,65 +1,69 @@
 [user]
-    name = jianjun
-    email = justmao945@gmail.com
+  name = Jianjun Mao
+  email = justmao945@gmail.com
 
 [color]
-    branch = auto
-    diff = auto
-    interactive = auto
-    status = auto
-    ui = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+  ui = auto
 
 [color "branch"]
-    current = green
-    remote = yellow
+  current = green
+  remote = yellow
 
 [core]
-    editor = vim
-    pager = less -FRSX
-    mergeoptions = --no-edit
-	  quotepath = false
+  editor = vim
+  pager = less -FRSX
+  mergeoptions = --no-edit
+  quotepath = false
 
 [alias]
-    a = add -A :/
-    d = diff
-    m = commit
-    ma = commit --amend
-    p = push
-    s = status
+  a = add -A :/
+  d = diff
+  dc = diff --cached
+  l = !"git lg"
+  m = commit
+  ma = commit --amend
+  p = push
+  r = remote -v
+  s = status
 
-    stat = !git --no-pager diff --stat
+  stat = !git --no-pager diff --stat
 
     # clean merged branches
-    sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
+  sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
 
-    lg = !"git lg1"
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(magenta)- %an%C(reset)%C(bold red)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)%aD %C(bold green)(%ar)%C(reset)%C(bold red)%d%C(reset)%n''          %C(black)%s%C(reset) %C(magenta)- %an%C(reset)' --all
+  lg = !"git lg1"
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(magenta)- %an%C(reset)%C(bold red)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)%aD %C(bold green)(%ar)%C(reset)%C(bold red)%d%C(reset)%n''          %C(black)%s%C(reset) %C(magenta)- %an%C(reset)' --all
 
     # serve local repo, others can access via `git clone git://`
-    serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+  serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
 
-    visual = !gitk
+  visual = !gitk
 
 [merge]
-    tool = vimdiff
+  tool = vimdiff
 
 [diff]
-    tool = vimdiff
+  tool = vimdiff
 
 [url "git@github.com:"]
-    pushInsteadOf = https://github.com/
+  pushInsteadOf = https://github.com/
 
 [push]
-    default = simple
+  default = simple
 
 [filter "media"]
-    clean = git-media-clean %f
-    smudge = git-media-smudge %f
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
 
 [help]
-    autocorrect = 1
+  autocorrect = 1
+
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
