@@ -8,7 +8,8 @@ set -g fish_key_bindings fish_vi_key_bindings
 set -x LC_CTYPE en_US.UTF-8
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x GOPATH   $HOME/Go
-set -x PATH     /usr/local/sbin $PATH $GEMPATH/bin $GOPATH/bin
+set -x GOROOT   /usr/local/go
+set -x PATH     /usr/local/sbin $GOROOT/bin $GOPATH/bin $GEMPATH/bin $PATH 
 set -x EDITOR   vim
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com

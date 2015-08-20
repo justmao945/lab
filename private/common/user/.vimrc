@@ -191,7 +191,6 @@ let g:clang_c_options = ''
 " Add clang options for C++ sources
 let g:clang_cpp_options = ''
 
-
 " =====================================
 " NERDTree settings
 " =====================================
