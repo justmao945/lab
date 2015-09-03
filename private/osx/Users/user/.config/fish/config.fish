@@ -96,6 +96,10 @@ function sub -d 'sub <exist> <cmd...>'
   popd
 end
 
+function v -d 'Vim' --wraps git
+  command vim $argv
+end
+
 function wp -d 'Start command with HTTP/HTTPS proxy'
   env http_proxy=127.0.0.1:1316 https_proxy=127.0.0.1:1316 $argv
 end
