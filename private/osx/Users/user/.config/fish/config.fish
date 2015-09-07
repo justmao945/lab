@@ -35,6 +35,13 @@ function c  -d 'Clear screen'
   clear
 end
 
+function datei -d 'Print date*100 ns'
+  for v in $argv
+    echo -n "$v -> "
+    date -r (expr $v / 10000000)
+  end
+end
+
 function df -d 'Print sizes in human readable'
   command df -h $argv
 end
