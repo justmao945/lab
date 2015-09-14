@@ -194,7 +194,7 @@ let g:clang_cpp_options = ''
 " =====================================
 " NERDTree settings
 " =====================================
-let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$', '\.a$', '\.d$', '\.gcda$', '\.gcno$']
+let NERDTreeIgnore = ['^a.out$','\.o$','\.obj$','\.pyc$','\.so$','\.dll$', '\.exe$', '\.a$', '\.gcda$', '\.gcno$']
 
 " default is 31
 let NERDTreeWinSize = 25

@@ -14,6 +14,7 @@ set -x EDITOR   vim
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
+set -x BYOBU_PREFIX (brew --prefix)
 
 function fish_title
   if [ $_ = 'fish' ]
