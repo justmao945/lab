@@ -55,6 +55,14 @@ function g -d 'Git' --wraps git
   command git $argv
 end
 
+function gx -d 'git commit -a -m "x"'
+  command git commit -a -m "x"
+end
+
+function gm -d 'git commit --amend -a -m ""'
+  command git commit --amend -a -m ""
+end
+
 function grep -d 'Grep with line number and color' --wraps grep
   command grep --color=auto -n $argv
 end
