@@ -18,7 +18,7 @@ endif
 set t_Co=256
 
 " share clipboard
-set clipboard+=unnamed
+"set clipboard+=unnamed
 
 " Disable compatibility with vi(must come first)
 set nocompatible
