@@ -301,15 +301,16 @@ if has('gui_running')
   set guioptions=aei
 endif
 
-" theme
-let g:solarized_termcolors=256
-colorscheme solarized
 
+" theme
 if has('unix') && !has('gui_running') && !has("mac")
   set background=dark
 else
   set background=light
 endif
+
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " platform
 if has("win32")
