@@ -61,3 +61,6 @@
 [submodule "mongo-hacker"]
 	path = mongo-hacker
 	url = https://github.com/TylerBrock/mongo-hacker.git
+[submodule "ciml"]
+	path = ciml
+	url = https://github.com/hal3/ciml.git
