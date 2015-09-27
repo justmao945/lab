@@ -58,3 +58,6 @@
 [submodule "vim-plugins/vim-fish"]
 	path = vim-plugins/vim-fish
 	url = git@github.com:dag/vim-fish.git
+[submodule "mongo-hacker"]
+	path = mongo-hacker
+	url = https://github.com/TylerBrock/mongo-hacker.git
