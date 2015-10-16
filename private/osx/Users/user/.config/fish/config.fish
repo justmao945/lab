@@ -36,6 +36,10 @@ function c  -d 'Clear screen'
   clear
 end
 
+function curl -d 'cURL' --wraps curl
+  command curl -v $argv
+end
+
 function datei -d 'Print date*100 ns'
   for v in $argv
     echo -n "$v -> "
