@@ -1,0 +1,47 @@
+Date:2011-8-31:
+  1. Optimizated as my <<Using C++ in Science and Research>> project
+  2. Add Logger to show all wrong messages
+
+Date: 2011-6-3:
+	1. Complete Simulator(no syscall)
+	2. Complete command line tool
+
+Date: 2011-6-2:
+	1. Add real binary code output, and reserve ASCII ouput for assembler
+	2. Complete part of simulator
+	3. Some small fixes
+
+Date: 2011-5-31:
+  1. Change comment into English
+  2. Fix str() function to compile under MSVC
+  3. Complete main module
+
+Date: 2011-5-29:
+	1. Change getFileExt() from virtual into Normal Member function
+	2. run() return none instead of bool. Use Exception to deal it
+	3. Add jump to some flags 
+	4. Get out "bgezal bltzal" instruction
+	5. Change loadFromFile() into protected member and use run("tst.s") instead
+	6. Complete disassembler.
+
+Date: 2011-5-28:
+	1. Project manager turn into cmake
+	2. Delete utils.cpp file. move all into AObject static member
+	3. Enhence Prepare class and Asm class
+
+Date: 2011-5-24: 
+  1. Complete Assembler
+
+Date: 2011-5-22: 
+	1. Change Prepare, Asm class
+	2. Add std::string functions split,strip,lstrip,rstrip
+
+Date: 2011-5-21: 
+	1. Change Asm class
+	2. Add std::string format function str
+
+Date: 2011-5-19:
+	1. Start Assebler
+
+Date: 2011-5-18
+	1. Start the project

@@ -1,0 +1,39 @@
+ MADS (MIPS Assembler|Disassembler|Simulator 32bit) 0.1.0
+
+COMPILE:
+  cd mads
+  mkdir build
+  cd build
+  cmake ..
+  make
+
+Use as a lib ("-->" means create a new file)
+  1. Preprocess:  Prepare::run("xx.s")  --> "xx.pre.s"
+  2. Assembly:    Asm::run("xx.pre.s" [,true|false]) --> "xx.bin"
+  3. Disassembly: Disasm::run("xx.bin")  --> "xx.dis.s"
+  4. Simulator:   Sim::run("xx.bin" [,"xx.dis.s"])
+
+  
+Source code is in the src/ directory
+Test modules in tst/ director
+
+aobject.cpp aobject.h:
+  Base class
+
+asm.cpp asm.h
+  Assembler class
+
+disasm.cpp disasm.h
+  Disassembler class
+
+except.h
+  Exception definition
+
+prepare.cpp prepare.h
+  Preprocess class
+
+sim.cpp sim.h
+  MIPS simulator class
+
+main.cpp
+  Command line tool
