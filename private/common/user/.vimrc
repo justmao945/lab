@@ -232,7 +232,7 @@ let g:go_auto_type_info = 1
 
 
 " go to def with different options
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
+"au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 

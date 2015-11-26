@@ -24,6 +24,11 @@ function fish_title
   end
 end
 
+if which pyenv
+  #status --is-interactive; and . (pyenv init -|psub)
+  #status --is-interactive; and . (pyenv virtualenv-init -|psub)
+end
+
 #---------------------+
 # abbr can't be alias |
 #---------------------+
