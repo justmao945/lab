@@ -282,6 +282,7 @@ filetype plugin indent on
 
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.sv set filetype=verilog
+au BufRead,BufNewFile *.conf set filetype=json
 
 " This autocommand jumps to the last known position in a file
 " just after opening it, if the '" mark is set: >
@@ -291,9 +292,8 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
 " Save buffer to file before leave
 au BufLeave * if &modifiable && !empty(bufname("%")) | exe "silent update" | endif
 
-" Add man page
-runtime! ftplugin/man.vim
-
+" Auto chdir
+autocmd BufEnter * silent! lcd %:p:h
 
 " =====================================
 " UI settings
