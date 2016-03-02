@@ -21,9 +21,9 @@
 
 [alias]
   a = add -A :/
-  d = diff
-  dc = diff --cached
-  l = !"git lg"
+  d = !git diff --color $@ | diff-so-fancy
+  dc = !git diff --cached --color $@ | diff-so-fancy
+  l = !git lg
   m = commit
   ma = commit --amend
   p = push
@@ -35,7 +35,7 @@
     # clean merged branches
   sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
 
-  lg = !"git lg1"
+  lg = !git lg1
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(magenta)- %an%C(reset)%C(bold red)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)%aD %C(bold green)(%ar)%C(reset)%C(bold red)%d%C(reset)%n''          %C(black)%s%C(reset) %C(magenta)- %an%C(reset)' --all
 

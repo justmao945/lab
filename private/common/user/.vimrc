@@ -86,7 +86,7 @@ set nowrap
 set nojoinspaces
 
 " Insert spaces instead of tabs
-set expandtab
+"set expandtab
 set shiftwidth=2 softtabstop=2 tabstop=2
 
 " Allow the backspace key to delete anything in insert mode

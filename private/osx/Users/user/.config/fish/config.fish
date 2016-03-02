@@ -24,10 +24,10 @@ function fish_title
   end
 end
 
-if which pyenv
+#if which pyenv
   #status --is-interactive; and . (pyenv init -|psub)
   #status --is-interactive; and . (pyenv virtualenv-init -|psub)
-end
+  #end
 
 #---------------------+
 # abbr can't be alias |
@@ -70,6 +70,16 @@ end
 
 function gm -d 'git commit --amend -a -m ""'
   command git commit --amend -a -m ""
+end
+
+function gotip -d 'Use latest go version'
+	set -x GOROOT /usr/local/opt/go/libexec
+	set -x PATH $GOROOT/bin $PATH
+end
+
+function go15 -d 'Use latest go version'
+	set -x GOROOT /usr/local/go1.5
+	set -x PATH $GOROOT/bin $PATH
 end
 
 function grep -d 'Grep with line number and color' --wraps grep
@@ -128,10 +138,3 @@ end
 function wp -d 'Start command with HTTP/HTTPS proxy'
   env http_proxy=127.0.0.1:1316 https_proxy=127.0.0.1:1316 $argv
 end
-
-#---------------+
-# docker
-#---------------+
-set -x DOCKER_CERT_PATH $HOME/.boot2docker/certs/boot2docker-vm
-set -x DOCKER_HOST tcp://192.168.59.103:2376
-set -x DOCKER_TLS_VERIFY 1
