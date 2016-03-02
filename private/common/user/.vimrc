@@ -69,6 +69,8 @@ set autochdir
 " Set fixed swap file dir
 set dir=~/.vimswap//,~/.cache//,/tmp//,.
 
+" Set netrw
+let g:netrw_liststyle=3
 
 " =====================================
 " Text edition
@@ -356,9 +358,9 @@ if has("gui_running")
 endif
 
 
-nmap ,r :NERDTreeFind<CR>
-nmap ,n :NERDTreeToggle<CR>
-nmap ,t :TagbarToggle<CR>
+"nmap ,r :NERDTreeFind<CR>
+"nmap ,n :NERDTreeToggle<CR>
+"nmap ,t :TagbarToggle<CR>
 
 
 " =====================================
