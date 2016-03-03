@@ -64,3 +64,9 @@
 [submodule "ciml"]
 	path = ciml
 	url = https://github.com/hal3/ciml.git
+[submodule "vim-plugins/ctrlp-funky"]
+	path = vim-plugins/ctrlp-funky
+	url = git://github.com/tacahiroy/ctrlp-funky.git
+[submodule "vim-plugins/syntastic"]
+	path = vim-plugins/syntastic
+	url = https://github.com/scrooloose/syntastic.git
