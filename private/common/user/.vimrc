@@ -302,7 +302,7 @@ filetype plugin indent on
 
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.sv set filetype=verilog
-au BufRead,BufNewFile *.conf set filetype=yaml
+au BufRead,BufNewFile *.conf set filetype=json
 
 " This autocommand jumps to the last known position in a file
 " just after opening it, if the '" mark is set: >

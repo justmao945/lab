@@ -16,9 +16,6 @@
 [submodule "vim-plugins/python-mode"]
 	path = vim-plugins/python-mode
 	url = https://github.com/klen/python-mode.git
-[submodule "vim-plugins/vim-json"]
-	path = vim-plugins/vim-json
-	url = https://github.com/elzr/vim-json.git
 [submodule "vim-plugins/vim-javascript"]
 	path = vim-plugins/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
@@ -70,3 +67,6 @@
 [submodule "vim-plugins/syntastic"]
 	path = vim-plugins/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim-plugins/vim-json"]
+	path = vim-plugins/vim-json
+	url = https://github.com/elzr/vim-json.git
