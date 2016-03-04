@@ -8,7 +8,7 @@ set -g fish_key_bindings fish_vi_key_bindings
 set -x LC_CTYPE en_US.UTF-8
 set -x GEMPATH  $HOME/.gem/ruby/2.0.0
 set -x GOPATH   $HOME/Go
-set -x GOROOT   /usr/local/go
+#set -x GOROOT   /usr/local/go
 set -x PATH     /usr/local/sbin $GOROOT/bin $GOPATH/bin $GEMPATH/bin $PATH 
 set -x EDITOR   vim
 

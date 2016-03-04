@@ -6,8 +6,10 @@
 	"go.lintFlags": [],
 	"go.vetFlags": [],
 	"go.useCodeSnippetsOnFunctionSuggest": false,
-	"go.formatOnSave": false,
-	"go.formatTool": "goreturns",
+	"go.formatOnSave": true,
+	"go.formatTool": "go fmt",
 	"go.goroot": "/usr/local/go",
-	"go.gopath": "/Users/Jianjun/go"
+	"go.gopath": "/Users/Jianjun/go",
+
+	"vim.keyboardLayout": "en-US"
 }

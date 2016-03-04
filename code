@@ -1,0 +1,2 @@
+#!/bin/bash
+/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron "$@" &
