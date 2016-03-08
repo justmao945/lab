@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# encoding:utf-8
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'infra'
+
+if ENV['INFRA_DEBUG']
+  # Don't use $DEBUG=true, it will set warnings to errors
+  $VERBOSE = true
+  exit Infra::Main.from_term ARGV
+else
+  begin
+    exit Infra::Main.from_term ARGV
+  rescue Infra::Error, OptionParser::ParseError => e
+    puts e.message
+    exit 1
+  end
+end
+
+# vim: set ts=2 sts=2 sw=2:

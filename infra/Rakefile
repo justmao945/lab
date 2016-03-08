@@ -1,0 +1,14 @@
+require "bundler/gem_tasks"
+require "rake/testtask"
+
+task :console do
+  exec "pry -r infra -I ./lib"
+end
+
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.verbose = true
+  t.test_files = FileList['test/pre_load.rb', 'test/**/test_*.rb']
+end
+
+# vim: set ts=2 sts=2 sw=2:
