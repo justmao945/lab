@@ -82,6 +82,11 @@ function go15 -d 'Use latest go version'
 	set -x PATH $GOROOT/bin $PATH
 end
 
+function go14 -d 'Use latest go version'
+	set -x GOROOT /usr/local/go
+	set -x PATH $GOROOT/bin $PATH
+end
+
 function grep -d 'Grep with line number and color' --wraps grep
   command grep --color=auto -n $argv
 end
