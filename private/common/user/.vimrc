@@ -325,14 +325,14 @@ endif
 
 
 " theme
-if has('unix') && !has('gui_running') && !has("mac")
-  set background=dark
-else
-  set background=light
-endif
+"if has('unix') && !has('gui_running') && !has("mac")
+"  set background=dark
+"else
+"  set background=light
+"endif
 
-let g:solarized_termcolors=256
-colorscheme solarized
+"let g:solarized_termcolors=256
+"colorscheme solarized
 
 " platform
 if has("win32")

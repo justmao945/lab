@@ -32,7 +32,8 @@ end
 #---------------------+
 # abbr can't be alias |
 #---------------------+
-abbr -a w='source $HOME/.config/fish/work.fish'
+abbr -a w='source $HOME/.config/fish/work2.fish'
+abbr -a w2='source $HOME/.config/fish/work.fish'
 
 #---------------+
 #    alias      |

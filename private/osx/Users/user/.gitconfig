@@ -21,8 +21,8 @@
 
 [alias]
   a = add -A :/
-  d = !git diff --color $@ | diff-so-fancy
-  dc = !git diff --cached --color $@ | diff-so-fancy
+  d = !git diff --color $@
+  dc = !git diff --cached --color $@
   l = !git lg
   m = commit
   ma = commit --amend

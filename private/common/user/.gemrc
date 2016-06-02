@@ -1,6 +1,7 @@
 ---
-gem: --user-install
-benchmark: false
-verbose: true
-backtrace: true
-http-proxy: localhost:1315
+:backtrace: false
+:bulk_threshold: 1000
+:sources:
+- https://ruby.taobao.org/
+:update_sources: true
+:verbose: true
