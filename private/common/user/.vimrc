@@ -39,7 +39,7 @@ set fileformats=unix,dos
 set number
 
 " Display relative line number
-set relativenumber
+"set relativenumber
 
 " Display commands in the bottom right corner as they are typed
 set showcmd
