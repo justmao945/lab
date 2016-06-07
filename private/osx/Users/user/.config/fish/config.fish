@@ -1,14 +1,14 @@
 #---------------+
 #    env        |
 #---------------+
-ulimit -n 102400
+ulimit -n 4000
 
 set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
 set -x EDITOR   vim
 set -x GOPATH   $HOME/Go
-set -x PATH     $GOROOT/bin $GOPATH/bin $HOME/.iterm2 $PATH 
+set -x PATH     $GOROOT/bin $GOPATH/bin $HOME/.iterm2 $HOME/.gem/ruby/2.0.0/bin $PATH 
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
