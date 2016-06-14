@@ -381,6 +381,8 @@ endif
 nmap ,r :NERDTreeFind<CR>
 nmap ,n :NERDTreeToggle<CR>
 
+nmap <silent> <C-E> :CtrlPFunky<CR>
+
 " =====================================
 "  Auto completion
 " =====================================
