@@ -331,8 +331,8 @@ endif
 "  set background=light
 "endif
 
-"let g:solarized_termcolors=256
-"colorscheme solarized
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " platform
 if has("win32")
