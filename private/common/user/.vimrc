@@ -377,11 +377,8 @@ if has("gui_running")
   autocmd VimEnter * call TabPos_Initialize()
 endif
 
-
-"nmap ,r :NERDTreeFind<CR>
-"nmap ,n :NERDTreeToggle<CR>
-"nmap ,t :TagbarToggle<CR>
-
+nmap ,r :NERDTreeFind<CR>
+nmap ,n :NERDTreeToggle<CR>
 
 " =====================================
 "  Auto completion
