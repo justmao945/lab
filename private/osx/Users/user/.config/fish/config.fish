@@ -137,8 +137,8 @@ function v -d 'Vim' --wraps vim
   command vim $argv
 end
 
-function v -d 'MVIM' --wraps mvim
-  command vv $argv
+function vv -d 'MVIM' --wraps mvim
+  command mvim $argv
 end
 
 function wp -d 'Start command with HTTP/HTTPS proxy'
