@@ -133,8 +133,12 @@ function sub -d 'sub <exist> <cmd...>'
   popd
 end
 
-function v -d 'Vim' --wraps git
+function v -d 'Vim' --wraps vim
   command vim $argv
+end
+
+function v -d 'MVIM' --wraps mvim
+  command vv $argv
 end
 
 function wp -d 'Start command with HTTP/HTTPS proxy'
