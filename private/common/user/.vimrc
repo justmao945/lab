@@ -121,7 +121,7 @@ set smartindent
 set foldmethod=marker
 
 " switch case indent style
-set cinoptions=l1
+"set cinoptions=l1
 
 " =====================================
 " Searching/Replacing
@@ -321,6 +321,7 @@ autocmd BufEnter * silent! lcd %:p:h
 " GUI
 if has('gui_running')
   set guioptions=aei
+
 endif
 
 
@@ -342,7 +343,7 @@ elseif has("mac") || system("uname -s") =~ "Darwin"
   set shell=bash
   " don't set them in non-gui
   if has('gui_running')
-    set linespace=1 lines=40 columns=84
+    set linespace=1 lines=999 columns=999
     set guifont=Monaco:h13
   endif
 elseif has("unix")
