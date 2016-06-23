@@ -137,7 +137,7 @@ function v -d 'Vim' --wraps vim
   command vim $argv
 end
 
-function vv -d 'MVIM' --wraps mvim
+function m -d 'MVIM' --wraps mvim
   command mvim $argv
 end
 
