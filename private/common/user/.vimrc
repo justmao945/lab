@@ -336,6 +336,7 @@ endif
 "endif
 
 let g:solarized_termcolors=256
+set background=dark
 colorscheme solarized
 
 " platform
@@ -347,7 +348,7 @@ elseif has("mac") || system("uname -s") =~ "Darwin"
   " don't set them in non-gui
   if has('gui_running')
     set linespace=1 lines=999 columns=999
-    set guifont=Monaco:h13
+    set guifont=Monaco:h16
   endif
 elseif has("unix")
   set shell=bash

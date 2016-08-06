@@ -8,7 +8,7 @@ set -g fish_key_bindings fish_vi_key_bindings
 set -x LC_CTYPE en_US.UTF-8
 set -x EDITOR   vim
 set -x GOPATH   $HOME/Go
-set -x PATH     $GOROOT/bin $GOPATH/bin $HOME/.iterm2 $HOME/.gem/ruby/2.0.0/bin $PATH 
+set -x PATH     $GOPATH/bin $HOME/.gem/ruby/2.0.0/bin $PATH 
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
@@ -20,16 +20,10 @@ function fish_title
   end
 end
 
-#if which pyenv
-  #status --is-interactive; and . (pyenv init -|psub)
-  #status --is-interactive; and . (pyenv virtualenv-init -|psub)
-  #end
-
 #---------------------+
 # abbr can't be alias |
 #---------------------+
-abbr -a w='source $HOME/.config/fish/work2.fish'
-abbr -a w2='source $HOME/.config/fish/work.fish'
+abbr -a w='source $HOME/.config/fish/work.fish'
 
 #---------------+
 #    alias      |
@@ -53,43 +47,12 @@ function df -d 'Print sizes in human readable'
   command df -h $argv
 end
 
-function e -d 'Print go env'
-  command go env $argv
-end
-
 function g -d 'Git' --wraps git
   command git $argv
 end
 
-function gx -d 'git commit -a -m "x"'
-  command git commit -a -m "x"
-end
-
-function gm -d 'git commit --amend -a -m ""'
-  command git commit --amend -a -m ""
-end
-
-function gotip -d 'Use latest go version'
-	set -x GOROOT /usr/local/opt/go/libexec
-	set -x PATH $GOROOT/bin $PATH
-end
-
-function go15 -d 'Use latest go version'
-	set -x GOROOT /usr/local/go1.5
-	set -x PATH $GOROOT/bin $PATH
-end
-
-function go14 -d 'Use latest go version'
-	set -x GOROOT /usr/local/go
-	set -x PATH $GOROOT/bin $PATH
-end
-
 function cgrep -d 'Grep with line number and color' --wraps grep
   command grep --color=auto -n $argv
-end
-
-function m -d 'Use vim viewer to display manpage'
-  command man $argv -P 'col -b | view -c "set ft=man noma nolist" -'
 end
 
 function p -d 'Print absolute path of file'
@@ -139,10 +102,6 @@ end
 
 function m -d 'MVIM' --wraps mvim
   command mvim $argv
-end
-
-function wp -d 'Start command with HTTP/HTTPS proxy'
-  env http_proxy=127.0.0.1:1316 https_proxy=127.0.0.1:1316 $argv
 end
 
 function gout
