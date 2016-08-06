@@ -8,7 +8,7 @@ set -g fish_key_bindings fish_vi_key_bindings
 set -x LC_CTYPE en_US.UTF-8
 set -x EDITOR   vim
 set -x GOPATH   $HOME/Go
-set -x PATH     $GOPATH/bin $HOME/.gem/ruby/2.0.0/bin $PATH 
+set -x PATH     $GOPATH/bin $HOME/.gem/ruby/2.0.0/bin $HOME/Library/Python/2.7/bin $PATH 
 
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
@@ -30,6 +30,10 @@ abbr -a w='source $HOME/.config/fish/work.fish'
 #---------------+
 function c  -d 'Clear screen'
   clear
+end
+
+function e -d 'go env'
+	command go env $argv
 end
 
 function curl -d 'cURL' --wraps curl
@@ -104,7 +108,7 @@ function m -d 'MVIM' --wraps mvim
   command mvim $argv
 end
 
-function gout
+function gout -d 'Install & Update Golang tools'
 	go get -u -v github.com/nsf/gocode
 	go get -u -v github.com/rogpeppe/godef
 	go get -u -v github.com/golang/lint/golint
@@ -114,4 +118,8 @@ function gout
 	go get -u -v github.com/tpng/gopkgs
 	go get -u -v github.com/newhook/go-symbols
 	go get -u -v golang.org/x/tools/cmd/guru
+end
+
+function diff -d 'git diff --no-index'
+	command git diff --no-index $argv
 end
