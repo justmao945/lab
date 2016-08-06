@@ -110,14 +110,18 @@ end
 
 function gout -d 'Install & Update Golang tools'
 	go get -u -v github.com/nsf/gocode
-	go get -u -v github.com/rogpeppe/godef
-	go get -u -v github.com/golang/lint/golint
-	go get -u -v github.com/lukehoban/go-outline
-	go get -u -v sourcegraph.com/sqs/goreturns
-	go get -u -v golang.org/x/tools/cmd/gorename
-	go get -u -v github.com/tpng/gopkgs
-	go get -u -v github.com/newhook/go-symbols
+  go get -u -v github.com/alecthomas/gometalinter
+	go get -u -v golang.org/x/tools/cmd/goimports
 	go get -u -v golang.org/x/tools/cmd/guru
+	go get -u -v golang.org/x/tools/cmd/gorename
+	go get -u -v github.com/golang/lint/golint
+	go get -u -v github.com/rogpeppe/godef
+	go get -u -v github.com/kisielk/errcheck
+	go get -u -v github.com/jstemmer/gotags
+	go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt
+	go get -u -v github.com/fatih/motion
+	go get -u -v github.com/zmb3/gogetdoc
+	go get -u -v github.com/josharian/impl
 end
 
 function diff -d 'git diff --no-index'

@@ -253,7 +253,7 @@ let g:go_fmt_command = "goimports"
 
 " Use this option to show the type info (|:GoInfo|) for the word under the cursor
 " automatically. Whenever the cursor changes the type info will be updated.
-"let g:go_auto_type_info = 1
+let g:go_auto_type_info = 1
 
 
 " go to def with different options
