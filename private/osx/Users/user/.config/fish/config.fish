@@ -127,3 +127,7 @@ end
 function diff -d 'git diff --no-index'
 	command git diff --no-index $argv
 end
+
+function ffpub -d 'ffmpeg publish stream'
+	command ffmpeg -f avfoundation -framerate 30 -i "0:0" -vcodec libx264 -preset ultrafast -acodec aac -f flv $argv
+end
