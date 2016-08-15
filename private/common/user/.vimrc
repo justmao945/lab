@@ -255,6 +255,11 @@ let g:go_fmt_command = "goimports"
 " automatically. Whenever the cursor changes the type info will be updated.
 let g:go_auto_type_info = 1
 
+" Specifies whether `gocode` should automatically build out-of-date packages
+" when their source fields are modified, in order to obtain the freshest
+" autocomplete results for them.  By default it is enabled.
+let g:go_gocode_autobuild = 0
+
 
 " go to def with different options
 "au FileType go nmap <Leader>ds <Plug>(go-def-split)
