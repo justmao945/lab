@@ -18,6 +18,11 @@
   pager = less -FRSX
   mergeoptions = --no-edit
   quotepath = false
+  preloadindex = true
+  fscache = true
+
+[gc]
+  auto = 256
 
 [alias]
   a = add -A :/
