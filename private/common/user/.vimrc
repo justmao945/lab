@@ -249,6 +249,9 @@ let g:go_highlight_build_constraints = 1
 " defualt is gofmt
 let g:go_fmt_command = "goimports"
 
+" godef is faster than guru
+let g:go_def_mode = 'godef'
+
 " Use this option to show the type info (|:GoInfo|) for the word under the cursor
 " automatically. Whenever the cursor changes the type info will be updated.
 let g:go_auto_type_info = 0
