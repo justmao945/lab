@@ -34,7 +34,7 @@ function c  -d 'Clear screen'
 end
 
 function e -d 'go env'
-	command go env $argv
+  command go env $argv
 end
 
 function curl -d 'cURL' --wraps curl
@@ -110,25 +110,25 @@ function m -d 'MVIM' --wraps mvim
 end
 
 function gout -d 'Install & Update Golang tools'
-	go get -u -v github.com/nsf/gocode
+  go get -u -v github.com/nsf/gocode
   go get -u -v github.com/alecthomas/gometalinter
-	go get -u -v golang.org/x/tools/cmd/goimports
-	go get -u -v golang.org/x/tools/cmd/guru
-	go get -u -v golang.org/x/tools/cmd/gorename
-	go get -u -v github.com/golang/lint/golint
-	go get -u -v github.com/rogpeppe/godef
-	go get -u -v github.com/kisielk/errcheck
-	go get -u -v github.com/jstemmer/gotags
-	go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt
-	go get -u -v github.com/fatih/motion
-	go get -u -v github.com/zmb3/gogetdoc
-	go get -u -v github.com/josharian/impl
+  go get -u -v golang.org/x/tools/cmd/goimports
+  go get -u -v golang.org/x/tools/cmd/guru
+  go get -u -v golang.org/x/tools/cmd/gorename
+  go get -u -v github.com/golang/lint/golint
+  go get -u -v github.com/rogpeppe/godef
+  go get -u -v github.com/kisielk/errcheck
+  go get -u -v github.com/jstemmer/gotags
+  go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt
+  go get -u -v github.com/fatih/motion
+  go get -u -v github.com/zmb3/gogetdoc
+  go get -u -v github.com/josharian/impl
 end
 
 function diff -d 'git diff --no-index'
-	command git diff --no-index $argv
+  command git diff --no-index $argv
 end
 
 function ffpub -d 'ffmpeg publish stream'
-	command ffmpeg -f avfoundation -framerate 30 -i "0:0" -vcodec libx264 -preset ultrafast -acodec aac -f flv $argv
+  command ffmpeg -f avfoundation -framerate 30 -i "0:0" -vcodec libx264 -preset ultrafast -acodec aac -f flv $argv
 end
