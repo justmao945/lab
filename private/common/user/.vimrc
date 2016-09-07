@@ -59,7 +59,7 @@ set novisualbell
 set ttyfast
 
 " Do not redraw when running macros
-set lazyredraw
+"set lazyredraw
 
 " Auto change to current directory.
 " e.g. Nautilus does not change system directories.
@@ -254,7 +254,7 @@ let g:go_def_mode = 'godef'
 
 " Use this option to show the type info (|:GoInfo|) for the word under the cursor
 " automatically. Whenever the cursor changes the type info will be updated.
-let g:go_auto_type_info = 0
+let g:go_auto_type_info = 1
 
 " Specifies whether `gocode` should automatically build out-of-date packages
 " when their source fields are modified, in order to obtain the freshest

@@ -33,6 +33,10 @@ function c  -d 'Clear screen'
   clear
 end
 
+function cl -d 'delete <file>.log.* files'
+	find . -name '*.log*' | grep -v -e 'log$'|xargs rm
+end
+
 function e -d 'go env'
   command go env $argv
 end

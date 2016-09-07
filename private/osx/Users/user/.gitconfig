@@ -38,6 +38,7 @@
   r = remote -v
   s = status
   sf = status -uno
+	u = pull
   x = commit -m update
 
   stat = !git --no-pager diff --stat
