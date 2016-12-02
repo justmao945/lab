@@ -136,3 +136,7 @@ end
 function ffpub -d 'ffmpeg publish stream'
   command ffmpeg -f avfoundation -framerate 30 -i "0:0" -vcodec libx264 -preset ultrafast -acodec aac -f flv $argv
 end
+
+function wp -d 'http proxy'
+  env http_proxy=http://localhost:1316 https_proxy=http://localhost:1316
+end
