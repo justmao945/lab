@@ -138,5 +138,5 @@ function ffpub -d 'ffmpeg publish stream'
 end
 
 function wp -d 'http proxy'
-  env http_proxy=http://localhost:1316 https_proxy=http://localhost:1316
+  env http_proxy=http://localhost:1316 https_proxy=http://localhost:1316 $argv
 end
