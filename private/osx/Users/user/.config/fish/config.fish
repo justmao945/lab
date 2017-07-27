@@ -13,6 +13,8 @@ set -x PATH     /usr/local/sbin $GOPATH/bin $HOME/.gem/ruby/2.0.0/bin $HOME/Libr
 set -x GOMAXPROCS 1
 set -x HOMEBREW_BOTTLE_DOMAIN http://7xkcej.dl1.z0.glb.clouddn.com
 
+set -x VIMRUNTIME  /Applications/MacVim.app/Contents/Resources/vim/runtime
+
 function fish_title
   if [ $_ = 'fish' ]
     echo (prompt_pwd)@(hostname)
