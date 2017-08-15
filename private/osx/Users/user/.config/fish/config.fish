@@ -3,7 +3,7 @@
 #---------------+
 ulimit -n 4000
 
-set -g fish_key_bindings fish_vi_key_bindings
+#set -g fish_key_bindings fish_vi_key_bindings
 
 set -x LC_CTYPE en_US.UTF-8
 set -x EDITOR   vim
@@ -22,6 +22,15 @@ function fish_title
     echo $argv[1]@(hostname)
   end
 end
+
+# powerline-shell
+function fish_prompt
+  python $HOME/.config/fish/powerline-shell.py $status --shell bare ^/dev/null
+end
+
+# powerline
+#set fish_function_path $fish_function_path "$HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/fish"
+#powerline-setup
 
 #---------------------+
 # abbr can't be alias |
@@ -141,4 +150,8 @@ end
 
 function wp -d 'http proxy'
   env http_proxy=http://localhost:1316 https_proxy=http://localhost:1316 $argv
+end
+
+function ll
+	command exa -l --git $argv
 end
