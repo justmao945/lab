@@ -81,6 +81,6 @@ function rm -d 'Remove interactively'
 end
 
 function wp -d 'with http proxy'
-  set proxy http://127.0.0.1:1081
+  set proxy http://127.0.0.1:1080
   env http_proxy=$proxy https_proxy=$proxy $argv
 end
