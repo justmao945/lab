@@ -46,7 +46,7 @@ func main() {
 	i := 0
 	j := 0
 
-	var l sync.RWLock
+	var l RWLock
 
 	go func() {
 		for k := 0; k < 100; k++ {
